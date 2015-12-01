@@ -5,9 +5,9 @@ import javax.swing.*;
 /**
  * Created by viacheslav on 01.12.2015.
  */
-public class ShowPoints extends JFrame {
+public class ShowPointsFrame extends JFrame {
 
-    public ShowPoints() {
+    public ShowPointsFrame() {
         initUI();
     }
 
@@ -27,7 +27,7 @@ public class ShowPoints extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
-                ShowPoints ex = new ShowPoints();
+                ShowPointsFrame ex = new ShowPointsFrame();
                 ex.setVisible(true);
             }
         });
