@@ -1,4 +1,7 @@
-package ru.ifmo.ctddev;
+package ru.ifmo.ctddev.gui;
+
+import ru.ifmo.ctddev.generation.DatasetGenerator;
+import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +21,9 @@ class DrawPanel extends JPanel {
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 4));
 
-        DatasetGenerator generator = new DatasetGeneratorImpl();
-        java.util.List<Point2D> points = generator.generate(10, new Point2D.Double(50, 50));
+        DatasetGenerator generator = new GausianDatasetGeneratorImpl();
+        java.util.List<Point2D> points = generator.generate(100, new Point2D.Double(50,50),
+                new Point2D.Double(0,100), new Point2D.Double(100,0) );
 
         for (int i = 0; i < points.size(); ++i) {
             if (i == points.size() / 2)

@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev;
+package ru.ifmo.ctddev.gui;
 
 import javax.swing.*;
 
