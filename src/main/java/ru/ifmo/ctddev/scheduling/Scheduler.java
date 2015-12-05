@@ -5,23 +5,28 @@ package ru.ifmo.ctddev.scheduling;
  */
 public class Scheduler {
 
-    /**
-     * simple algorithm
-     *
-     * @param data
-     * @return
-     */
-    public double runSceduler(ScheduleData data) {
+
+    private Optimiser optimiser;
+
+    public static final int K = 10;
+
+    public Scheduler(Optimiser optimizer) {
+        this.optimiser = optimizer;
+    }
+
+
+    public double schedule(ScheduleData data) {
 
         System.out.println("initial state:");
         for (int i : data.getRoute())
             System.out.print(i + " ");
         System.out.println("");
         System.out.println("constraint: " + data.checkConstraints());
-        System.out.println("cost: " + data.getCost());
+        double initialCost = data.getCost();
+        System.out.println("cost: " + initialCost);
 
-        for (int i = 0; i < data.ordersNum * data.ordersNum; ++i)
-            persorm2Opt(data);
+        for (int i = 0; i < K * data.ordersNum * data.ordersNum; ++i)
+            performStep(data);
 
         System.out.println();
         System.out.println("final state:");
@@ -31,6 +36,10 @@ public class Scheduler {
         System.out.println("constraint: " + data.checkConstraints());
         System.out.println("cost: " + data.getCost());
 
+        double reachedCost = data.getCost();
+        System.out.println("optimization ratio: " + (initialCost - reachedCost) / initialCost * 100 + "%");
+        System.out.println();
+
         return data.getCost();
     }
 
@@ -38,21 +47,22 @@ public class Scheduler {
     // todo small-steps-heuristics with strategy.
 
 
-    public void persorm2Opt(ScheduleData data) {
-        Lin2opt l2o = new Lin2opt();
-        int[] r = l2o.oneStep(data);
+    public void performStep(ScheduleData data) {
+        int[] r = optimiser.oneStep(data);
 
         // check and accept or reject:
         if (data.checkConstraints(r)) {
-            System.out.println("constraints: OK");
-            System.out.println("initial: " + data.getCost() + "; reached: " + data.getCost(r));
+//            System.out.println("constraints: OK");
             if (data.getCost(r) < data.getCost()) {
-                System.out.println("ACCEPTED");
+//                System.out.println("initial: " + data.getCost() + "; reached: " + data.getCost(r));
+//                System.out.println("ACCEPTED");
                 data.setRoute(r);
-            } else
-                System.out.println("rejected");
-        } else
-            System.out.println("constraints NO");
+            } else {
+//                System.out.println("rejected");
+            }
+        } else {
+//            System.out.println("constraints NO");
+        }
     }
 
 }

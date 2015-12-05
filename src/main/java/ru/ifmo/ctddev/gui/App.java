@@ -2,6 +2,8 @@ package ru.ifmo.ctddev.gui;
 
 import ru.ifmo.ctddev.generation.DatasetGenerator;
 import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
+import ru.ifmo.ctddev.scheduling.CoupleExchange;
+import ru.ifmo.ctddev.scheduling.Lin2opt;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 
@@ -16,8 +18,12 @@ public class App {
         DatasetGenerator generator = new GausianDatasetGeneratorImpl();
         List<Point2D> points = generator.generate(100, new Point2D.Double(50,50),
                 new Point2D.Double(0,100), new Point2D.Double(100,0) );
+
         ScheduleData data = new ScheduleData(points);
-        Scheduler scheduler = new Scheduler();
-        scheduler.runSceduler(data);
+        Scheduler scheduler = new Scheduler(new Lin2opt());
+        scheduler.schedule(data);
+
+        scheduler = new Scheduler(new CoupleExchange());
+        scheduler.schedule(new ScheduleData(points));
     }
 }

@@ -52,8 +52,8 @@ public class ScheduleData {
                 picked.add(p);
             else {
                 if (!picked.contains(p - ordersNum)) {
-                    System.out.println("pairing constraint not satisfied for: "
-                            + (p - ordersNum) + " -> " + p);
+//                    System.out.println("pairing constraint not satisfied for: "
+//                            + (p - ordersNum) + " -> " + p);
                     return false;
                 }
             }
