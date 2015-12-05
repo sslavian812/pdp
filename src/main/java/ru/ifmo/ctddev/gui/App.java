@@ -16,16 +16,24 @@ public class App {
         List<Point2D> points = generator.generate(100, new Point2D.Double(50,50),
                 new Point2D.Double(0,100), new Point2D.Double(100,0) );
 
-        ScheduleData data = new ScheduleData(points);
+        System.out.println("============================================");
+        System.out.println("Lin2Opt");
         Scheduler scheduler = new Scheduler(new Lin2opt());
-        scheduler.schedule(data);
+        scheduler.schedule(new ScheduleData(points));
 
         System.out.println("============================================");
+        System.out.println("Relocate-couple");
         scheduler.setOptimiser(new RelocateCouple());
         scheduler.schedule(new ScheduleData(points));
-        System.out.println("============================================");
 
-        scheduler.setOptimiser(new CoupleExchange());
+        System.out.println("============================================");
+        System.out.println("Double-bridge");
+        scheduler.setOptimiser(new DoubleBridge());
+        scheduler.schedule(new ScheduleData(points));
+
+        System.out.println("============================================");
+        System.out.println("Couple-exchange");
+        scheduler.setOptimiser(new PointExchange());
         scheduler.schedule(new ScheduleData(points));
     }
 }
