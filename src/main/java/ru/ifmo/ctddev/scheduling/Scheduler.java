@@ -14,6 +14,9 @@ public class Scheduler {
         this.optimiser = optimizer;
     }
 
+    public void setOptimiser(Optimiser optimiser) {
+        this.optimiser = optimiser;
+    }
 
     public double schedule(ScheduleData data) {
 
@@ -25,7 +28,11 @@ public class Scheduler {
         double initialCost = data.getCost();
         System.out.println("cost: " + initialCost);
 
-        for (int i = 0; i < K * data.ordersNum * data.ordersNum; ++i)
+        int t = K;
+        if(!(optimiser instanceof RelocateCouple))
+            t*=data.ordersNum;
+
+        for (int i = 0; i < t * data.ordersNum; ++i)
             performStep(data);
 
         System.out.println();

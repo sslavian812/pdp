@@ -2,10 +2,7 @@ package ru.ifmo.ctddev.gui;
 
 import ru.ifmo.ctddev.generation.DatasetGenerator;
 import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
-import ru.ifmo.ctddev.scheduling.CoupleExchange;
-import ru.ifmo.ctddev.scheduling.Lin2opt;
-import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.Scheduler;
+import ru.ifmo.ctddev.scheduling.*;
 
 import java.awt.geom.Point2D;
 import java.util.List;
@@ -23,7 +20,12 @@ public class App {
         Scheduler scheduler = new Scheduler(new Lin2opt());
         scheduler.schedule(data);
 
-        scheduler = new Scheduler(new CoupleExchange());
+        System.out.println("============================================");
+        scheduler.setOptimiser(new RelocateCouple());
+        scheduler.schedule(new ScheduleData(points));
+        System.out.println("============================================");
+
+        scheduler.setOptimiser(new CoupleExchange());
         scheduler.schedule(new ScheduleData(points));
     }
 }

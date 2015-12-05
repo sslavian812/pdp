@@ -5,6 +5,8 @@ package ru.ifmo.ctddev.scheduling;
  */
 public class CoupleExchange implements Optimiser {
     public int[] oneStep(ScheduleData data) {
+
+        // todo: fix this shit.  I should exchange request rather than 2 points.
         int n = data.ordersNum;
         int i = (int) (Math.random() * (n));
         int j = (int) (Math.random() * (n - 1));

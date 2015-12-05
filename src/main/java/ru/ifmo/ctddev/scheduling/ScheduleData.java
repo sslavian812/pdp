@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by viacheslav on 01.12.2015.
@@ -86,6 +87,14 @@ public class ScheduleData {
         double acc = 0.0;
         for (int i = 1; i < route.length; ++i) {
             acc += dist(route[i - 1], route[i]);
+        }
+        return acc;
+    }
+
+    public double getCost(List<Integer> route) {
+        double acc = 0.0;
+        for (int i = 1; i < route.size(); ++i) {
+            acc += dist(route.get(i - 1), route.get(i));
         }
         return acc;
     }
