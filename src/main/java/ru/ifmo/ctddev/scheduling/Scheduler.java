@@ -1,5 +1,9 @@
 package ru.ifmo.ctddev.scheduling;
 
+import ru.ifmo.ctddev.scheduling.steps.Optimiser;
+import ru.ifmo.ctddev.scheduling.steps.RelocateBlock;
+import ru.ifmo.ctddev.scheduling.steps.RelocateCouple;
+
 /**
  * Created by viacheslav on 01.12.2015.
  */
@@ -29,10 +33,10 @@ public class Scheduler {
         System.out.println("cost: " + initialCost);
 
         int t = K;
-        if(!(optimiser instanceof RelocateCouple))
-            t*=data.ordersNum;
+        if(!(optimiser instanceof RelocateCouple || optimiser instanceof RelocateBlock))
+            t*=data.getOrdersNum();
 
-        for (int i = 0; i < t * data.ordersNum; ++i)
+        for (int i = 0; i < t * data.getOrdersNum(); ++i)
             performStep(data);
 
         System.out.println();

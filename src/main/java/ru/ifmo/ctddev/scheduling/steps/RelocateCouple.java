@@ -1,4 +1,6 @@
-package ru.ifmo.ctddev.scheduling;
+package ru.ifmo.ctddev.scheduling.steps;
+
+import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
  */
 public class RelocateCouple implements Optimiser {
     public int[] oneStep(ScheduleData data) {
-        int n = data.ordersNum;
+        int n = data.getOrdersNum();
         int k = (int) (Math.random() * (n));
 
         List<Integer> route = new ArrayList<Integer>(data.getSize());

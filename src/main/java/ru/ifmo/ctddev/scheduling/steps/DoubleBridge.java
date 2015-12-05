@@ -1,4 +1,6 @@
-package ru.ifmo.ctddev.scheduling;
+package ru.ifmo.ctddev.scheduling.steps;
+
+import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 import java.util.Arrays;
 

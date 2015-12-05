@@ -15,7 +15,7 @@ public class ScheduleData {
     private Point2D depot;
     private int[] route;
     private double cost;
-    int ordersNum;
+    private int ordersNum;
 
     public ScheduleData(List<Point2D> points, Point2D depot) {
         this.ordersNum = points.size() / 2;
@@ -102,6 +102,11 @@ public class ScheduleData {
     public double dist(int s, int d) {
         return Math.sqrt((points[s].getX() - points[d].getX()) * (points[s].getX() - points[d].getX())
                 + (points[s].getY() - points[d].getY()) * (points[s].getY() - points[d].getY()));
+    }
+
+
+    public int getOrdersNum() {
+        return ordersNum;
     }
 
 
