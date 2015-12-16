@@ -22,22 +22,22 @@ class DrawPanel extends JPanel {
         g.setFont(new Font("TimesRoman", Font.PLAIN, 4));
 
         DatasetGenerator generator = new GausianDatasetGeneratorImpl();
-        java.util.List<Point2D> points = generator.generate(100, new Point2D.Double(50,50),
-                new Point2D.Double(0,100), new Point2D.Double(100,0) );
+        java.util.List<Point2D> points = generator.generate(10, new Point2D.Double(150,150),
+                new Point2D.Double(0,300), new Point2D.Double(300,0) );
 
         for (int i = 0; i < points.size(); ++i) {
             if (i == points.size() / 2)
-                g2d.setColor(Color.green);
+                g2d.setColor(Color.red);
             int x = (int) points.get(i).getX();
             int y = (int) points.get(i).getY();
 //            g2d.drawLine(x, y, x, y);
-            g2d.fillOval(x, y, 1, 1);
+            g2d.fillOval(x, y, 2, 2);
             g2d.drawString("" + i % (points.size() / 2), x, y);
         }
 
-        g2d.setColor(Color.black);
-        g2d.drawLine(100, 0, 100, 100);
-        g2d.drawLine(0, 100, 100, 100);
+//        g2d.setColor(Color.black);
+//        g2d.drawLine(100, 0, 100, 100);
+//        g2d.drawLine(0, 100, 100, 100);
     }
 
     @Override
