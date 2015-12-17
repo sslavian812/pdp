@@ -27,7 +27,7 @@ public class UniformDatasetGenerator implements DatasetGenerator {
             int n = sizes.get(cluster);
             Point2D center = centers.get(cluster);
 
-            RandomEngine engine = new DRand();
+            RandomEngine engine = new DRand((int)System.currentTimeMillis()/1000);
             double dx = rightDown.getX() - leftUp.getX();
             double dy = leftUp.getY() - rightDown.getY();
             Uniform uniformX = new Uniform(leftUp.getX(), rightDown.getX(), engine);
@@ -49,5 +49,9 @@ public class UniformDatasetGenerator implements DatasetGenerator {
             }
         }
         return Arrays.asList(points);
+    }
+
+    public String getName() {
+        return "Uniform";
     }
 }

@@ -39,4 +39,8 @@ public class CoupleExchange implements Optimiser {
             array[g] = route.get(g);
         return array;
     }
+
+    public String getName() {
+        return "CoupleExchange";
+    }
 }

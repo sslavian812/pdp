@@ -24,13 +24,13 @@ public class Scheduler {
 
     public double schedule(ScheduleData data) {
 
-        System.out.println("initial state:");
-        for (int i : data.getRoute())
-            System.out.print(i + " ");
-        System.out.println("");
-        System.out.println("constraint: " + data.checkConstraints());
+//        System.out.println("initial state:");
+//        for (int i : data.getRoute())
+//            System.out.print(i + " ");
+//        System.out.println("");
+//        System.out.println("constraint: " + data.checkConstraints());
         double initialCost = data.getCost();
-        System.out.println("cost: " + initialCost);
+//        System.out.println("cost: " + initialCost);
 
         int t = K;
         if(!(optimiser instanceof RelocateCouple || optimiser instanceof RelocateBlock))
@@ -39,19 +39,19 @@ public class Scheduler {
         for (int i = 0; i < t * data.getOrdersNum(); ++i)
             performStep(data);
 
-        System.out.println();
-        System.out.println("final state:");
-        for (int i : data.getRoute())
-            System.out.print(i + " ");
-        System.out.println("");
-        System.out.println("constraint: " + data.checkConstraints());
-        System.out.println("cost: " + data.getCost());
+//        System.out.println();
+//        System.out.println("final state:");
+//        for (int i : data.getRoute())
+//            System.out.print(i + " ");
+//        System.out.println("");
+//        System.out.println("constraint: " + data.checkConstraints());
+//        System.out.println("cost: " + data.getCost());
 
         double reachedCost = data.getCost();
-        System.out.println("optimization ratio: " + (initialCost - reachedCost) / initialCost * 100 + "%");
-        System.out.println();
+//        System.out.println("optimization ratio: " + (initialCost - reachedCost) / initialCost * 100 + "%");
+//        System.out.println();
 
-        return data.getCost();
+        return (initialCost - reachedCost) / initialCost ;
     }
 
     // todo construction method (bestInsertion or other)

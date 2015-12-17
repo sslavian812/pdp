@@ -15,6 +15,7 @@ import java.util.function.BinaryOperator;
  */
 public class GausianDatasetGeneratorImpl implements DatasetGenerator {
 
+    @Deprecated
     public List<Point2D> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown) {
 
         Point2D[] points = new Point2D[2*N];
@@ -59,7 +60,7 @@ public class GausianDatasetGeneratorImpl implements DatasetGenerator {
             int n = sizes.get(cluster);
             Point2D center = centers.get(cluster);
 
-            RandomEngine engine = new DRand();
+            RandomEngine engine = new DRand((int)System.currentTimeMillis()/1000); // fixed seed!!!
             double dx = rightDown.getX() - leftUp.getX();
             double dy = leftUp.getY() - rightDown.getY();
             Normal normalX = new Normal(center.getX(), dx / 8, engine);
@@ -83,5 +84,9 @@ public class GausianDatasetGeneratorImpl implements DatasetGenerator {
             lastPos += n;
         }
             return Arrays.asList(points);
+    }
+
+    public String getName() {
+        return "gaussian";
     }
 }

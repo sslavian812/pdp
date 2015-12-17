@@ -3,7 +3,6 @@ package ru.ifmo.ctddev.experiments;
 import ru.ifmo.ctddev.generation.DatasetGenerator;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
-import ru.ifmo.ctddev.scheduling.steps.Lin2opt;
 import ru.ifmo.ctddev.scheduling.steps.Optimiser;
 
 import java.awt.geom.Point2D;
@@ -34,7 +33,7 @@ public class StepTester {
         this.rightDown = new Point2D.Double(100, 0);
         this.centers = Arrays.asList(new Point2D[]{new Point2D.Double(50, 50)});
         this.sizes = Arrays.asList(100);
-        this.times = 10;
+        this.times = 100;
     }
 
 
@@ -47,7 +46,7 @@ public class StepTester {
         List<Double> res = new ArrayList<Double>(10);
         for (int i = 0; i < times; ++i) {
             List<Point2D> points = generator.generate(leftUp, rightDown, sizes, centers);
-            Scheduler scheduler = new Scheduler(new Lin2opt());
+            Scheduler scheduler = new Scheduler(optimiser);
             double ratio = scheduler.schedule(new ScheduleData(points));
             res.add(ratio);
         }
@@ -55,7 +54,12 @@ public class StepTester {
         for (int i = 0; i < res.size(); ++i)
             ss[i] = "" + res.get(i);
 
-        System.out.println("[" + String.join(",", ss) + "]");
+
+        System.out.println();
+        System.out.println("figure");
+        System.out.println("hist([" + String.join(" ", ss) + "], 25)");
+        System.out.println("xlabel('" + optimiser.getName() + ":  " + generator.getName() + "', 'FontSize', 30);");
+        System.out.println();
         return res;
     }
 }

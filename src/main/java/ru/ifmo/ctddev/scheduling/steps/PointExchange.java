@@ -30,4 +30,8 @@ public class PointExchange implements Optimiser {
 
         return r;
     }
+
+    public String getName() {
+        return "PointExchange";
+    }
 }

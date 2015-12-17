@@ -50,4 +50,8 @@ public class DoubleBridge implements Optimiser {
 
         return r;
     }
+
+    public String getName() {
+        return "DoubleBridge";
+    }
 }

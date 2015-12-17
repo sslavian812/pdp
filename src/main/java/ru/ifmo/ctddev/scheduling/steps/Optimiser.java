@@ -12,4 +12,6 @@ public interface Optimiser {
      * @return new solution
      */
     int[] oneStep(ScheduleData data);
+
+    String getName();
 }

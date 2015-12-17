@@ -47,4 +47,8 @@ public class RelocateCouple implements Optimiser {
 
         return array;
     }
+
+    public String getName() {
+        return "RelocateCouple";
+    }
 }
