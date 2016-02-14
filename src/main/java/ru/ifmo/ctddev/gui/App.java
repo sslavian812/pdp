@@ -30,7 +30,7 @@ public class App {
 
     public static void main(String[] args) {
         DatasetGenerator generator = new GausianDatasetGeneratorImpl();
-        List<Point2D> points = generator.generate(100, new Point2D.Double(50, 50),
+        List<Point2D.Double> points = generator.generate(100, new Point2D.Double(50, 50),
                 new Point2D.Double(0, 100), new Point2D.Double(100, 0));
 
 

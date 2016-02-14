@@ -18,7 +18,7 @@ import java.util.Random;
  * Created by viacheslav on 14.02.2016.
  */
 public class DatasetProvider {
-    enum Direction {
+    public enum Direction {
         LEFT,
         RIGHT,
         DEFAULT

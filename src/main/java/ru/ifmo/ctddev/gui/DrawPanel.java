@@ -22,7 +22,7 @@ class DrawPanel extends JPanel {
         g.setFont(new Font("TimesRoman", Font.PLAIN, 4));
 
         DatasetGenerator generator = new GausianDatasetGeneratorImpl();
-        java.util.List<Point2D> points = generator.generate(10, new Point2D.Double(150,150),
+        java.util.List<Point2D.Double> points = generator.generate(10, new Point2D.Double(150,150),
                 new Point2D.Double(0,300), new Point2D.Double(300,0) );
 
         for (int i = 0; i < points.size(); ++i) {

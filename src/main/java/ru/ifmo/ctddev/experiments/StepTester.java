@@ -45,7 +45,7 @@ public class StepTester {
 
         List<Double> res = new ArrayList<Double>(10);
         for (int i = 0; i < times; ++i) {
-            List<Point2D> points = generator.generate(leftUp, rightDown, sizes, centers);
+            List<Point2D.Double> points = generator.generate(leftUp, rightDown, sizes, centers);
             Scheduler scheduler = new Scheduler(optimiser);
             double ratio = scheduler.schedule(new ScheduleData(points));
             res.add(ratio);

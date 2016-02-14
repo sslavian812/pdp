@@ -14,13 +14,13 @@ import java.util.List;
 public class UniformDatasetGenerator implements DatasetGenerator {
 
     @Deprecated
-    public List<Point2D> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown) {
+    public List<Point2D.Double> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown) {
         return null;
     }
 
-    public List<Point2D> generate(Point2D leftUp, Point2D rightDown, List<Integer> sizes, List<Point2D> centers) {
+    public List<Point2D.Double> generate(Point2D leftUp, Point2D rightDown, List<Integer> sizes, List<Point2D> centers) {
         int total = sizes.get(0);
-        Point2D[] points = new Point2D[2*total];
+        Point2D.Double[] points = new Point2D.Double[2*total];
 
 
         for(int cluster=0; cluster<sizes.size(); ++cluster) {

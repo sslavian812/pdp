@@ -16,9 +16,9 @@ public interface DatasetGenerator {
      * @return
      */
     @Deprecated
-    List<Point2D> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown);
+    List<Point2D.Double> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown);
 
-    List<Point2D> generate(Point2D leftUp, Point2D rightDown, List<Integer> sizes, List<Point2D> centers);
+    List<Point2D.Double> generate(Point2D leftUp, Point2D rightDown, List<Integer> sizes, List<Point2D> centers);
 
     String getName();
 }

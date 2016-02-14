@@ -4,7 +4,9 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.datasets.Util;
+import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
 import ru.ifmo.ctddev.scheduling.optimisers.*;
 
@@ -62,10 +64,17 @@ public class AppTest extends TestCase {
     }
 
     public void testMercatorProjection() {
-        Point2D.Double point = new Point2D.Double(51.698768,-0.183759);
+        Point2D.Double point = new Point2D.Double(51.698768, -0.183759);
 //        Point2D.Double point = new Point2D.Double(1.0,1.0);
         Point2D.Double projected = Util.convertLatLonToXY(point);
         Assert.assertNotNull(projected);
         System.out.println(projected.getX() + ", " + projected.getY());
+    }
+
+    public void testDatasetProvider() {
+        ScheduleData data = DatasetProvider.getDataset(10, DatasetProvider.Direction.RIGHT, false, null);
+        Assert.assertNotNull(data);
+        Assert.assertEquals(20, data.getPoints().length);
+        System.out.println(Arrays.toString(data.getRoute()));
     }
 }

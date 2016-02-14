@@ -16,9 +16,9 @@ import java.util.function.BinaryOperator;
 public class GausianDatasetGeneratorImpl implements DatasetGenerator {
 
     @Deprecated
-    public List<Point2D> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown) {
+    public List<Point2D.Double> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown) {
 
-        Point2D[] points = new Point2D[2*N];
+        Point2D.Double[] points = new Point2D.Double[2*N];
         RandomEngine engine = new DRand();
         double dx = rightDown.getX() - leftUp.getX();
         double dy = leftUp.getY() - rightDown.getY();
@@ -42,7 +42,7 @@ public class GausianDatasetGeneratorImpl implements DatasetGenerator {
         return Arrays.asList(points);
     }
 
-    public List<Point2D> generate(Point2D leftUp, Point2D rightDown, List<Integer> sizes, List<Point2D> centers) {
+    public List<Point2D.Double> generate(Point2D leftUp, Point2D rightDown, List<Integer> sizes, List<Point2D> centers) {
 
         BinaryOperator operator = new BinaryOperator<Integer>() {
             public Integer apply(Integer a, Integer b) {
@@ -51,7 +51,7 @@ public class GausianDatasetGeneratorImpl implements DatasetGenerator {
         };
 
         int total = sizes.stream().reduce(0, operator);
-        Point2D[] points = new Point2D[2*total];
+        Point2D.Double[] points = new Point2D.Double[2*total];
 
 
         int lastPos = 0;
