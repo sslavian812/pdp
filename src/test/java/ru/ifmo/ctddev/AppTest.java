@@ -6,12 +6,15 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.datasets.Util;
+import ru.ifmo.ctddev.features.Feature;
+import ru.ifmo.ctddev.features.FeatureMaker;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
 import ru.ifmo.ctddev.scheduling.optimisers.*;
 
 import java.awt.geom.Point2D;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Unit test for simple App.
@@ -76,5 +79,14 @@ public class AppTest extends TestCase {
         Assert.assertNotNull(data);
         Assert.assertEquals(20, data.getPoints().length);
         System.out.println(Arrays.toString(data.getRoute()));
+    }
+
+    public void testFeatures() {
+        ScheduleData data = DatasetProvider.getDataset(10, DatasetProvider.Direction.RIGHT, false, null);
+        FeatureMaker featureMaker = new FeatureMaker();
+        List<Feature> features = featureMaker.getFeatures(data);
+        Assert.assertNotNull(features);
+        Assert.assertEquals(15, features.size());
+        features.stream().forEach(f -> System.out.println(f.toString()));
     }
 }

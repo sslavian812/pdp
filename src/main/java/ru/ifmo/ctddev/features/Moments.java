@@ -49,7 +49,7 @@ public class Moments {
         /**
          * average difference between the observed value and mean of values
          */
-        double average_deviation = 0.0;
+        double averageDeviation = 0.0;
 
         /**
          * A measure that is used to quantify the amount of variation
@@ -57,7 +57,7 @@ public class Moments {
          * close to 0 indicates that the data points tend
          * to be very close to the mean
          */
-        double standard_deviation = 0.0;
+        double standardDeviation = 0.0;
 
 
         /**
@@ -98,17 +98,17 @@ public class Moments {
         for (int i = 0; i < n; i++) {
             double deviation = doubles.get(i) - mean;
 
-            average_deviation += Math.abs(deviation);
+            averageDeviation += Math.abs(deviation);
             variance += Math.pow(deviation, 2);
             skew += Math.pow(deviation, 3);
             kurtosis += Math.pow(deviation, 4);
         }
-        average_deviation /= n;
+        averageDeviation /= n;
         variance /= (n - 1);
-        standard_deviation = Math.sqrt(variance);
+        standardDeviation = Math.sqrt(variance);
 
         if (variance != 0.0) {
-            skew /= (n * variance * standard_deviation);
+            skew /= (n * variance * standardDeviation);
             kurtosis = kurtosis / (n * variance * variance) - 3.0;
         }
 
@@ -128,8 +128,8 @@ public class Moments {
             System.out.println("n:                  " + n);
             System.out.println("median:             " + nf.format(median));
             System.out.println("mean:               " + nf.format(mean));
-            System.out.println("average_deviation:  " + nf.format(average_deviation));
-            System.out.println("standard_deviation: " + nf.format(standard_deviation));
+            System.out.println("average_deviation:  " + nf.format(averageDeviation));
+            System.out.println("standard_deviation: " + nf.format(standardDeviation));
             System.out.println("variance:           " + nf.format(variance));
             System.out.println("skew:               " + nf.format(skew));
             System.out.println("kurtosis:           " + nf.format(kurtosis));
@@ -143,11 +143,11 @@ public class Moments {
                 prefix + "mean", mean, "Ex. The average value of numbers in range. mean = sum / n"
         ));
         features.add(new Feature(
-                prefix + "average_deviation", average_deviation,
+                prefix + "average_deviation", averageDeviation,
                 "average difference between the observed value and mean of values"
         ));
         features.add(new Feature(
-                prefix + "standatd_deviation", standard_deviation,
+                prefix + "standatd_deviation", standardDeviation,
                 "the amount of dispersion"
         ));
         features.add(new Feature(

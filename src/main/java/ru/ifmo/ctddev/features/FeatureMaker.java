@@ -23,8 +23,8 @@ public class FeatureMaker {
         Moments moments = new Moments();
         List<Double> xs = Arrays.asList(scheduleData.getPoints()).stream().map(p -> p.getX()).collect(Collectors.toList());
         List<Double> ys = Arrays.asList(scheduleData.getPoints()).stream().map(p -> p.getY()).collect(Collectors.toList());
-        List<Feature> features = moments.extractStatisticalFeatures(xs, "xs");
-        features.addAll(moments.extractStatisticalFeatures(ys, "ys"));
+        List<Feature> features = moments.extractStatisticalFeatures(xs, "xs_");
+        features.addAll(moments.extractStatisticalFeatures(ys, "ys_"));
 
         features.add(new Feature(
                 "n", xs.size(), "amount of points in range"
