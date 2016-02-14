@@ -18,6 +18,7 @@ public class Config {
     public static boolean distanceCartesian        = false;
     public static boolean distanceMatrix           = false;
     public static int     maxCapacity              = Integer.MAX_VALUE;
+    public static String  datasetPath              = "";
 
 
     static {
@@ -43,6 +44,7 @@ public class Config {
             distanceCartesian = Boolean.parseBoolean(prop.getProperty("distance.cartesian"));
             distanceMatrix           = Boolean.parseBoolean(prop.getProperty("distance.matrix"));
             maxCapacity              = Integer.parseInt(prop.getProperty("max.capacity"));
+            datasetPath              = prop.getProperty("dataset.path");
 
         } catch (IOException ex) {
             ex.printStackTrace();

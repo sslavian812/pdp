@@ -1,5 +1,6 @@
 package ru.ifmo.ctddev.datasets;
 
+import ru.ifmo.ctddev.Config;
 import ru.ifmo.ctddev.gui.App;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
@@ -37,7 +38,7 @@ public class DatasetProvider {
      */
     public static ScheduleData getDataset(int size, Direction direction, boolean shuffled, String outputFilePath) {
         try {
-            String resourceName = "";
+            String resourceName = Config.datasetPath;
             List<String[]> orders = CSVReader.read(App.class.getClassLoader().getResource(resourceName).getFile(), ",");
 
             if (shuffled) {
