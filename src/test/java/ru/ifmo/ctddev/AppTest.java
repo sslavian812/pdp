@@ -52,4 +52,10 @@ public class AppTest extends TestCase {
         System.out.println(strategy.toString());
         Assert.assertNotNull(strategy.toString());
     }
+
+    public void testResourcesAvailability() {
+        System.out.println(Config.maxCapacity);
+        Assert.assertNotNull(Config.maxCapacity);
+        Assert.assertTrue(Config.maxCapacity > 0);
+    }
 }

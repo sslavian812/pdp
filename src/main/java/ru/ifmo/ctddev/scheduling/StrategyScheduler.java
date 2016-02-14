@@ -10,6 +10,11 @@ import ru.ifmo.ctddev.Config;
 public class StrategyScheduler {
 
     private Strategy strategy;
+
+    /**
+     * The scheduler will perform {@code convergenceReserve * N^2} operations.
+     * {@code 10 * N^2} by default
+     */
     private int convergenceReserve = 10;
 
     public StrategyScheduler(Strategy strategy) {

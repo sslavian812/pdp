@@ -26,7 +26,7 @@ public class Config {
 
         try {
 
-            String filename = "config.properties";
+            String filename = "application.properties";
             input = App.class.getClassLoader().getResourceAsStream(filename);
             if(input==null){
                 System.out.println("Sorry, unable to find " + filename);
