@@ -18,12 +18,12 @@ public class ScheduleData {
     /**
      * coordinates of each point in
      */
-    private Point2D[] points;
+    private Point2D.Double[] points;
 
     /**
      * depot-point. here starts and ends each route.
      */
-    private Point2D depot;
+    private Point2D.Double depot;
 
     /**
      * The whole path through src and dst points.
@@ -45,9 +45,9 @@ public class ScheduleData {
 
     private List<Integer> ids;
 
-    public ScheduleData(List<Point2D.Double> points, Point2D depot) {
+    public ScheduleData(List<Point2D.Double> points, Point2D.Double depot) {
         this.ordersNum = points.size() / 2;
-        this.points = points.toArray(new Point2D[1]);
+        this.points = points.toArray(new Point2D.Double[1]);
         this.depot = depot;
         this.route = new int[points.size()];
 //        int[] intArray = ArrayUtils.toPrimitive(routeList.toArray(new Integer[routeList.size()]));
@@ -168,24 +168,24 @@ public class ScheduleData {
     }
 
 
-    public Point2D[] getPoints() {
+    public Point2D.Double[] getPoints() {
         return points;
     }
 
-    public void setPoints(Point2D[] points) {
+    public void setPoints(Point2D.Double[] points) {
         this.points = points;
     }
 
-    public Point2D getDepot() {
+    public Point2D.Double getDepot() {
         return depot;
     }
 
-    public void setDepot(Point2D depot) {
+    public void setDepot(Point2D.Double depot) {
         this.depot = depot;
     }
 
-    public List<Point2D> getRouteAsPoints() {
-        List<Point2D> res = new ArrayList<Point2D>(route.length);
+    public List<Point2D.Double> getRouteAsPoints() {
+        List<Point2D.Double> res = new ArrayList<>(route.length);
 
         for (int i : route) {
             res.add(points[route[i]]);
