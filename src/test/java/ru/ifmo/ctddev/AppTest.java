@@ -4,9 +4,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import ru.ifmo.ctddev.datasets.Util;
 import ru.ifmo.ctddev.scheduling.Strategy;
 import ru.ifmo.ctddev.scheduling.optimisers.*;
 
+import java.awt.geom.Point2D;
 import java.util.Arrays;
 
 /**
@@ -57,5 +59,13 @@ public class AppTest extends TestCase {
         System.out.println(Config.maxCapacity);
         Assert.assertNotNull(Config.maxCapacity);
         Assert.assertTrue(Config.maxCapacity > 0);
+    }
+
+    public void testMercatorProjection() {
+        Point2D.Double point = new Point2D.Double(51.698768,-0.183759);
+//        Point2D.Double point = new Point2D.Double(1.0,1.0);
+        Point2D.Double projected = Util.convertLatLonToXY(point);
+        Assert.assertNotNull(projected);
+        System.out.println(projected.getX() + ", " + projected.getY());
     }
 }

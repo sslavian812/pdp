@@ -12,7 +12,8 @@ public interface DatasetGenerator {
      * @param N
      * @param center
      * @param leftUp
-     *@param rightDown @return
+     * @param rightDown
+     * @return
      */
     @Deprecated
     List<Point2D> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown);
