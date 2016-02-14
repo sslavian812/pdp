@@ -43,6 +43,8 @@ public class ScheduleData {
      */
     private int ordersNum;
 
+    private List<Integer> ids;
+
     public ScheduleData(List<Point2D.Double> points, Point2D depot) {
         this.ordersNum = points.size() / 2;
         this.points = points.toArray(new Point2D[1]);
@@ -195,5 +197,11 @@ public class ScheduleData {
         return route;
     }
 
+    public List<Integer> getIds() {
+        return ids;
+    }
 
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
+    }
 }

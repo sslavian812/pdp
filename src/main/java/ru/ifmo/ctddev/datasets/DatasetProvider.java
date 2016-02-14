@@ -49,33 +49,41 @@ public class DatasetProvider {
 
             List<Point2D.Double> lhs = new ArrayList<>(size);
             List<Point2D.Double> rhs = new ArrayList<>(size);
+            List<Integer> lhsIds = new ArrayList<>(size);
+            List<Integer> rhsIds = new ArrayList<>(size);
+
 
             orders.stream().forEach(ss -> {
                 Point2D.Double left = new Point2D.Double(Double.parseDouble(ss[1]), Double.parseDouble(ss[2]));
                 Point2D.Double right = new Point2D.Double(Double.parseDouble(ss[4]), Double.parseDouble(ss[5]));
 
-                if (direction.equals(Direction.DEFAULT)) {
-                    if (ss[6].equals(">")) {
-                        lhs.add(left);
-                        rhs.add(right);
-                    } else {
-                        rhs.add(left);
-                        lhs.add(right);
-                    }
+
+                if (direction.equals(Direction.DEFAULT) && ss[6].equals("<")) {
+                    rhs.add(left);
+                    lhs.add(right);
+                    rhsIds.add(Integer.parseInt(ss[0]));
+                    lhsIds.add(Integer.parseInt(ss[3]));
                 } else {
                     lhs.add(left);
                     rhs.add(right);
+                    lhsIds.add(Integer.parseInt(ss[0]));
+                    rhsIds.add(Integer.parseInt(ss[3]));
                 }
             });
 
             ScheduleData scheduleData;
             if (direction.equals(Direction.LEFT)) {
                 rhs.addAll(lhs);
+                rhsIds.addAll(lhsIds);
                 scheduleData = new ScheduleData(rhs);
+                scheduleData.setIds(rhsIds);
             } else {
                 lhs.addAll(rhs);
+                lhsIds.addAll(rhsIds);
                 scheduleData = new ScheduleData(lhs);
+                scheduleData.setIds(lhsIds);
             }
+
 
             if (outputFilePath != null)
                 CSVWriter.write(outputFilePath, orders);

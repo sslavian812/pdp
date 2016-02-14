@@ -1,6 +1,5 @@
 package ru.ifmo.ctddev.datasets;
 
-import ru.ifmo.ctddev.Config;
 import ru.ifmo.ctddev.gui.App;
 
 import java.awt.geom.Point2D;
@@ -38,7 +37,7 @@ public class OneTimeConverter {
             int i = 0;
             for (String ss[] : orders) {
                 String[] outRecord = new String[7];
-                outRecord[0] = "" + i;
+                outRecord[0] = "" + (i + ids.size());
                 Point2D.Double point = Util.convertLatLonToXY(
                         new Point2D.Double(Double.parseDouble(ss[1]), Double.parseDouble(ss[2])));
                 outRecord[1] = "" + point.getX();

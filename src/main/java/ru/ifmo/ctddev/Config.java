@@ -19,7 +19,7 @@ public class Config {
     public static boolean distanceMatrix           = false;
     public static int     maxCapacity              = Integer.MAX_VALUE;
     public static String  datasetPath              = "";
-
+    public static int leastSeize                   = 33;
 
     static {
         Properties prop = new Properties();
@@ -45,6 +45,7 @@ public class Config {
             distanceMatrix           = Boolean.parseBoolean(prop.getProperty("distance.matrix"));
             maxCapacity              = Integer.parseInt(prop.getProperty("max.capacity"));
             datasetPath              = prop.getProperty("dataset.path");
+            leastSeize               = Integer.parseInt(prop.getProperty("least.size"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
