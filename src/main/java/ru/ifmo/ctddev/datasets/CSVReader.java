@@ -29,8 +29,8 @@ public class CSVReader {
                 records.add(ss);
             }
 
-            System.out.println("read file " + csvFile + " successful");
-            System.out.println(records.size() + " records found.");
+//            System.out.println("read file " + csvFile + " successful");
+//            System.out.println(records.size() + " records found.");
 
             return records;
         }

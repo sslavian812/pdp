@@ -37,6 +37,7 @@ public class Strategy {
             if (i > 0)
                 partialSums[i] += partialSums[i - 1];
         }
+        random = new Random();
     }
 
     public Strategy(Optimiser optimiser) {

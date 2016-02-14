@@ -46,9 +46,9 @@ public class StrategyScheduler {
 
         double initialCost = scheduleData.getCost();
 
-        int t = convergenceReserve;
+        int t = convergenceReserve * scheduleData.getOrdersNum() * scheduleData.getOrdersNum();
 
-        for (int i = 0; i < t * scheduleData.getOrdersNum(); ++i)
+        for (int i = 0; i < t ; ++i)
             performStep(scheduleData);
 
         if (Config.showInfo) {

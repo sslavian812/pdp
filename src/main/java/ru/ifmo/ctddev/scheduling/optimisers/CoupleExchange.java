@@ -22,9 +22,9 @@ public class CoupleExchange implements Optimiser {
         }
 
         int pi = route.indexOf(i);
-        int pni = route.indexOf(n + i);
+        int pni = route.indexOf(-n -i);
         int pj = route.indexOf(j);
-        int pnj = route.indexOf(n + j);
+        int pnj = route.indexOf(-n -j);
 
         int t, tn;
         t = route.get(pi);

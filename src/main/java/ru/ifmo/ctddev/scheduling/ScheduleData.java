@@ -101,7 +101,7 @@ public class ScheduleData {
     public boolean checkConstraints(int[] route) {
         Set<Integer> picked = new HashSet<Integer>();
         for (int p : route) {
-            if (p > 0) {
+            if (p >= 0) {
                 picked.add(p);
                 if (Config.enableConstraintCapacity && picked.size() > Config.maxCapacity)
                     return false;
@@ -152,7 +152,9 @@ public class ScheduleData {
         return acc;
     }
 
-    public double dist(int s, int d) {
+    public double dist(int s1, int d1) {
+        int s = s1 < 0 ? -s1 : s1;
+        int d = d1 < 0 ? -d1 : d1;
         return Math.sqrt((points[s].getX() - points[d].getX()) * (points[s].getX() - points[d].getX())
                 + (points[s].getY() - points[d].getY()) * (points[s].getY() - points[d].getY()));
     }
