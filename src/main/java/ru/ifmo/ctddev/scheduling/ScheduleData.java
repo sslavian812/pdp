@@ -43,29 +43,46 @@ public class ScheduleData {
      */
     private int ordersNum;
 
-    public ScheduleData(List<Point2D> points, Point2D depot) {
+    public ScheduleData(List<Point2D.Double> points, Point2D depot) {
         this.ordersNum = points.size() / 2;
         this.points = points.toArray(new Point2D[1]);
         this.depot = depot;
         this.route = new int[points.size()];
-        this.cost = -1;
 //        int[] intArray = ArrayUtils.toPrimitive(routeList.toArray(new Integer[routeList.size()]));
         clearRoute();
     }
 
     /**
-     * When depot is not specified, {0,0} is used.
+     * When depot is not specified, mean of points is used.
      *
      * @param points
      */
-    public ScheduleData(List<Point2D> points) {
-        this(points, new Point2D.Double(0, 0));
+    public ScheduleData(List<Point2D.Double> points) {
+        this(points, calcCenter(points));
+    }
+
+    private static Point2D.Double calcCenter(List<Point2D.Double> points) {
+        double x = 0;
+        double y = 0;
+
+        for (Point2D point : points) {
+            x += point.getX();
+            y += point.getY();
+        }
+        x /= points.size();
+        y /= points.size();
+        return new Point2D.Double(x, y);
     }
 
 
     public void clearRoute() {
-        for (int i = 0; i < this.points.length; ++i)
-            route[i] = i;
+        for (int i = 0; i < this.points.length; ++i) {
+            if (i < ordersNum)
+                route[i] = i;
+            else
+                route[i] = -i;
+        }
+        this.cost = -1;
     }
 
 
