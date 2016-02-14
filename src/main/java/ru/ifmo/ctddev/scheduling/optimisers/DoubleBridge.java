@@ -51,7 +51,7 @@ public class DoubleBridge implements Optimiser {
         return r;
     }
 
-    public String getName() {
+    public String toString() {
         return "DoubleBridge";
     }
 }

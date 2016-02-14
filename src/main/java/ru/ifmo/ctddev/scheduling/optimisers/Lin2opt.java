@@ -36,7 +36,7 @@ public class Lin2opt implements Optimiser {
         return r;
     }
 
-    public String getName() {
+    public String toString() {
         return "Lin2Opt";
     }
 }

@@ -58,7 +58,7 @@ public class StepTester {
         System.out.println();
         System.out.println("figure");
         System.out.println("hist([" + String.join(" ", ss) + "], 25)");
-        System.out.println("xlabel('" + optimiser.getName() + ":  " + generator.getName() + "', 'FontSize', 30);");
+        System.out.println("xlabel('" + optimiser.toString() + ":  " + generator.getName() + "', 'FontSize', 30);");
         System.out.println();
         return res;
     }

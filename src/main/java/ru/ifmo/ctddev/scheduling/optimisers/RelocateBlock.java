@@ -48,7 +48,7 @@ public class RelocateBlock implements Optimiser {
         return array;
     }
 
-    public String getName() {
+    public String toString() {
         return "RelocateBlock";
     }
 }

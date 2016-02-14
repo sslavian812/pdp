@@ -5,6 +5,7 @@ import ru.ifmo.ctddev.scheduling.optimisers.Optimiser;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Created by viacheslav on 14.02.2016.
@@ -19,6 +20,7 @@ public class Strategy {
     private double[] partialSums;
 
     private Random random;
+    private String comment;
 
     /**
      * Initializes probabilities by default.
@@ -75,5 +77,20 @@ public class Strategy {
                 return optimisers.get(i);
         }
         return optimisers.get(optimisers.size() - 1);
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Strategy{\n"
+                + (comment == null ? "" : "comment=" + comment)
+                + "    optimisers={" + optimisers.stream()
+                .map(optimiser -> optimiser.toString())
+                .collect(Collectors.joining(", "))
+                + ",\n    probabilities=" + Arrays.toString(probabilities)
+                + "\n}";
     }
 }
