@@ -2,7 +2,7 @@ package ru.ifmo.ctddev.gui;
 
 import ru.ifmo.ctddev.generation.DatasetGenerator;
 import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
-import ru.ifmo.ctddev.scheduling.steps.*;
+import ru.ifmo.ctddev.scheduling.optimisers.*;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 

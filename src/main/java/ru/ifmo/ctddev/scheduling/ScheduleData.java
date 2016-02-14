@@ -1,20 +1,46 @@
 package ru.ifmo.ctddev.scheduling;
 
+import ru.ifmo.ctddev.Config;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by viacheslav on 01.12.2015.
+ * <p>
+ * This class holds all data, needed for scheduling.
  */
 public class ScheduleData {
+
+    /**
+     * coordinates of each point in
+     */
     private Point2D[] points;
+
+    /**
+     * depot-point. here starts and ends each route.
+     */
     private Point2D depot;
+
+    /**
+     * The whole path through src and dst points.
+     * Each value is an index in {@code points} array, with a sign:
+     * if positive - pick the object up. if negative - drop the object.
+     * Some of values can repeat.
+     */
     private int[] route;
+
+    /**
+     * total cost of current route.
+     */
     private double cost;
+
+    /**
+     * Total count of orders (total count of pairs {src, dst} )
+     */
     private int ordersNum;
 
     public ScheduleData(List<Point2D> points, Point2D depot) {
@@ -23,12 +49,19 @@ public class ScheduleData {
         this.depot = depot;
         this.route = new int[points.size()];
         this.cost = -1;
+//        int[] intArray = ArrayUtils.toPrimitive(routeList.toArray(new Integer[routeList.size()]));
         clearRoute();
     }
 
+    /**
+     * When depot is not specified, {0,0} is used.
+     *
+     * @param points
+     */
     public ScheduleData(List<Point2D> points) {
         this(points, new Point2D.Double(0, 0));
     }
+
 
     public void clearRoute() {
         for (int i = 0; i < this.points.length; ++i)
@@ -44,19 +77,20 @@ public class ScheduleData {
     /**
      * checks construction constraints. (pairing, capacity, tw if present)
      *
-     * @return
+     * @return true, if constraint is satisfied.
      */
     public boolean checkConstraints(int[] route) {
         Set<Integer> picked = new HashSet<Integer>();
         for (int p : route) {
-            if (p < ordersNum)
+            if (p > 0) {
                 picked.add(p);
-            else {
-                if (!picked.contains(p - ordersNum)) {
-//                    System.out.println("pairing constraint not satisfied for: "
-//                            + (p - ordersNum) + " -> " + p);
+                if (Config.enableConstraintCapacity && picked.size() > Config.maxCapacity)
+                    return false;
+            } else {
+                if (Config.enableConstraintPairing && !picked.contains((-p) - ordersNum)) {
                     return false;
                 }
+                picked.remove(-p);
             }
         }
         return true;

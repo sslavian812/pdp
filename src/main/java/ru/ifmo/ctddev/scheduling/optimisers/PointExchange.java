@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.scheduling.steps;
+package ru.ifmo.ctddev.scheduling.optimisers;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 

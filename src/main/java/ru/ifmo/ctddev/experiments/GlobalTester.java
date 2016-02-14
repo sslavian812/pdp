@@ -2,9 +2,7 @@ package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
 import ru.ifmo.ctddev.generation.UniformDatasetGenerator;
-import ru.ifmo.ctddev.scheduling.steps.*;
-
-import java.util.List;
+import ru.ifmo.ctddev.scheduling.optimisers.*;
 
 /**
  * Created by viacheslav on 16.12.2015.

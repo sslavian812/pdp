@@ -3,7 +3,7 @@ package ru.ifmo.ctddev.experiments;
 import ru.ifmo.ctddev.generation.DatasetGenerator;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
-import ru.ifmo.ctddev.scheduling.steps.Optimiser;
+import ru.ifmo.ctddev.scheduling.optimisers.Optimiser;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
