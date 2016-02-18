@@ -13,7 +13,7 @@ import java.util.Set;
  * <p>
  * This class holds all data, needed for scheduling.
  */
-public class ScheduleData {
+public class ScheduleData implements Cloneable {
 
     /**
      * coordinates of each point in
@@ -43,6 +43,9 @@ public class ScheduleData {
      */
     private int ordersNum;
 
+    /**
+     * Id's from dataset file. For future feature extraction.
+     */
     private List<Integer> ids;
 
     public ScheduleData(List<Point2D.Double> points, Point2D.Double depot) {
@@ -206,4 +209,18 @@ public class ScheduleData {
     public void setIds(List<Integer> ids) {
         this.ids = ids;
     }
+
+    @Override
+    public ScheduleData clone() {
+        // todo: test copying object.
+        try {
+            return (ScheduleData) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    // todo: ad method to serialize and deserialise data to/from file
 }

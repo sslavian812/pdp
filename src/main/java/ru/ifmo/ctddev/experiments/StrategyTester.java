@@ -18,7 +18,8 @@ import java.util.concurrent.*;
 public class StrategyTester {
 
     public static final int times = 100;
-    public static final int size = 200;
+    public static final int size = 100;
+    public static final boolean shuffled = false;
 
     public static void main(String[] args) {
 
@@ -40,24 +41,26 @@ public class StrategyTester {
         strategies.add(new Strategy(new CoupleExchange()));
         strategies.add(new Strategy(new DoubleBridge()));
         strategies.add(new Strategy(new PointExchange()));
-        strategies.add(new Strategy(new RelocateBlock()));
-        strategies.add(new Strategy(all));
         strategies.add(new Strategy(two));
+        strategies.add(new Strategy(all));
+        strategies.add(new Strategy(new RelocateBlock()));
 
 
 
         List<ScheduleData> datasets = new ArrayList<>();
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, false, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, false, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, false, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, false, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, false, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, false, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, false, null));
+        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
+        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
+        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
+        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
+        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
+        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
+        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
 
 
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 4, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));
         List<Future<List<Double>>> futures = new ArrayList<>();
+
+        long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < strategies.size(); ++i) {
             futures.add(threadPoolExecutor.submit(
@@ -77,6 +80,8 @@ public class StrategyTester {
                 e.printStackTrace();
             }
         }
+
+        System.out.println("time spent: " + (System.currentTimeMillis()-startTime) /1000 + " s");
 
         threadPoolExecutor.shutdown();
 
