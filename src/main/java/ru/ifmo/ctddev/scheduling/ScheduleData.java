@@ -1,5 +1,6 @@
 package ru.ifmo.ctddev.scheduling;
 
+import com.sun.istack.internal.NotNull;
 import ru.ifmo.ctddev.Config;
 
 import java.awt.geom.Point2D;
@@ -13,7 +14,7 @@ import java.util.Set;
  * <p>
  * This class holds all data, needed for scheduling.
  */
-public class ScheduleData implements Cloneable {
+public class ScheduleData implements Cloneable, Comparable<ScheduleData> {
 
     /**
      * coordinates of each point in
@@ -210,15 +211,55 @@ public class ScheduleData implements Cloneable {
         this.ids = ids;
     }
 
+    /**
+     * This clone method makes s partially shallow copy of Schedule data.
+     * All object-fields reference the same objects except array rout[].
+     *
+     * @return a copy with fully copied rout[]
+     */
     @Override
     public ScheduleData clone() {
-        // todo: test copying object.
         try {
-            return (ScheduleData) super.clone();
+            ScheduleData copy = (ScheduleData) super.clone();
+            copy.setRoute(route.clone());
+            return copy;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Provides a shallow copy with specified route[] field.
+     *
+     * @param route
+     * @return
+     */
+    public ScheduleData clone(int[] route) {
+        try {
+            ScheduleData copy = (ScheduleData) super.clone();
+            copy.setRoute(route);
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Returns a negative integer as this object is less
+     * than the specified object.
+     *
+     * @param o
+     * @return
+     */
+    @Override
+    public int compareTo(ScheduleData o) {
+        if (this.getCost() < o.getCost())
+            return -1;
+        if (this.getCost() > o.getCost())
+            return 1;
+        return 0;
     }
 
 

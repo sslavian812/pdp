@@ -9,8 +9,8 @@ import ru.ifmo.ctddev.scheduling.ScheduleData;
 public interface Optimiser {
 
     /**
-     * Try one optimization step({@code small-move}).
-     * If constraints are satisfied, data {@code data} should be updated.
+     * Try one optimization step({@code small-move}) and provides a new route[] as copy.
+     * If constraints are satisfied, data {@code data} should be updated manually according to greedy strategy.
      * @param data
      * @return new solution
      */
