@@ -8,13 +8,14 @@ import java.util.stream.Collectors;
 /**
  * Created by viacheslav on 18.02.2016.
  */
-public class GeneticStrategyScheduler implements Scheduler{
+public class GeneticStrategyScheduler implements Scheduler {
 
     private Strategy strategy;
     private int generationSize;
     private int generations;
+    private ScheduleData originalScheduleData;
 
-    List<ScheduleData> currentGeneration;
+    List<int[]> currentGeneration;
 
     public GeneticStrategyScheduler(Strategy strategy, int generationSize, int generations) {
         this.strategy = strategy;
@@ -33,40 +34,42 @@ public class GeneticStrategyScheduler implements Scheduler{
      */
     @Override
     public double schedule(ScheduleData scheduleData) {
+        originalScheduleData = scheduleData;
         double initialCost = scheduleData.getCost();
+        currentGeneration.clear();
 
         for (int i = 0; i < generationSize; ++i) {
-            ScheduleData testScheduteData = scheduleData.clone();
-            currentGeneration.add(testScheduteData);
+            currentGeneration.add(scheduleData.getRoute().clone());
         }
 
-
         for (int i = 0; i < generations; ++i) {
-            List<ScheduleData> temp = currentGeneration.stream()
+            List<int[]> temp = currentGeneration.stream()
                     .map(old -> expandOneStepCopies(old, generationSize))
-                    .flatMap(List<ScheduleData>::stream)
+                    .flatMap(List<int[]>::stream)
                     .collect(Collectors.toList());
             temp = getTopMembers(temp, generationSize);
             currentGeneration = mergeGenerations(currentGeneration, temp);
         }
 
-        Collections.sort(currentGeneration);
-        scheduleData = currentGeneration.get(0);
+        Collections.sort(currentGeneration, originalScheduleData);
+        scheduleData.setRoute(currentGeneration.get(0));
 
         return (initialCost - scheduleData.getCost()) / initialCost;
     }
 
-    private List<ScheduleData> mergeGenerations(List<ScheduleData> oldGeneration, List<ScheduleData> newGeneration) {
+    private List<int[]> mergeGenerations(List<int[]> oldGeneration, List<int[]> newGeneration) {
         Collections.shuffle(oldGeneration);
         Collections.shuffle(newGeneration);
-        List<ScheduleData> merged = oldGeneration.subList(0, oldGeneration.size() / 2);
-        merged.addAll(newGeneration.subList(0, newGeneration.size() / 2));
-        return merged;
+
+        for (int i = oldGeneration.size() / 2; i < newGeneration.size() && i < oldGeneration.size(); ++i) {
+            oldGeneration.set(i, newGeneration.get(i));
+        }
+
+        return oldGeneration;
     }
 
-    private List<ScheduleData> getTopMembers(List<ScheduleData> generation, int maxSize) {
-        Collections.sort(generation);
-        Collections.reverse(generation);
+    private List<int[]> getTopMembers(List<int[]> generation, int maxSize) {
+        Collections.sort(generation, originalScheduleData);
         return generation.subList(0, Math.min(maxSize, generation.size()));
     }
 
@@ -74,20 +77,22 @@ public class GeneticStrategyScheduler implements Scheduler{
     /**
      * Returns List of not more than {@code times} one-step-modified copies of given {@code scheduleData}.
      *
-     * @param scheduleData
+     * @param oldRoute
      * @param times
      * @return
      */
-    private List<ScheduleData> expandOneStepCopies(ScheduleData scheduleData, int times) {
-        List<ScheduleData> list = new ArrayList<>(times);
+    private List<int[]> expandOneStepCopies(int[] oldRoute, int times) {
+        List<int[]> list = new ArrayList<>(times);
         for (int i = 0; i < times; ++i) {
-            int[] route = strategy.getOptimiser().oneStep(scheduleData);
-            if (scheduleData.checkConstraints(route)
-                    && scheduleData.getCost(route) > scheduleData.getCost()) {
-                list.add(scheduleData.clone(route));
+            originalScheduleData.setRoute(oldRoute);
+            int[] route = strategy.getOptimiser().oneStep(originalScheduleData);
+            if (originalScheduleData.checkConstraints(route)
+                    && originalScheduleData.getCost(route) < originalScheduleData.getCost(oldRoute)) {
+                list.add(route);
             }
         }
-        list.add(scheduleData.clone()); // todo is this a good idea?
+        if (list.isEmpty())
+            list.add(oldRoute); // todo is this a good idea?
         return list;
     }
 }

@@ -1,20 +1,16 @@
 package ru.ifmo.ctddev.scheduling;
 
-import com.sun.istack.internal.NotNull;
 import ru.ifmo.ctddev.Config;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by viacheslav on 01.12.2015.
  * <p>
  * This class holds all data, needed for scheduling.
  */
-public class ScheduleData implements Cloneable, Comparable<ScheduleData> {
+public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Comparator<int[]> {
 
     /**
      * coordinates of each point in
@@ -258,6 +254,15 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData> {
         if (this.getCost() < o.getCost())
             return -1;
         if (this.getCost() > o.getCost())
+            return 1;
+        return 0;
+    }
+
+    @Override
+    public int compare(int[] o1, int[] o2) {
+        if (getCost(o1) < getCost(o2))
+            return -1;
+        if (getCost(o1) > getCost(o2))
             return 1;
         return 0;
     }

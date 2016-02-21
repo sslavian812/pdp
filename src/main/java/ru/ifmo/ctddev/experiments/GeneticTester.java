@@ -59,7 +59,7 @@ public class GeneticTester {
         datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
 
 
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 4, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 2, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));
         List<Future<List<Double>>> futures = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
@@ -70,10 +70,13 @@ public class GeneticTester {
             ));
         }
 
+        System.out.println(GeneticTester.class.getName());
+
         for (int i = 0; i < futures.size(); ++i) {
             try {
                 List<Double> ratios = futures.get(i).get();
                 System.out.println(strategies.get(i));
+                System.out.println("size: " + size);
                 System.out.println(Arrays.toString(ratios.toArray()));
                 System.out.println("================");
                 System.out.println();
