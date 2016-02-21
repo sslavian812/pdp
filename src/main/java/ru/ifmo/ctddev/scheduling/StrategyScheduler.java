@@ -7,7 +7,7 @@ import ru.ifmo.ctddev.Config;
  * <p>
  * Created by viacheslav on 14.02.2016.
  */
-public class StrategyScheduler {
+public class StrategyScheduler implements Scheduler {
 
     private Strategy strategy;
 
@@ -30,6 +30,7 @@ public class StrategyScheduler {
      * @param scheduleData
      * @return returns optimisation ratio: (initialCost - reachedCost) / initialCost
      */
+    @Override
     public double schedule(ScheduleData scheduleData) {
 
         if (Config.showInfo) {

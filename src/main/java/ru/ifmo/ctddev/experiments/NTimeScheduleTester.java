@@ -1,6 +1,7 @@
 package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
+import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.StrategyScheduler;
 
 import java.util.ArrayList;
@@ -13,13 +14,13 @@ import java.util.concurrent.Callable;
  * Created by viacheslav on 14.02.2016.
  */
 public class NTimeScheduleTester implements Callable<List<Double>> {
-    private StrategyScheduler strategyScheduler;
+    private Scheduler scheduler;
     private ScheduleData data;
     private int times;
 
 
-    public NTimeScheduleTester(StrategyScheduler strategyScheduler, ScheduleData data, int times) {
-        this.strategyScheduler = strategyScheduler;
+    public NTimeScheduleTester(StrategyScheduler scheduler, ScheduleData data, int times) {
+        this.scheduler = scheduler;
         this.data = data;
         this.times = times;
     }
@@ -34,7 +35,7 @@ public class NTimeScheduleTester implements Callable<List<Double>> {
 
         for (int i = 0; i < times; ++i) {
             data.clearRoute();
-            double ratio = strategyScheduler.schedule(data);
+            double ratio = scheduler.schedule(data);
             optimisationRatios.add(ratio);
         }
         return optimisationRatios;

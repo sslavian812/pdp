@@ -4,7 +4,7 @@ import ru.ifmo.ctddev.generation.DatasetGenerator;
 import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
 import ru.ifmo.ctddev.scheduling.optimisers.*;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.Scheduler;
+import ru.ifmo.ctddev.old.SchedulerTemp;
 
 import java.awt.geom.Point2D;
 import java.util.List;
@@ -36,7 +36,7 @@ public class App {
 
         System.out.println("============================================");
         System.out.println("Lin2Opt");
-        Scheduler scheduler = new Scheduler(new Lin2opt());
+        SchedulerTemp scheduler = new SchedulerTemp(new Lin2opt());
         scheduler.schedule(new ScheduleData(points));
 
         System.out.println("============================================");

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Created by viacheslav on 18.02.2016.
  */
-public class GeneticStrategyScheduler {
+public class GeneticStrategyScheduler implements Scheduler{
 
     private Strategy strategy;
     private int generationSize;
@@ -31,6 +31,7 @@ public class GeneticStrategyScheduler {
      * @param scheduleData
      * @return returns optimisation ratio: (initialCost - reachedCost) / initialCost
      */
+    @Override
     public double schedule(ScheduleData scheduleData) {
         double initialCost = scheduleData.getCost();
 

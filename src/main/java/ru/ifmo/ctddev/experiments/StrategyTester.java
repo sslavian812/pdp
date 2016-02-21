@@ -1,7 +1,6 @@
 package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.datasets.DatasetProvider;
-import ru.ifmo.ctddev.features.FeatureMaker;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
 import ru.ifmo.ctddev.scheduling.StrategyScheduler;

@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.experiments;
+package ru.ifmo.ctddev.old;
 
 import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
 import ru.ifmo.ctddev.generation.UniformDatasetGenerator;

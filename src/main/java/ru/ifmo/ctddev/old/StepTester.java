@@ -1,8 +1,8 @@
-package ru.ifmo.ctddev.experiments;
+package ru.ifmo.ctddev.old;
 
 import ru.ifmo.ctddev.generation.DatasetGenerator;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.Scheduler;
+import ru.ifmo.ctddev.old.SchedulerTemp;
 import ru.ifmo.ctddev.scheduling.optimisers.Optimiser;
 
 import java.awt.geom.Point2D;
@@ -46,7 +46,7 @@ public class StepTester {
         List<Double> res = new ArrayList<Double>(10);
         for (int i = 0; i < times; ++i) {
             List<Point2D.Double> points = generator.generate(leftUp, rightDown, sizes, centers);
-            Scheduler scheduler = new Scheduler(optimiser);
+            SchedulerTemp scheduler = new SchedulerTemp(optimiser);
             double ratio = scheduler.schedule(new ScheduleData(points));
             res.add(ratio);
         }
