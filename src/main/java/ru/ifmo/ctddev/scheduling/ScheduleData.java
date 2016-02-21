@@ -127,6 +127,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     public int getSize() {
         return points.length;
+//        return getOrdersNum();
     }
 
     public double getCost() {

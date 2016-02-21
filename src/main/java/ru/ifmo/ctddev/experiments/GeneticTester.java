@@ -66,7 +66,7 @@ public class GeneticTester {
 
         for (int i = 0; i < strategies.size(); ++i) {
             futures.add(threadPoolExecutor.submit(
-                    new NTimeScheduleTester(new GeneticStrategyScheduler(strategies.get(i), generationSize, generations ), datasets.get(i), times)
+                    new NTimeScheduleTester(new GeneticStrategyScheduler(strategies.get(i)), datasets.get(i), times)
             ));
         }
 
