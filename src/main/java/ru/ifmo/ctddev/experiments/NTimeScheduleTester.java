@@ -19,7 +19,7 @@ public class NTimeScheduleTester implements Callable<List<Double>> {
     private int times;
 
 
-    public NTimeScheduleTester(StrategyScheduler scheduler, ScheduleData data, int times) {
+    public NTimeScheduleTester(Scheduler scheduler, ScheduleData data, int times) {
         this.scheduler = scheduler;
         this.data = data;
         this.times = times;
