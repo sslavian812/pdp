@@ -18,6 +18,7 @@ public class StrategyTester {
 
     public static final int times = 100;
     public static final int size = 100;
+    public static final int start = 0;
     public static final boolean shuffled = false;
 
     public static void main(String[] args) {
@@ -47,13 +48,13 @@ public class StrategyTester {
 
 
         List<ScheduleData> datasets = new ArrayList<>();
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
-        datasets.add(DatasetProvider.getDataset(size, DatasetProvider.Direction.RIGHT, shuffled, null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
 
 
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 4, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));

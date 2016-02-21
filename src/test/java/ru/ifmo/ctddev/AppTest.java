@@ -75,14 +75,14 @@ public class AppTest extends TestCase {
     }
 
     public void testDatasetProvider() {
-        ScheduleData data = DatasetProvider.getDataset(10, DatasetProvider.Direction.RIGHT, false, null);
+        ScheduleData data = DatasetProvider.getDataset(10, 0, DatasetProvider.Direction.RIGHT, null);
         Assert.assertNotNull(data);
         Assert.assertEquals(20, data.getPoints().length);
         System.out.println(Arrays.toString(data.getRoute()));
     }
 
     public void testFeatures() {
-        ScheduleData data = DatasetProvider.getDataset(10, DatasetProvider.Direction.RIGHT, false, null);
+        ScheduleData data = DatasetProvider.getDataset(10, 0, DatasetProvider.Direction.RIGHT, null);
         FeatureMaker featureMaker = new FeatureMaker();
         List<Feature> features = featureMaker.getFeatures(data);
         Assert.assertNotNull(features);
