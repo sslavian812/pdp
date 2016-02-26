@@ -5,14 +5,14 @@
     <groupId>ru.ifmo.ctddev</groupId>
     <artifactId>shalamov</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>pdp</name>
 
-    <modules>
-        <!-- these are directory names, not artifactIds -->
-        <module>JMapProjLib</module>
-    </modules>
+    <!--<modules>-->
+        <!--&lt;!&ndash; these are directory names, not artifactIds &ndash;&gt;-->
+        <!--<module>JMapProjLib</module>-->
+    <!--</modules>-->
 
 
     <properties>

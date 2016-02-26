@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class OneThreadGeneticsTester {
     public static final int times = 1;
-    public static final int size = 100;
+    public static final int size = 20;
     public static final int start = 0;
 
 

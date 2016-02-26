@@ -5,6 +5,7 @@ import ru.ifmo.ctddev.gui.App;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 import java.awt.geom.Point2D;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,7 +111,13 @@ public class DatasetProvider {
     private static ScheduleData getDataset(int size, int position, Direction direction, boolean shuffled, String outputFilePath) {
         try {
             String resourceName = Config.datasetPath;
-            List<String[]> orders = CSVReader.read(App.class.getClassLoader().getResource(resourceName).getFile(), ",");
+            List<String[]> orders;
+
+            try {
+                orders = CSVReader.read(App.class.getClassLoader().getResource(resourceName).getFile(), ",");
+            } catch (FileNotFoundException e) {
+                orders = CSVReader.read(resourceName, ",");
+            }
 
             if (shuffled) {
                 Collections.shuffle(orders, new Random());

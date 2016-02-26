@@ -113,7 +113,7 @@ public class GeneticStrategyScheduler implements Scheduler {
         }
 
         for (int i = 0; i < S; ++i) {
-            if (i == S / 4 || i == S / 2 || S == 3.0 / 4.0 * (double) S) {
+            if (isBigMutationAllowed && (i == S / 4 || i == S / 2 || S == 3.0 / 4.0 * (double) S)) {
                 currentGeneration = bigMutations(currentGeneration, (int) Math.sqrt(originalScheduleData.getSize() / 2));
             }
             List<int[]> reproducted = reproduction(currentGeneration);
@@ -142,7 +142,7 @@ public class GeneticStrategyScheduler implements Scheduler {
 
     private int[] mutate(int[] individual) {
         originalScheduleData.setRoute(individual);
-        int[] route = strategy.getOptimiser().oneStep(originalScheduleData);
+        int[] route = strategy.getSmallMove().oneStep(originalScheduleData);
         if (originalScheduleData.checkConstraints(route))
             return route;
         else
@@ -214,21 +214,23 @@ public class GeneticStrategyScheduler implements Scheduler {
      * Represents budding reproduction process of one individual.
      *
      * @param oldRoute
-     * @param times
+     * @param buds - number of "children"
      * @return
      */
-    private List<int[]> budding(int[] oldRoute, int times) {
-        List<int[]> list = new ArrayList<>(times);
-        if (!onlyChildren)
+    private List<int[]> budding(int[] oldRoute, int buds) {
+        List<int[]> list = new ArrayList<>(buds);
+        if (!onlyChildren) {
             list.add(oldRoute.clone());
+            buds++; // one more for parent
+        }
 
-        while (list.size() < times) {
+        while (list.size() < buds) {
             originalScheduleData.setRoute(oldRoute);
-            int[] route = strategy.getOptimiser().oneStep(originalScheduleData);
+            int[] route = strategy.getSmallMove().oneStep(originalScheduleData);
             if (originalScheduleData.checkConstraints(route)) {
                 list.add(route);
-//            } else {
-//                list.add(oldRoute); // todo: low performance - lot's of objects will be the same.
+            } else {
+                list.add(oldRoute);
             }
         }
         return list;
@@ -247,7 +249,7 @@ public class GeneticStrategyScheduler implements Scheduler {
                 "    E=" + E + "," + System.lineSeparator() +
                 "    T=" + T + "," + System.lineSeparator() +
                 "    onlyChildren=" + onlyChildren + "," + System.lineSeparator() +
-                "    isBigMutationAllowed=" + isBigMutationAllowed +
-                '}';
+                "    isBigMutationAllowed=" + isBigMutationAllowed + System.lineSeparator() +
+                "}";
     }
 }

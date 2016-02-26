@@ -89,7 +89,7 @@ public class StrategyScheduler implements Scheduler {
      * @param scheduleData data to be scheduled
      */
     private void performStep(ScheduleData scheduleData) {
-        int[] r = strategy.getOptimiser().oneStep(scheduleData);
+        int[] r = strategy.getSmallMove().oneStep(scheduleData);
 
         // check and accept or reject:
         if (scheduleData.checkConstraints(r)) {

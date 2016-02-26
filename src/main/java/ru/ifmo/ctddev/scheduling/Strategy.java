@@ -71,7 +71,7 @@ public class Strategy {
      *
      * @return on optimiser according to the strategy
      */
-    public SmallMove getOptimiser() {
+    public SmallMove getSmallMove() {
         double p = random.nextDouble();
         for (int i = 0; i < partialSums.length; ++i) {
             if (p < partialSums[i])
@@ -97,9 +97,9 @@ public class Strategy {
 
     public String toString(String indent) {
         return "Strategy{" + System.lineSeparator()
-               + indent + (comment == null ? "" : "    comment=" + comment + System.lineSeparator())
-               + indent + "    smallMoves={" + smallMoves.stream().map(SmallMove::toString)
-               .collect(Collectors.joining(", ")) + "," + System.lineSeparator()
+               + (comment == null ? "" : indent + "    comment=" + comment + System.lineSeparator())
+               + indent + "    smallMoves=[" + smallMoves.stream().map(SmallMove::toString)
+               .collect(Collectors.joining(", ")) + "]," + System.lineSeparator()
                + indent + "    probabilities=" + Arrays.toString(probabilities) + System.lineSeparator()
                + indent + "}";
     }

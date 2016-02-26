@@ -1,6 +1,6 @@
 package ru.ifmo.ctddev.datasets;
 
-import com.jhlabs.map.proj.MercatorProjection;
+import lib.com.jhlabs.map.proj.MercatorProjection;
 
 import java.awt.geom.Point2D;
 
