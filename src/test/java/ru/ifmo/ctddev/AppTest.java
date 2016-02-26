@@ -10,7 +10,7 @@ import ru.ifmo.ctddev.features.Feature;
 import ru.ifmo.ctddev.features.FeatureMaker;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
-import ru.ifmo.ctddev.scheduling.optimisers.*;
+import ru.ifmo.ctddev.scheduling.smallmoves.*;
 
 import java.awt.geom.Point2D;
 import java.util.Arrays;

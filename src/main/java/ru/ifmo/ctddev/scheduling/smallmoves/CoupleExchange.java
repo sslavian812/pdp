@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.scheduling.optimisers;
+package ru.ifmo.ctddev.scheduling.smallmoves;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by viacheslav on 05.12.2015.
  */
-public class CoupleExchange implements Optimiser {
+public class CoupleExchange implements SmallMove {
     public int[] oneStep(ScheduleData data) {
         int n = data.getOrdersNum();
         int i = (int) (Math.random() * (n - 3)); // max = n-4

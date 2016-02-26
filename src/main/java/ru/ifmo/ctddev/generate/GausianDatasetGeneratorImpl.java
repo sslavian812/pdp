@@ -1,9 +1,8 @@
-package ru.ifmo.ctddev.generation;
+package ru.ifmo.ctddev.generate;
 
 import cern.jet.random.Normal;
 import cern.jet.random.engine.DRand;
 import cern.jet.random.engine.RandomEngine;
-import ru.ifmo.ctddev.generation.DatasetGenerator;
 
 import java.awt.geom.Point2D;
 import java.util.Arrays;

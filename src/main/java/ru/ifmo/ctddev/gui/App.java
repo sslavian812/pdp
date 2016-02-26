@@ -1,8 +1,8 @@
 package ru.ifmo.ctddev.gui;
 
-import ru.ifmo.ctddev.generation.DatasetGenerator;
-import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
-import ru.ifmo.ctddev.scheduling.optimisers.*;
+import ru.ifmo.ctddev.generate.DatasetGenerator;
+import ru.ifmo.ctddev.generate.GausianDatasetGeneratorImpl;
+import ru.ifmo.ctddev.scheduling.smallmoves.*;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.old.SchedulerTemp;
 
@@ -41,27 +41,27 @@ public class App {
 
         System.out.println("============================================");
         System.out.println("Relocate-couple");
-        scheduler.setOptimiser(new RelocateCouple());
+        scheduler.setSmallMove(new RelocateCouple());
         scheduler.schedule(new ScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Double-bridge");
-        scheduler.setOptimiser(new DoubleBridge());
+        scheduler.setSmallMove(new DoubleBridge());
         scheduler.schedule(new ScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Point-exchange");
-        scheduler.setOptimiser(new PointExchange());
+        scheduler.setSmallMove(new PointExchange());
         scheduler.schedule(new ScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Couple-exchange");
-        scheduler.setOptimiser(new CoupleExchange());
+        scheduler.setSmallMove(new CoupleExchange());
         scheduler.schedule(new ScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Relocate-Block");
-        scheduler.setOptimiser(new RelocateBlock());
+        scheduler.setSmallMove(new RelocateBlock());
         scheduler.schedule(new ScheduleData(points));
 
     }

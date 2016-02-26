@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.scheduling.optimisers;
+package ru.ifmo.ctddev.scheduling.smallmoves;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Created by viacheslav on 05.12.2015.
  */
-public class DoubleBridge implements Optimiser {
+public class DoubleBridge implements SmallMove {
 
 
     public int[] oneStep(ScheduleData data) {

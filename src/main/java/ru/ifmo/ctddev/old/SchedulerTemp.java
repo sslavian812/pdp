@@ -2,9 +2,9 @@ package ru.ifmo.ctddev.old;
 
 import ru.ifmo.ctddev.Config;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.optimisers.Optimiser;
-import ru.ifmo.ctddev.scheduling.optimisers.RelocateBlock;
-import ru.ifmo.ctddev.scheduling.optimisers.RelocateCouple;
+import ru.ifmo.ctddev.scheduling.smallmoves.SmallMove;
+import ru.ifmo.ctddev.scheduling.smallmoves.RelocateBlock;
+import ru.ifmo.ctddev.scheduling.smallmoves.RelocateCouple;
 
 /**
  * Created by viacheslav on 01.12.2015.
@@ -12,16 +12,16 @@ import ru.ifmo.ctddev.scheduling.optimisers.RelocateCouple;
 public class SchedulerTemp {
 
 
-    private Optimiser optimiser;
+    private SmallMove smallMove;
 
     public static final int K = 10;
 
-    public SchedulerTemp(Optimiser optimizer) {
-        this.optimiser = optimizer;
+    public SchedulerTemp(SmallMove optimizer) {
+        this.smallMove = optimizer;
     }
 
-    public void setOptimiser(Optimiser optimiser) {
-        this.optimiser = optimiser;
+    public void setSmallMove(SmallMove smallMove) {
+        this.smallMove = smallMove;
     }
 
     public double schedule(ScheduleData data) {
@@ -38,7 +38,7 @@ public class SchedulerTemp {
         double initialCost = data.getCost();
 
         int t = K;
-        if (!(optimiser instanceof RelocateCouple || optimiser instanceof RelocateBlock))
+        if (!(smallMove instanceof RelocateCouple || smallMove instanceof RelocateBlock))
             t *= data.getOrdersNum();
 
         for (int i = 0; i < t * data.getOrdersNum(); ++i)
@@ -69,7 +69,7 @@ public class SchedulerTemp {
      * @param data
      */
     private void performStep(ScheduleData data) {
-        int[] r = optimiser.oneStep(data);
+        int[] r = smallMove.oneStep(data);
 
         // check and accept or reject:
         if (data.checkConstraints(r)) {

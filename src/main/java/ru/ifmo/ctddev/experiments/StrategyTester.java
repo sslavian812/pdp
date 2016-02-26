@@ -4,7 +4,7 @@ import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
 import ru.ifmo.ctddev.scheduling.StrategyScheduler;
-import ru.ifmo.ctddev.scheduling.optimisers.*;
+import ru.ifmo.ctddev.scheduling.smallmoves.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,14 +23,14 @@ public class StrategyTester {
 
     public static void main(String[] args) {
 
-        List<Optimiser> all = new ArrayList<>(5);
+        List<SmallMove> all = new ArrayList<>(5);
         all.add(new Lin2opt());
         all.add(new CoupleExchange());
         all.add(new DoubleBridge());
         all.add(new PointExchange());
         all.add(new RelocateBlock());
 
-        List<Optimiser> two = new ArrayList<>(5);
+        List<SmallMove> two = new ArrayList<>(5);
         two.add(new Lin2opt());
         two.add(new PointExchange());
 

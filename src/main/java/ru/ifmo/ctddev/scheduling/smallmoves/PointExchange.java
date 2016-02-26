@@ -1,11 +1,11 @@
-package ru.ifmo.ctddev.scheduling.optimisers;
+package ru.ifmo.ctddev.scheduling.smallmoves;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 /**
  * Created by viacheslav on 05.12.2015.
  */
-public class PointExchange implements Optimiser {
+public class PointExchange implements SmallMove {
     public int[] oneStep(ScheduleData data) {
 
         int n = data.getOrdersNum();

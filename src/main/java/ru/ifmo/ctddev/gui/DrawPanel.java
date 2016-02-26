@@ -1,7 +1,7 @@
 package ru.ifmo.ctddev.gui;
 
-import ru.ifmo.ctddev.generation.DatasetGenerator;
-import ru.ifmo.ctddev.generation.GausianDatasetGeneratorImpl;
+import ru.ifmo.ctddev.generate.DatasetGenerator;
+import ru.ifmo.ctddev.generate.GausianDatasetGeneratorImpl;
 
 import javax.swing.*;
 import java.awt.*;

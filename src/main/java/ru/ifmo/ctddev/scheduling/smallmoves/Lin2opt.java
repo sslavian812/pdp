@@ -1,11 +1,11 @@
-package ru.ifmo.ctddev.scheduling.optimisers;
+package ru.ifmo.ctddev.scheduling.smallmoves;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 /**
  * Created by viacheslav on 05.12.2015.
  */
-public class Lin2opt implements Optimiser {
+public class Lin2opt implements SmallMove {
     public int[] oneStep(ScheduleData data) {
         // 2 randoms:  j+1 < k
         int k = (int) (Math.random() * (data.getSize() - 2) + 1);

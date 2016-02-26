@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.generation;
+package ru.ifmo.ctddev.generate;
 
 import java.awt.geom.Point2D;
 import java.util.List;

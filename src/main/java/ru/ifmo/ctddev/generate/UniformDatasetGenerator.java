@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.generation;
+package ru.ifmo.ctddev.generate;
 
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.DRand;

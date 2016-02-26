@@ -1,6 +1,6 @@
 package ru.ifmo.ctddev.scheduling;
 
-import ru.ifmo.ctddev.scheduling.optimisers.Optimiser;
+import ru.ifmo.ctddev.scheduling.smallmoves.SmallMove;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
  * Created by viacheslav on 14.02.2016.
  * <p>
  * This class represents an {@code optimisation strategy}.
- * Strategy is a probability distribution on {@code optimisers}.
+ * Strategy is a probability distribution on {@code smallMoves}.
  */
 public class Strategy {
 
-    private List<Optimiser> optimisers;
+    private List<SmallMove> smallMoves;
     private double[] probabilities;
     private double[] partialSums;
 
@@ -25,14 +25,14 @@ public class Strategy {
     /**
      * Initializes probabilities by default.
      *
-     * @param optimisers
+     * @param smallMoves
      */
-    public Strategy(List<Optimiser> optimisers) {
-        this.optimisers = optimisers;
-        this.probabilities = new double[optimisers.size()];
-        this.partialSums = new double[optimisers.size()];
-        for (int i = 0; i < optimisers.size(); ++i) {
-            probabilities[i] = 1.0 / optimisers.size();
+    public Strategy(List<SmallMove> smallMoves) {
+        this.smallMoves = smallMoves;
+        this.probabilities = new double[smallMoves.size()];
+        this.partialSums = new double[smallMoves.size()];
+        for (int i = 0; i < smallMoves.size(); ++i) {
+            probabilities[i] = 1.0 / smallMoves.size();
             partialSums[i] = probabilities[i];
             if (i > 0)
                 partialSums[i] += partialSums[i - 1];
@@ -40,21 +40,21 @@ public class Strategy {
         random = new Random();
     }
 
-    public Strategy(Optimiser optimiser) {
-        this(Arrays.asList(optimiser));
+    public Strategy(SmallMove smallMove) {
+        this(Arrays.asList(smallMove));
     }
 
     /**
-     * Creates Strategy with specified optimisers and probabilities.
+     * Creates Strategy with specified smallMoves and probabilities.
      *
-     * @param optimisers
+     * @param smallMoves
      * @param probabilities
      */
-    public Strategy(List<Optimiser> optimisers, double[] probabilities) {
-        this.optimisers = optimisers;
+    public Strategy(List<SmallMove> smallMoves, double[] probabilities) {
+        this.smallMoves = smallMoves;
         this.probabilities = probabilities;
-        this.partialSums = new double[optimisers.size()];
-        for (int i = 0; i < optimisers.size(); ++i) {
+        this.partialSums = new double[smallMoves.size()];
+        for (int i = 0; i < smallMoves.size(); ++i) {
             partialSums[i] = probabilities[i];
             if (i > 0)
                 partialSums[i] += partialSums[i - 1];
@@ -71,13 +71,13 @@ public class Strategy {
      *
      * @return on optimiser according to the strategy
      */
-    public Optimiser getOptimiser() {
+    public SmallMove getOptimiser() {
         double p = random.nextDouble();
         for (int i = 0; i < partialSums.length; ++i) {
             if (p < partialSums[i])
-                return optimisers.get(i);
+                return smallMoves.get(i);
         }
-        return optimisers.get(optimisers.size() - 1);
+        return smallMoves.get(smallMoves.size() - 1);
     }
 
     public void setComment(String comment) {
@@ -88,8 +88,8 @@ public class Strategy {
     public String toString() {
         return "Strategy{\n"
                 + (comment == null ? "" : "comment=" + comment)
-                + "    optimisers={" + optimisers.stream()
-                .map(optimiser -> optimiser.toString())
+                + "    smallmoves={" + smallMoves.stream()
+                .map(smallMove -> smallMove.toString())
                 .collect(Collectors.joining(", "))
                 + ",\n    probabilities=" + Arrays.toString(probabilities)
                 + "\n}";

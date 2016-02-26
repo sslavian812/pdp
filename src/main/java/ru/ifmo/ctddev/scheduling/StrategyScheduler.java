@@ -3,7 +3,7 @@ package ru.ifmo.ctddev.scheduling;
 import ru.ifmo.ctddev.Config;
 
 /**
- * This class is a scheduler, which uses a strategy to choose an {@code Optimiser} for each step.
+ * This class is a scheduler, which uses a strategy to choose an {@code SmallMove} for each step.
  * <p>
  * Created by viacheslav on 14.02.2016.
  */
