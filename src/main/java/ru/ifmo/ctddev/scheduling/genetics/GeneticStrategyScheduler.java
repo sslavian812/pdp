@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class GeneticStrategyScheduler implements Scheduler {
 
     public static final int BIG_MUTATION_AMOUNT = 100;
+    private String comment;
 
     // internals:
     private Strategy strategy;
@@ -113,7 +114,7 @@ public class GeneticStrategyScheduler implements Scheduler {
 
         for (int i = 0; i < S; ++i) {
             if (i == S / 4 || i == S / 2 || S == 3.0 / 4.0 * (double) S) {
-                currentGeneration = bigMutations(currentGeneration);
+                currentGeneration = bigMutations(currentGeneration, (int) Math.sqrt(originalScheduleData.getSize() / 2));
             }
             List<int[]> reproducted = reproduction(currentGeneration);
             List<int[]> mutated = mutation(reproducted);
@@ -126,9 +127,14 @@ public class GeneticStrategyScheduler implements Scheduler {
         return (initialCost - scheduleData.getCost()) / initialCost;
     }
 
-    private List<int[]> bigMutations(List<int[]> generation) {
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    private List<int[]> bigMutations(List<int[]> generation, int amount) {
         return generation.stream().map(individual -> {
-            for (int i = 0; i < BIG_MUTATION_AMOUNT; ++i)
+            for (int i = 0; i < amount; ++i)
                 individual = mutate(individual);
             return individual;
         }).collect(Collectors.toList());
@@ -226,5 +232,22 @@ public class GeneticStrategyScheduler implements Scheduler {
             }
         }
         return list;
+    }
+
+
+    @Override
+    public String toString() {
+        return "GeneticStrategyScheduler{" + System.lineSeparator() +
+                "    comment='" + comment + '\'' + "," + System.lineSeparator() +
+                "    strategy=" + strategy.toString("    ") + "," + System.lineSeparator() +
+                "    G=" + G + "," + System.lineSeparator() +
+                "    R=" + R + "," + System.lineSeparator() +
+                "    Pm=" + Pm + "," + System.lineSeparator() +
+                "    S=" + S + "," + System.lineSeparator() +
+                "    E=" + E + "," + System.lineSeparator() +
+                "    T=" + T + "," + System.lineSeparator() +
+                "    onlyChildren=" + onlyChildren + "," + System.lineSeparator() +
+                "    isBigMutationAllowed=" + isBigMutationAllowed +
+                '}';
     }
 }

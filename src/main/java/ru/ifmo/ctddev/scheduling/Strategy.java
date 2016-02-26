@@ -86,12 +86,21 @@ public class Strategy {
 
     @Override
     public String toString() {
-        return "Strategy{\n"
-                + (comment == null ? "" : "comment=" + comment)
-                + "    smallmoves={" + smallMoves.stream()
-                .map(smallMove -> smallMove.toString())
-                .collect(Collectors.joining(", "))
-                + ",\n    probabilities=" + Arrays.toString(probabilities)
-                + "\n}";
+        return "Strategy{" + System.lineSeparator()
+                + (comment == null ? "" : "    comment=" + comment + System.lineSeparator())
+                + "    smallMoves={" + smallMoves.stream()
+                .map(SmallMove::toString)
+                .collect(Collectors.joining(", ")) + "," + System.lineSeparator()
+                + "    probabilities=" + Arrays.toString(probabilities) + System.lineSeparator()
+                + "}";
+    }
+
+    public String toString(String indent) {
+        return "Strategy{" + System.lineSeparator()
+               + indent + (comment == null ? "" : "    comment=" + comment + System.lineSeparator())
+               + indent + "    smallMoves={" + smallMoves.stream().map(SmallMove::toString)
+               .collect(Collectors.joining(", ")) + "," + System.lineSeparator()
+               + indent + "    probabilities=" + Arrays.toString(probabilities) + System.lineSeparator()
+               + indent + "}";
     }
 }

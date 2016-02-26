@@ -16,27 +16,37 @@ public class GeneticsSchedulerFctory {
         public static final GeneticsSchedulerFctory INSTANCE = new GeneticsSchedulerFctory();
     }
 
-    public GeneticsSchedulerFctory getInstance() {
+    public static GeneticsSchedulerFctory getInstance() {
         return Holder.INSTANCE;
     }
 
     public GeneticStrategyScheduler getOnePluOneScheduler(Strategy strategy, int generations) {
-        return new GeneticStrategyScheduler(strategy, 1, 1, 1.0, 1, 1, generations, false);
+        GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, 1, 1.0, 1, 1, generations, false);
+        g.setComment("OnePluOneScheduler");
+        return g;
     }
 
     public GeneticStrategyScheduler getOnePlusNScheduler(Strategy strategy, int generations, int n) {
-        return new GeneticStrategyScheduler(strategy, 1, n, 1, 1, 1, generations, false);
+        GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, n, 1, 1, 1, generations, false);
+        g.setComment("OnePlusNScheduler");
+        return g;
     }
 
     public GeneticStrategyScheduler getOneCommaNScheduler(Strategy strategy, int generations, int n) {
-        return new GeneticStrategyScheduler(strategy, 1, n, 1, 1, 1, generations, true);
+        GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, n, 1, 1, 1, generations, true);
+        g.setComment("OneCommaNScheduler");
+        return g;
     }
 
     public GeneticStrategyScheduler getKCommaKNScheduler(Strategy strategy, int generations, int n, int k) {
-        return new GeneticStrategyScheduler(strategy, k, n, 1, k, 1, generations, false);
+        GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, k, n, 1, k, 1, generations, false);
+        g.setComment("KCommaKNScheduler");
+        return g;
     }
 
     public GeneticStrategyScheduler getBigMutationsScheduler(Strategy strategy, int generations, int n) {
-        return new GeneticStrategyScheduler(strategy, 1, n, 1, 1, 1, generations, false, true);
+        GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, n, 1, 1, 1, generations, false, true);
+        g.setComment("BigMutationsScheduler");
+        return g;
     }
 }

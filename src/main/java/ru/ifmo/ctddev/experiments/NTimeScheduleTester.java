@@ -41,4 +41,7 @@ public class NTimeScheduleTester implements Callable<List<Double>> {
         return optimisationRatios;
     }
 
+    public Scheduler getScheduler() {
+        return scheduler;
+    }
 }

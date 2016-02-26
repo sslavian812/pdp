@@ -74,6 +74,7 @@ public class StrategyScheduler implements Scheduler {
         return (initialCost - reachedCost) / initialCost;
     }
 
+
     // todo construction method (bestInsertion or other)
 
 
