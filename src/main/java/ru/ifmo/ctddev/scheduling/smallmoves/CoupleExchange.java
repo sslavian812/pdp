@@ -3,6 +3,7 @@ package ru.ifmo.ctddev.scheduling.smallmoves;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**

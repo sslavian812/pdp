@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
  */
 public class Strategy {
 
-    private List<SmallMove> smallMoves;
-    private double[] probabilities;
-    private double[] partialSums;
+    protected List<SmallMove> smallMoves;
+    protected double[] probabilities;
+    protected double[] partialSums;
 
     private Random random;
     private String comment;
@@ -29,6 +29,7 @@ public class Strategy {
      */
     public Strategy(List<SmallMove> smallMoves) {
         this.smallMoves = smallMoves;
+        this.comment = smallMoves.stream().map(s -> s.toString()).collect(Collectors.joining(","));
         this.probabilities = new double[smallMoves.size()];
         this.partialSums = new double[smallMoves.size()];
         for (int i = 0; i < smallMoves.size(); ++i) {
@@ -84,6 +85,12 @@ public class Strategy {
         this.comment = comment;
     }
 
+
+    public void receiveReward(double reward) {
+        //...
+        return;
+    }
+
     @Override
     public String toString() {
         return "Strategy{" + System.lineSeparator()
@@ -97,10 +104,14 @@ public class Strategy {
 
     public String toString(String indent) {
         return "Strategy{" + System.lineSeparator()
-               + (comment == null ? "" : indent + "    comment=" + comment + System.lineSeparator())
-               + indent + "    smallMoves=[" + smallMoves.stream().map(SmallMove::toString)
-               .collect(Collectors.joining(", ")) + "]," + System.lineSeparator()
-               + indent + "    probabilities=" + Arrays.toString(probabilities) + System.lineSeparator()
-               + indent + "}";
+                + (comment == null ? "" : indent + "    comment=" + comment + System.lineSeparator())
+                + indent + "    smallMoves=[" + smallMoves.stream().map(SmallMove::toString)
+                .collect(Collectors.joining(", ")) + "]," + System.lineSeparator()
+                + indent + "    probabilities=" + Arrays.toString(probabilities) + System.lineSeparator()
+                + indent + "}";
+    }
+
+    public String getComment() {
+        return comment;
     }
 }

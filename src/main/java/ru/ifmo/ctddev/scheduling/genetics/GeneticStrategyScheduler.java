@@ -132,6 +132,55 @@ public class GeneticStrategyScheduler implements Scheduler {
         this.comment = comment;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public String getJuliaHist(int bins, int pairs, long ms) {
+        return "# " + getComment() + " " + strategy.getComment() + System.lineSeparator() +
+                "display(" +
+                "plot(x=ratios" + System.lineSeparator() +
+                ",Geom.histogram(bincount=" + bins + "), "
+                + "Guide.xlabel(\"Optimisation ratio\"), Guide.ylabel(\"Frequency\"),"
+                + " Guide.title(\"" + getComment() + " " + strategy.getComment() + " (" + pairs + " pairs)\")))" + System.lineSeparator()
+                + "display(\"mean= $(mean(ratios)) , std= $(std(ratios))\")\n"
+                + "display(\"average per run: " + ms + " ms\")";
+    }
+
+//    public String getJulaiCells(int bins, int pairs) {
+//        String head = "{\n" +
+//                "   \"cell_type\": \"code\",\n" +
+//                "   \"execution_count\": null,\n" +
+//                "   \"metadata\": {\n" +
+//                "    \"collapsed\": true\n" +
+//                "   },\n" +
+//                "   \"outputs\": [],\n" +
+//                "   \"source\": [";
+//        String tail = " ]\n" +
+//                "  }";
+//
+//        List<String> strings = new ArrayList<>();
+//        strings.add(head);
+//
+//        strings.add(enquote("# " + getComment() + " " + strategy.getComment()));
+//        strings.add(",\n");
+//        strings.add(enquote("plot(x=ratios, Geom.histogram(bincount=" + bins + "), "
+//                + "Guide.xlabel(\"Optimisation ratio\"), Guide.ylabel(\"Frequency\"),"
+//                + " Guide.title(\"" + getComment() + " (" + pairs + " pairs)\"))"));
+////        strings.add(tail +",");
+////        strings.add(System.lineSeparator());
+////        strings.add(head);
+////        strings.add(enquote("# " + getComment() + " " + strategy.getComment()));
+//        strings.add(",\n");
+//        strings.add(enquote("print(\"mean= $(mean(ratios)), std= $(std(ratios))\")"));
+//        strings.add(tail);
+//        return String.join("", strings);
+//    }
+//
+//    private String enquote(String s) {
+//        return "\"" + s + "\"";
+//    }
+
     private List<int[]> bigMutations(List<int[]> generation, int amount) {
         return generation.stream().map(individual -> {
             for (int i = 0; i < amount; ++i)
@@ -143,10 +192,15 @@ public class GeneticStrategyScheduler implements Scheduler {
     private int[] mutate(int[] individual) {
         originalScheduleData.setRoute(individual);
         int[] route = strategy.getSmallMove().oneStep(originalScheduleData);
+        strategy.receiveReward(reward());
         if (originalScheduleData.checkConstraints(route))
             return route;
         else
             return individual;
+    }
+
+    private double reward() {
+        return 0.0;
     }
 
     private List<int[]> selection(List<int[]> generation) {
@@ -214,15 +268,25 @@ public class GeneticStrategyScheduler implements Scheduler {
      * Represents budding reproduction process of one individual.
      *
      * @param oldRoute
-     * @param buds - number of "children"
+     * @param buds     - number of "children"
      * @return
      */
     private List<int[]> budding(int[] oldRoute, int buds) {
         List<int[]> list = new ArrayList<>(buds);
+
+        while (list.size() < buds) {
+            list.add(oldRoute.clone());
+        }
+
         if (!onlyChildren) {
             list.add(oldRoute.clone());
-            buds++; // one more for parent
         }
+
+        return list;
+    }
+
+    private List<int[]> buddingWithMutation(int[] oldRoute, int buds) {
+        List<int[]> list = new ArrayList<>(buds);
 
         while (list.size() < buds) {
             originalScheduleData.setRoute(oldRoute);
@@ -232,6 +296,10 @@ public class GeneticStrategyScheduler implements Scheduler {
             } else {
                 list.add(oldRoute);
             }
+        }
+
+        if (!onlyChildren) {
+            list.add(oldRoute.clone());
         }
         return list;
     }
@@ -251,5 +319,9 @@ public class GeneticStrategyScheduler implements Scheduler {
                 "    onlyChildren=" + onlyChildren + "," + System.lineSeparator() +
                 "    isBigMutationAllowed=" + isBigMutationAllowed + System.lineSeparator() +
                 "}";
+    }
+
+    public String getTitle() {
+        return comment + " " + strategy.getComment() + (Pm == 0 ? " no mutation" : " ");
     }
 }

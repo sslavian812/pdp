@@ -20,6 +20,12 @@ public class GeneticsSchedulerFctory {
         return Holder.INSTANCE;
     }
 
+    public GeneticStrategyScheduler getOnePluOneOriginalScheduler(Strategy strategy, int generations) {
+        GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, 1, 0.0, 1, 1, generations, false);
+        g.setComment("OnePluOneOriginalScheduler");
+        return g;
+    }
+
     public GeneticStrategyScheduler getOnePluOneScheduler(Strategy strategy, int generations) {
         GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, 1, 1.0, 1, 1, generations, false);
         g.setComment("OnePluOneScheduler");
@@ -38,9 +44,9 @@ public class GeneticsSchedulerFctory {
         return g;
     }
 
-    public GeneticStrategyScheduler getKCommaKNScheduler(Strategy strategy, int generations, int n, int k) {
+    public GeneticStrategyScheduler getKPlusKNScheduler(Strategy strategy, int generations, int n, int k) {
         GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, k, n, 1, k, 1, generations, false);
-        g.setComment("KCommaKNScheduler");
+        g.setComment("KPlusKNScheduler");
         return g;
     }
 
@@ -49,4 +55,6 @@ public class GeneticsSchedulerFctory {
         g.setComment("BigMutationsScheduler");
         return g;
     }
+
+
 }

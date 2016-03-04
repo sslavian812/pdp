@@ -116,7 +116,7 @@ public class DatasetProvider {
             try {
                 orders = CSVReader.read(App.class.getClassLoader().getResource(resourceName).getFile(), ",");
             } catch (FileNotFoundException e) {
-                orders = CSVReader.read(resourceName, ",");
+                orders = CSVReader.read("./dataset/full.csv", ",");
             }
 
             if (shuffled) {
