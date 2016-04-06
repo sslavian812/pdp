@@ -16,7 +16,7 @@ import java.util.List;
  * Created by viacheslav on 26.02.2016.
  */
 public class OneThreadGeneticsTester {
-    public static final int times = 30;
+    public static final int times = 1;
     public static final int size = 50;
     public static final int start = 0;
 
@@ -46,8 +46,7 @@ public class OneThreadGeneticsTester {
 
         List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
         for (Strategy strategy : strategies) {
-//            schedulers.add(factory.getOnePluOneOriginalScheduler(strategy, generations));
-//            schedulers.add(factory.getOnePluOneScheduler(strategy, generations));
+            schedulers.add(factory.getOnePluOneScheduler(strategy, generations));
             schedulers.add(factory.getOnePlusNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
             schedulers.add(factory.getOneCommaNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
             schedulers.add(factory.getBigMutationsScheduler(strategy, generations, (int) Math.sqrt(size / 2)));

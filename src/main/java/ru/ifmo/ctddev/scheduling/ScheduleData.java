@@ -45,6 +45,8 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
      */
     private List<Integer> ids;
 
+    private int fitFunctionCallsCount = 0;
+
     public ScheduleData(List<Point2D.Double> points, Point2D.Double depot) {
         this.ordersNum = points.size() / 2;
         this.points = points.toArray(new Point2D.Double[1]);
@@ -85,6 +87,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
                 route[i] = -i;
         }
         this.cost = -1;
+        this.fitFunctionCallsCount = 0;
     }
 
 
@@ -142,6 +145,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
         for (int i = 1; i < route.length; ++i) {
             acc += dist(route[i - 1], route[i]);
         }
+        ++fitFunctionCallsCount;
         return acc;
     }
 
@@ -268,6 +272,9 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
         return 0;
     }
 
+    public int getFitFunctionCallsCount() {
+        return fitFunctionCallsCount;
+    }
 
-    // todo: ad method to serialize and deserialise data to/from file
+// todo: ad method to serialize and deserialise data to/from file
 }

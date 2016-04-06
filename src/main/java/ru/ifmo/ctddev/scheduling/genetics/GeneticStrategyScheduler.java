@@ -4,6 +4,9 @@ import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.Strategy;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,8 +40,12 @@ public class GeneticStrategyScheduler implements Scheduler {
      * if false, new population will be chosen from parents and children.
      */
     private boolean onlyChildren;
-
     private boolean isBigMutationAllowed;
+
+    private double initialCost;
+    private BufferedWriter logFile = null;
+    private List<String> xs = new ArrayList<>();
+    private List<String> ys = new ArrayList<>();
 
 
     public GeneticStrategyScheduler(Strategy strategy) {
@@ -102,29 +109,73 @@ public class GeneticStrategyScheduler implements Scheduler {
      */
     @Override
     public double schedule(ScheduleData scheduleData) {
+        try {
+            logFile = new BufferedWriter(new FileWriter("out2.txt", true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         originalScheduleData = scheduleData;
-        double initialCost = scheduleData.getCost();
+        initialCost = scheduleData.getCost();
         currentGeneration.clear();
 
         // form first generation:
-        currentGeneration.add(scheduleData.getRoute().clone());
-        for (int i = 1; i < G; ++i) {
+        for (int i = 0; i < G; ++i) {
             currentGeneration.add(scheduleData.getRoute().clone());
         }
 
-        for (int i = 0; i < S; ++i) {
+        for (int i = 0;; ++i) {
             if (isBigMutationAllowed && (i == S / 4 || i == S / 2 || S == 3.0 / 4.0 * (double) S)) {
-                currentGeneration = bigMutations(currentGeneration, (int) Math.sqrt(originalScheduleData.getSize() / 2));
+                currentGeneration = bigMutations(currentGeneration, (int) Math.sqrt(scheduleData.getSize() / 2));
             }
-            List<int[]> reproducted = reproduction(currentGeneration);
-            List<int[]> mutated = mutation(reproducted);
+            List<int[]> children = reproduction(currentGeneration);
+            List<int[]> mutated = mutation(children);
+
+            if (!onlyChildren) {
+                mutated.addAll(currentGeneration);
+            }
+
             currentGeneration = selection(mutated);
+
+
+            printState(currentGeneration, originalScheduleData);
+
+            if(originalScheduleData.getFitFunctionCallsCount() >= 200000)
+                break;
         }
 
-        Collections.sort(currentGeneration, originalScheduleData);
-        scheduleData.setRoute(currentGeneration.get(0));
+//        Collections.sort(currentGeneration, originalScheduleData);
 
+        try {
+            logFile.write("\"" + comment + "_" + strategy.getComment() + ":\";");
+            logFile.write("xs = {");
+            logFile.write(String.join(", ", xs));
+            logFile.write("};");
+            logFile.newLine();
+            logFile.write("ys = {");
+            logFile.write(String.join(", ", ys));
+            logFile.write("};");
+            logFile.newLine();
+            logFile.write("list = Transpose[{xs, ys}];");
+            logFile.newLine();
+            logFile.write("ListPlot[list, AxesLabel -> {\"fit function calls\", \"relative cost\"}, PlotLabel -> \"");
+            logFile.write(comment + " - " + strategy.getComment());
+                    logFile.write("\", Joined -> True, PlotRange -> {{0, 200500}, {0, 1}}]");
+            logFile.newLine();
+            logFile.write("\"===================================================\";");
+            logFile.newLine();
+            logFile.flush();
+            logFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        scheduleData.setRoute(currentGeneration.get(0));
         return (initialCost - scheduleData.getCost()) / initialCost;
+    }
+
+    private void printState(List<int[]> currentGeneration, ScheduleData originalScheduleData) {
+        xs.add("" + originalScheduleData.getFitFunctionCallsCount());
+        ys.add("" + originalScheduleData.getCost(currentGeneration.get(0)) / initialCost);
     }
 
 
@@ -275,10 +326,6 @@ public class GeneticStrategyScheduler implements Scheduler {
         List<int[]> list = new ArrayList<>(buds);
 
         while (list.size() < buds) {
-            list.add(oldRoute.clone());
-        }
-
-        if (!onlyChildren) {
             list.add(oldRoute.clone());
         }
 
