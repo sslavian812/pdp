@@ -1,16 +1,13 @@
 package ru.ifmo.ctddev.experiments;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.StrategyProvider;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
-import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFctory;
-import ru.ifmo.ctddev.scheduling.smallmoves.*;
+import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,17 +17,17 @@ import java.util.concurrent.*;
  * Created by viacheslav on 21.02.2016.
  */
 public class GeneticRunner {
-    public static final int times = 100;
-    public static final int size = 50;
+    public static final int times = 10;
+    public static final int size = 30;
 
-    public static final int generationSize = 10;
+    public static final int n_datasets = 5;
     public static final int generations = 12 * size * size;
 
 
     public static void main(String[] args) {
 
         List<Strategy> strategies = StrategyProvider.provideAllStrategies();
-        GeneticsSchedulerFctory factory = GeneticsSchedulerFctory.getInstance();
+        GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
 
         List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
         for (Strategy strategy : strategies) {
@@ -45,7 +42,7 @@ public class GeneticRunner {
         int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
 
-        while (start + size <= 8000) {
+        while (start + size <= (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
                     "uniform8000.csv", "uniform8000_" + start + "_" + (start + size)));
             start += size;
@@ -60,10 +57,10 @@ public class GeneticRunner {
 
             long time = System.currentTimeMillis();
             List<List<Double>> ratios = new NDataSetsNTimesScheduleTester(scheduler, datasets, times).setExecutor(threadPoolExecutor).call();
-            
+
 
             System.out.println(scheduler.getComment());
-            System.out.println("Dataset: " + datasets.size() + ". Size of one dataset: " + size);
+            System.out.println("Datasets: " + datasets.size() + ". Size of one dataset: " + size);
             System.out.println("# total time: " + (System.currentTimeMillis() - time) + " ms =~ " + (System.currentTimeMillis() - time) / 1000 + " s");
 
             List<Double> averagePerNTimes = new ArrayList<>();
@@ -71,12 +68,15 @@ public class GeneticRunner {
             for (List<Double> list : ratios) {
                 String indent = "    ";
                 System.out.println(indent + "dataset: " + i + "-" + (i + size) + ": ");
+                i+=size;
                 System.out.println(indent + "ratios=" + Arrays.toString(list.toArray()));
                 averagePerNTimes.add(calcAverage(list));
-                System.out.println(indent + "average ratio for dataset: "
+                System.out.println(indent + "average ratio for i-th dataset: "
                         + averagePerNTimes.get(averagePerNTimes.size() - 1));
                 System.out.println();
             }
+
+            System.out.println("average for scheduler: " + calcAverage(averagePerNTimes));
 
             System.out.println("==================================================");
             System.out.println();

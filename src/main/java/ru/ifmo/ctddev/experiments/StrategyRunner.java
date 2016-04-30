@@ -48,13 +48,13 @@ public class StrategyRunner {
 
 
         List<ScheduleData> datasets = new ArrayList<>();
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
+        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
 
 
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 4, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));

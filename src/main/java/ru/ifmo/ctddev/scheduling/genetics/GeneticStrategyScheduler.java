@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
+ * todo this class is not thread save
  * Created by viacheslav on 18.02.2016.
  */
 public class GeneticStrategyScheduler implements Scheduler {
@@ -110,7 +111,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     @Override
     public double schedule(ScheduleData scheduleData) {
         try {
-            logFile = new BufferedWriter(new FileWriter("out2.txt", true));
+            logFile = new BufferedWriter(new FileWriter("wolfram_uniform.txt", true));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -145,29 +146,31 @@ public class GeneticStrategyScheduler implements Scheduler {
 
 //        Collections.sort(currentGeneration, originalScheduleData);
 
-        try {
-            logFile.write("\"" + comment + "_" + strategy.getComment() + ":\";");
-            logFile.write("xs = {");
-            logFile.write(String.join(", ", xs));
-            logFile.write("};");
-            logFile.newLine();
-            logFile.write("ys = {");
-            logFile.write(String.join(", ", ys));
-            logFile.write("};");
-            logFile.newLine();
-            logFile.write("list = Transpose[{xs, ys}];");
-            logFile.newLine();
-            logFile.write("ListPlot[list, AxesLabel -> {\"fit function calls\", \"relative cost\"}, PlotLabel -> \"");
-            logFile.write(comment + " - " + strategy.getComment());
-                    logFile.write("\", Joined -> True, PlotRange -> {{0, 200500}, {0, 1}}]");
-            logFile.newLine();
-            logFile.write("\"===================================================\";");
-            logFile.newLine();
-            logFile.flush();
-            logFile.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        // todo uncomment this if you want graphics
+//        try {
+//            logFile.write("\"" + comment + "_" + strategy.getComment() + ":\";");
+//            logFile.write("xs = {");
+//            logFile.write(String.join(", ", xs));
+//            logFile.write("};");
+//            logFile.newLine();
+//            logFile.write("ys = {");
+//            logFile.write(String.join(", ", ys));
+//            logFile.write("};");
+//            logFile.newLine();
+//            logFile.write("list = Transpose[{xs, ys}];");
+//            logFile.newLine();
+//            logFile.write("ListPlot[list, AxesLabel -> {\"fit function calls\", \"relative cost\"}, PlotLabel -> \"");
+//            logFile.write(comment + " - " + strategy.getComment());
+//                    logFile.write("\", Joined -> True, PlotRange -> {{0, 200500}, {0, 1}}]");
+//            logFile.newLine();
+////            logFile.write("\"===================================================\";");
+//            logFile.newLine();
+//            logFile.flush();
+//            logFile.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         scheduleData.setRoute(currentGeneration.get(0));
         return (initialCost - scheduleData.getCost()) / initialCost;
@@ -184,7 +187,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     }
 
     public String getComment() {
-        return comment;
+        return comment + " " + strategy.getComment();
     }
 
     public String getJuliaHist(int bins, int pairs, long ms) {

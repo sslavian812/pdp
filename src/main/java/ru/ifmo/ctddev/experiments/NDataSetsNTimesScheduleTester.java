@@ -45,17 +45,22 @@ public class NDataSetsNTimesScheduleTester implements Callable<List<List<Double>
         for (ScheduleData iData : data) {
             ScheduleData currentData = iData.clone();
 
-            futures.add(executor.submit(new NTimeScheduleTester(scheduler, currentData, times)));
-        }
+            List<Double> ratios = new NTimeScheduleTester(scheduler, currentData, times).call();
+            ratiosPerDataset.add(ratios);
 
-        for (Future<List<Double>> f : futures) {
-            try {
-                List<Double> ratios = f.get();
-                ratiosPerDataset.add(ratios);
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-                ratiosPerDataset.add(new ArrayList<>());
-            }
+// todo uncomment this if you wand multithreading
+//            futures.add(executor.submit(new NTimeScheduleTester(scheduler, currentData, times)));
+//        }
+//
+//        for (Future<List<Double>> f : futures) {
+//
+//            try {
+//                List<Double> ratios = f.get();
+//                ratiosPerDataset.add(ratios);
+//            } catch (ExecutionException | InterruptedException e) {
+//                e.printStackTrace();
+//                ratiosPerDataset.add(new ArrayList<>());
+//            }
         }
         return ratiosPerDataset;
     }

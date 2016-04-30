@@ -5,18 +5,18 @@ import ru.ifmo.ctddev.scheduling.Strategy;
 /**
  * Created by viacheslav on 26.02.2016.
  */
-public class GeneticsSchedulerFctory {
+public class GeneticsSchedulerFactory {
 
     private static final int K = 12;
 
-    private GeneticsSchedulerFctory() {
+    private GeneticsSchedulerFactory() {
     }
 
     private static class Holder {
-        public static final GeneticsSchedulerFctory INSTANCE = new GeneticsSchedulerFctory();
+        public static final GeneticsSchedulerFactory INSTANCE = new GeneticsSchedulerFactory();
     }
 
-    public static GeneticsSchedulerFctory getInstance() {
+    public static GeneticsSchedulerFactory getInstance() {
         return Holder.INSTANCE;
     }
 

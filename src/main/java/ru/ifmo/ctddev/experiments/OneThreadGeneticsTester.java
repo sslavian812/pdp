@@ -5,7 +5,7 @@ import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.Strategy;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
-import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFctory;
+import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
 import ru.ifmo.ctddev.scheduling.smallmoves.*;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class OneThreadGeneticsTester {
 
         strategies.get(strategies.size()-1).setComment("Mixed");
 
-        GeneticsSchedulerFctory factory = GeneticsSchedulerFctory.getInstance();
+        GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
         ScheduleData scheduleData = DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, "taxi8129.csv", null);
         int size = scheduleData.getSize();
         int generations = size * size;
