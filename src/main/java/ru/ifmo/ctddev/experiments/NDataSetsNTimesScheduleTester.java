@@ -24,8 +24,9 @@ public class NDataSetsNTimesScheduleTester implements Callable<List<List<Double>
         this.times = times;
     }
 
-    public void setExecutor(ThreadPoolExecutor executor) {
+    public NDataSetsNTimesScheduleTester setExecutor(ThreadPoolExecutor executor) {
         this.executor = executor;
+        return this;
     }
 
     /**
@@ -37,7 +38,7 @@ public class NDataSetsNTimesScheduleTester implements Callable<List<List<Double>
     public List<List<Double>> call() {
         List<List<Double>> ratiosPerDataset = new ArrayList<>();
         if (executor == null)
-            executor = new ThreadPoolExecutor(4, 8, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+            executor = new ThreadPoolExecutor(4, 10, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
         List<Future<List<Double>>> futures = new ArrayList<>();
 

@@ -1,11 +1,16 @@
 package ru.ifmo.ctddev.experiments;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import ru.ifmo.ctddev.datasets.DatasetProvider;
+import ru.ifmo.ctddev.scheduling.Scheduler;
+import ru.ifmo.ctddev.scheduling.StrategyProvider;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
+import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFctory;
 import ru.ifmo.ctddev.scheduling.smallmoves.*;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,77 +22,77 @@ import java.util.concurrent.*;
 public class GeneticRunner {
     public static final int times = 100;
     public static final int size = 50;
-    public static final int start = 0;
 
     public static final int generationSize = 10;
-    public static final int generations = 12* size* size;
+    public static final int generations = 12 * size * size;
 
 
     public static void main(String[] args) {
 
-        List<SmallMove> all = new ArrayList<>(5);
-        all.add(new Lin2opt());
-        all.add(new CoupleExchange());
-        all.add(new DoubleBridge());
-        all.add(new PointExchange());
-        all.add(new RelocateBlock());
+        List<Strategy> strategies = StrategyProvider.provideAllStrategies();
+        GeneticsSchedulerFctory factory = GeneticsSchedulerFctory.getInstance();
 
-        List<SmallMove> two = new ArrayList<>(5);
-        two.add(new Lin2opt());
-        two.add(new PointExchange());
-
-
-        List<Strategy> strategies = new ArrayList<>();
-        strategies.add(new Strategy(new Lin2opt()));
-        strategies.add(new Strategy(new CoupleExchange()));
-        strategies.add(new Strategy(new DoubleBridge()));
-        strategies.add(new Strategy(new PointExchange()));
-        strategies.add(new Strategy(two));
-        strategies.add(new Strategy(all));
-        strategies.add(new Strategy(new RelocateBlock()));
+        List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
+        for (Strategy strategy : strategies) {
+            schedulers.add(factory.getOnePluOneScheduler(strategy, generations));
+            schedulers.add(factory.getOnePlusNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
+            schedulers.add(factory.getOneCommaNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
+            schedulers.add(factory.getBigMutationsScheduler(strategy, generations, (int) Math.sqrt(size / 2)));
+            schedulers.add(factory.getKPlusKNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0), (int) Math.sqrt(size / 4.0)));
+        }
 
 
-
+        int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
 
+        while (start + size <= 8000) {
+            datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
+                    "uniform8000.csv", "uniform8000_" + start + "_" + (start + size)));
+            start += size;
+        }
 
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 2, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
         List<Future<List<Double>>> futures = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
 
-        for (int i = 0; i < strategies.size(); ++i) {
-            futures.add(threadPoolExecutor.submit(
-                    new NTimeScheduleTester(new GeneticStrategyScheduler(strategies.get(i)), datasets.get(i), times)
-            ));
-        }
+        for (Scheduler scheduler : schedulers) {
 
-        System.out.println(GeneticRunner.class.getName());
+            long time = System.currentTimeMillis();
+            List<List<Double>> ratios = new NDataSetsNTimesScheduleTester(scheduler, datasets, times).setExecutor(threadPoolExecutor).call();
+            
 
-        for (int i = 0; i < futures.size(); ++i) {
-            try {
-                List<Double> ratios = futures.get(i).get();
-                System.out.println(strategies.get(i));
-                System.out.println("size: " + size);
-                System.out.println(Arrays.toString(ratios.toArray()));
-                System.out.println("================");
+            System.out.println(scheduler.getComment());
+            System.out.println("Dataset: " + datasets.size() + ". Size of one dataset: " + size);
+            System.out.println("# total time: " + (System.currentTimeMillis() - time) + " ms =~ " + (System.currentTimeMillis() - time) / 1000 + " s");
+
+            List<Double> averagePerNTimes = new ArrayList<>();
+            int i = 0;
+            for (List<Double> list : ratios) {
+                String indent = "    ";
+                System.out.println(indent + "dataset: " + i + "-" + (i + size) + ": ");
+                System.out.println(indent + "ratios=" + Arrays.toString(list.toArray()));
+                averagePerNTimes.add(calcAverage(list));
+                System.out.println(indent + "average ratio for dataset: "
+                        + averagePerNTimes.get(averagePerNTimes.size() - 1));
                 System.out.println();
-
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
             }
+
+            System.out.println("==================================================");
+            System.out.println();
         }
 
-        System.out.println("time spent: " + (System.currentTimeMillis()-startTime) /1000 + " s");
 
+        System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
         threadPoolExecutor.shutdown();
+    }
 
+    private static Double calcAverage(List<Double> list) {
+        double acc = 0;
+        for (Double x : list) {
+            acc += x;
+        }
+        acc /= list.size();
+        return acc;
     }
 }

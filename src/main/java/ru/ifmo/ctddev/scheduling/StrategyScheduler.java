@@ -75,6 +75,10 @@ public class StrategyScheduler implements Scheduler {
         return (initialCost - reachedCost) / initialCost;
     }
 
+    @Override
+    public String getComment() {
+        return strategy.getComment();
+    }
 
 
     /**

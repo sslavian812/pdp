@@ -34,8 +34,9 @@ public class DatasetProvider {
      * @param outputFilePath
      * @return
      */
-    public static ScheduleData getDataset(int size, int position, Direction direction, String outputFilePath) {
-        return getDataset(size, position, direction, false, outputFilePath);
+    public static ScheduleData getDataset(int size, int position, Direction direction,
+                                          String inputFilePath, String outputFilePath) {
+        return getDataset(size, position, direction, false, inputFilePath, outputFilePath);
     }
 
     /**
@@ -46,8 +47,8 @@ public class DatasetProvider {
      * @param outputFilePath
      * @return
      */
-    public static ScheduleData getShuffledHeadDataset(int size, Direction direction, String outputFilePath) {
-        return getDataset(size, 0, direction, true, outputFilePath);
+    public static ScheduleData getShuffledHeadDataset(int size, Direction direction, String inputFilePath, String outputFilePath) {
+        return getDataset(size, 0, direction, true, inputFilePath, outputFilePath);
     }
 
     /**
@@ -108,7 +109,9 @@ public class DatasetProvider {
      * @param outputFilePath if not null, the original will be written to this file (if not exists - create this file).
      * @return
      */
-    private static ScheduleData getDataset(int size, int position, Direction direction, boolean shuffled, String outputFilePath) {
+    private static ScheduleData getDataset(int size, int position, Direction direction,
+                                           boolean shuffled,
+                                           String inputFilePath, String outputFilePath) {
         try {
             String resourceName = Config.datasetPath;
             List<String[]> orders;
@@ -116,7 +119,7 @@ public class DatasetProvider {
             try {
                 orders = CSVReader.read(App.class.getClassLoader().getResource(resourceName).getFile(), ",");
             } catch (FileNotFoundException e) {
-                orders = CSVReader.read("./datasets/taxi8129.csv", ",");
+                orders = CSVReader.read("./datasets/" + inputFilePath, ",");
             }
 
             if (shuffled) {

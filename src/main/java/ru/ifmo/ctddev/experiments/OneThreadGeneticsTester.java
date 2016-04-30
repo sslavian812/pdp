@@ -40,7 +40,7 @@ public class OneThreadGeneticsTester {
         strategies.get(strategies.size()-1).setComment("Mixed");
 
         GeneticsSchedulerFctory factory = GeneticsSchedulerFctory.getInstance();
-        ScheduleData scheduleData = DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null);
+        ScheduleData scheduleData = DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, "taxi8129.csv", null);
         int size = scheduleData.getSize();
         int generations = size * size;
 

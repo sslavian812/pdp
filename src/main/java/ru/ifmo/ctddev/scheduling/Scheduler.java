@@ -5,4 +5,6 @@ package ru.ifmo.ctddev.scheduling;
  */
 public interface Scheduler {
     double schedule(ScheduleData scheduleData);
+
+    String getComment();
 }
