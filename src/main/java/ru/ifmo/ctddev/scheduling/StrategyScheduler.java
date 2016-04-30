@@ -3,11 +3,12 @@ package ru.ifmo.ctddev.scheduling;
 import ru.ifmo.ctddev.Config;
 
 /**
- * This class is a scheduler, which uses a strategy to choose an {@code SmallMove} for each step.
+ * This class is a scheduler, which uses a fixed strategy to choose an {@code SmallMove} for each step.
  * <p>
  * Created by viacheslav on 14.02.2016.
  */
 public class StrategyScheduler implements Scheduler {
+
 
     private Strategy strategy;
 
@@ -74,8 +75,6 @@ public class StrategyScheduler implements Scheduler {
         return (initialCost - reachedCost) / initialCost;
     }
 
-
-    // todo construction method (bestInsertion or other)
 
 
     /**

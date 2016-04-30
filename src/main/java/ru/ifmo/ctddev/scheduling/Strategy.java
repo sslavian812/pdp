@@ -68,9 +68,9 @@ public class Strategy {
 
 
     /**
-     * Provides and optimizer according to the strategy.
+     * Provides an SmallMove according to the strategy.
      *
-     * @return on optimiser according to the strategy
+     * @return SmallMove according to the strategy
      */
     public SmallMove getSmallMove() {
         double p = random.nextDouble();
@@ -86,8 +86,13 @@ public class Strategy {
     }
 
 
+    /**
+     * This method gets called, when the strategy gets a reward.
+     * For future active learning.
+     *
+     * @param reward
+     */
     public void receiveReward(double reward) {
-        //...
         return;
     }
 
@@ -112,6 +117,6 @@ public class Strategy {
     }
 
     public String getComment() {
-        return comment;
+        return comment == null ? "" : comment;
     }
 }

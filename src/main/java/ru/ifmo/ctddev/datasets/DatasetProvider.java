@@ -1,16 +1,16 @@
 package ru.ifmo.ctddev.datasets;
 
 import ru.ifmo.ctddev.Config;
+import ru.ifmo.ctddev.generate.DatasetGenerator;
+import ru.ifmo.ctddev.generate.GausianDatasetGeneratorImpl;
+import ru.ifmo.ctddev.generate.UniformDatasetGeneratorImpl;
 import ru.ifmo.ctddev.gui.App;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 import java.awt.geom.Point2D;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This class provides custom datasets from the whole one.
@@ -173,5 +173,29 @@ public class DatasetProvider {
         }
 
         return null;
+    }
+
+
+    public List<Point2D.Double> getGeneratePoints(int pairsNumber, DatasetGenerator generator) {
+        List<Integer> sizes = new ArrayList<Integer>(1);
+        sizes.add(pairsNumber);
+        List<Point2D> centers = new ArrayList<>(1);
+        centers.add(new Point2D.Double(0.0, 0.0));
+
+        Point2D lu = new Point2D.Double(-50.0, 50.0);
+        Point2D rd = new Point2D.Double(50.0, -50.0);
+        List<Point2D.Double> points = generator.generate(
+                lu, rd,
+                sizes, centers);
+
+        return points;
+    }
+
+    public ScheduleData getGaussianDistributedDataset(int pairsNumber) {
+        return new ScheduleData(getGeneratePoints(pairsNumber, new GausianDatasetGeneratorImpl()));
+    }
+
+    public ScheduleData getUniformDistributedDataset(int pairsNumber) {
+        return new ScheduleData(getGeneratePoints(pairsNumber, new UniformDatasetGeneratorImpl()));
     }
 }

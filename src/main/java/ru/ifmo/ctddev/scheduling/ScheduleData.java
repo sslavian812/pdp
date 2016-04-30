@@ -12,41 +12,56 @@ import java.util.*;
  */
 public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Comparator<int[]> {
 
+    // there are N pairs of points. N "orders". N pickups and N drops.
+
     /**
-     * coordinates of each point in
+     * coordinates of each point. Size 2*N
      */
     private Point2D.Double[] points;
 
     /**
      * depot-point. here starts and ends each route.
+     * It's usually the mass-center af all points.
      */
     private Point2D.Double depot;
 
     /**
      * The whole path through src and dst points.
-     * Each value is an index in {@code points} array, with a sign:
-     * if positive - pick the object up. if negative - drop the object.
-     * Some of values can repeat.
+     * Each value is an index in {@code ScheduleData.points} array, with a sign:
+     * if positive or 0 - pick the object up. if negative - drop the object.
+     * 0,..(N-1),(-N),..(-2N+1).
      */
     private int[] route;
 
     /**
      * total cost of current route.
+     * If -1, then it's not calculated yet.
      */
     private double cost;
 
     /**
      * Total count of orders (total count of pairs {src, dst} )
+     * it's N, actually.
      */
     private int ordersNum;
 
     /**
      * Id's from dataset file. For future feature extraction.
+     * Each integer here is an identifier of concrete src-dst pair.
      */
     private List<Integer> ids;
 
+    /**
+     * This counter shows, how much times, the fit-function was couted.
+     * The fit-function is the length of the path.
+     */
     private int fitFunctionCallsCount = 0;
 
+    /**
+     * This publi constructor specifies coordinates of considered points and the depot-point.
+     * @param points
+     * @param depot
+     */
     public ScheduleData(List<Point2D.Double> points, Point2D.Double depot) {
         this.ordersNum = points.size() / 2;
         this.points = points.toArray(new Point2D.Double[1]);
@@ -65,6 +80,11 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
         this(points, calcCenter(points));
     }
 
+    /**
+     * Calculates the mass center of points.
+     * @param points
+     * @return
+     */
     private static Point2D.Double calcCenter(List<Point2D.Double> points) {
         double x = 0;
         double y = 0;
@@ -79,6 +99,9 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
     }
 
 
+    /**
+     * This function
+     */
     public void clearRoute() {
         for (int i = 0; i < this.points.length; ++i) {
             if (i < ordersNum)
@@ -112,7 +135,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
                 if (Config.enableConstraintPairing && !picked.contains((-p) - ordersNum)) {
                     return false;
                 }
-                picked.remove(-p);
+                picked.remove((-p) - ordersNum);
             }
         }
         return true;
@@ -128,11 +151,19 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
     }
 
 
+    /**
+     * Provides the number of points, which is equal 2*N
+     * @return
+     */
     public int getSize() {
         return points.length;
 //        return getOrdersNum();
     }
 
+    /**
+     * Provides Cost of internal data.
+     * @return
+     */
     public double getCost() {
         if (cost < 0) {
             this.cost = getCost(route);
@@ -140,6 +171,12 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
         return this.cost;
     }
 
+    /**
+     * Calculates cost of given route, according to distance-function implemented in this ScheduleData.
+     * Increments fitFunctionCallCount.
+     * @param route
+     * @return
+     */
     public double getCost(int[] route) {
         double acc = 0.0;
         for (int i = 1; i < route.length; ++i) {
@@ -149,48 +186,51 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
         return acc;
     }
 
+    /**
+     * Calculates cost of given route as a List, according to distance-function implemented in this ScheduleData.
+     * @param route
+     * @return
+     */
     public double getCost(List<Integer> route) {
         double acc = 0.0;
         for (int i = 1; i < route.size(); ++i) {
             acc += dist(route.get(i - 1), route.get(i));
         }
+        ++fitFunctionCallsCount;
         return acc;
     }
 
-    public double dist(int s1, int d1) {
+    /**
+     * Calculated distance between two points according to the Euclidean metric.
+     * @param s1
+     * @param d1
+     * @return
+     */
+    private double dist(int s1, int d1) {
         int s = s1 < 0 ? -s1 : s1;
         int d = d1 < 0 ? -d1 : d1;
         return Math.sqrt((points[s].getX() - points[d].getX()) * (points[s].getX() - points[d].getX())
                 + (points[s].getY() - points[d].getY()) * (points[s].getY() - points[d].getY()));
     }
 
-
+    /**
+     * Provdes the number of pairs, N.
+     * @return
+     */
     public int getOrdersNum() {
         return ordersNum;
     }
-
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
 
     public Point2D.Double[] getPoints() {
         return points;
     }
 
-    public void setPoints(Point2D.Double[] points) {
-        this.points = points;
-    }
 
-    public Point2D.Double getDepot() {
-        return depot;
-    }
-
-    public void setDepot(Point2D.Double depot) {
-        this.depot = depot;
-    }
-
+    /**
+     * Provides current route as list of points.
+     * For future use by visualization.
+     * @return
+     */
     public List<Point2D.Double> getRouteAsPoints() {
         List<Point2D.Double> res = new ArrayList<>(route.length);
 
@@ -202,10 +242,6 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     public int[] getRoute() {
         return route;
-    }
-
-    public List<Integer> getIds() {
-        return ids;
     }
 
     public void setIds(List<Integer> ids) {
@@ -263,6 +299,12 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
         return 0;
     }
 
+    /**
+     * compares two routes through points, which are in this ScheduleData object.
+     * @param o1
+     * @param o2
+     * @return
+     */
     @Override
     public int compare(int[] o1, int[] o2) {
         if (getCost(o1) < getCost(o2))
@@ -276,5 +318,6 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
         return fitFunctionCallsCount;
     }
 
-// todo: ad method to serialize and deserialise data to/from file
+
+    // todo: ad method to serialize and deserialise data to/from file as json.
 }

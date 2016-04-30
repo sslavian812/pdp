@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by viacheslav on 16.12.2015.
  */
-public class UniformDatasetGenerator implements DatasetGenerator {
+public class UniformDatasetGeneratorImpl implements DatasetGenerator {
 
     @Deprecated
     public List<Point2D.Double> generate(int N, Point2D center, Point2D leftUp, Point2D rightDown) {
