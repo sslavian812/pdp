@@ -1,9 +1,9 @@
 package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.datasets.DatasetProvider;
-import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
+import ru.ifmo.ctddev.scheduling.StrategyScheduler;
 import ru.ifmo.ctddev.scheduling.smallmoves.*;
 
 import java.util.ArrayList;
@@ -12,16 +12,14 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * Created by viacheslav on 21.02.2016.
+ * Created by viacheslav on 14.02.2016.
  */
-public class GeneticTester {
+public class StrategyRunner {
+
     public static final int times = 100;
-    public static final int size = 50;
+    public static final int size = 100;
     public static final int start = 0;
-
-    public static final int generationSize = 10;
-    public static final int generations = 12* size* size;
-
+    public static final boolean shuffled = false;
 
     public static void main(String[] args) {
 
@@ -35,6 +33,7 @@ public class GeneticTester {
         List<SmallMove> two = new ArrayList<>(5);
         two.add(new Lin2opt());
         two.add(new PointExchange());
+
 
 
         List<Strategy> strategies = new ArrayList<>();
@@ -58,24 +57,21 @@ public class GeneticTester {
         datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, null));
 
 
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 2, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 4, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));
         List<Future<List<Double>>> futures = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < strategies.size(); ++i) {
             futures.add(threadPoolExecutor.submit(
-                    new NTimeScheduleTester(new GeneticStrategyScheduler(strategies.get(i)), datasets.get(i), times)
+                    new NTimeScheduleTester(new StrategyScheduler(strategies.get(i)), datasets.get(i), times)
             ));
         }
-
-        System.out.println(GeneticTester.class.getName());
 
         for (int i = 0; i < futures.size(); ++i) {
             try {
                 List<Double> ratios = futures.get(i).get();
                 System.out.println(strategies.get(i));
-                System.out.println("size: " + size);
                 System.out.println(Arrays.toString(ratios.toArray()));
                 System.out.println("================");
                 System.out.println();
