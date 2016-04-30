@@ -29,6 +29,7 @@ public class Strategy {
      */
     public Strategy(List<SmallMove> smallMoves) {
         this.smallMoves = smallMoves;
+        this.random = new Random();
         this.comment = smallMoves.stream().map(s -> s.toString()).collect(Collectors.joining(","));
         this.probabilities = new double[smallMoves.size()];
         this.partialSums = new double[smallMoves.size()];
@@ -38,7 +39,6 @@ public class Strategy {
             if (i > 0)
                 partialSums[i] += partialSums[i - 1];
         }
-        random = new Random();
     }
 
     public Strategy(SmallMove smallMove) {
@@ -53,6 +53,8 @@ public class Strategy {
      */
     public Strategy(List<SmallMove> smallMoves, double[] probabilities) {
         this.smallMoves = smallMoves;
+        this.random = new Random();
+        this.comment = smallMoves.stream().map(s -> s.toString()).collect(Collectors.joining(","));
         this.probabilities = probabilities;
         this.partialSums = new double[smallMoves.size()];
         for (int i = 0; i < smallMoves.size(); ++i) {
@@ -117,6 +119,6 @@ public class Strategy {
     }
 
     public String getComment() {
-        return comment == null ? "" : comment;
+        return comment == null ? "" : comment + " - " + Arrays.toString(probabilities);
     }
 }

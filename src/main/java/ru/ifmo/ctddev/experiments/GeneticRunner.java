@@ -18,7 +18,7 @@ import java.util.concurrent.*;
  */
 public class GeneticRunner {
     public static final int times = 10;
-    public static final int size = 30;
+    public static final int size = 50;
 
     public static final int n_datasets = 5;
     public static final int generations = 12 * size * size;
@@ -48,15 +48,17 @@ public class GeneticRunner {
             start += size;
         }
 
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
-        List<Future<List<Double>>> futures = new ArrayList<>();
+//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+//        List<Future<List<Double>>> futures = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
+
+        NDataSetsNTimesScheduleTester nDataSetsNTimesScheduleTester = new NDataSetsNTimesScheduleTester(null, datasets, times);
 
         for (Scheduler scheduler : schedulers) {
 
             long time = System.currentTimeMillis();
-            List<List<Double>> ratios = new NDataSetsNTimesScheduleTester(scheduler, datasets, times).setExecutor(threadPoolExecutor).call();
+            List<List<Double>> ratios = nDataSetsNTimesScheduleTester.setScheduler(scheduler).call();
 
 
             System.out.println(scheduler.getComment());
@@ -84,7 +86,7 @@ public class GeneticRunner {
 
 
         System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
-        threadPoolExecutor.shutdown();
+//        threadPoolExecutor.shutdown();
     }
 
     private static Double calcAverage(List<Double> list) {

@@ -29,6 +29,11 @@ public class NDataSetsNTimesScheduleTester implements Callable<List<List<Double>
         return this;
     }
 
+    public NDataSetsNTimesScheduleTester setScheduler(Scheduler scheduler) {
+        this.scheduler = scheduler;
+        return this;
+    }
+
     /**
      * Executes scheduling procedure for each dataset in {@code data} {@code times} times.
      *
@@ -37,15 +42,17 @@ public class NDataSetsNTimesScheduleTester implements Callable<List<List<Double>
     @Override
     public List<List<Double>> call() {
         List<List<Double>> ratiosPerDataset = new ArrayList<>();
-        if (executor == null)
-            executor = new ThreadPoolExecutor(4, 10, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+//        if (executor == null)
+//            executor = new ThreadPoolExecutor(4, 10, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
         List<Future<List<Double>>> futures = new ArrayList<>();
+
+        NTimeScheduleTester  nTimeTester = new NTimeScheduleTester(scheduler, null, times);
 
         for (ScheduleData iData : data) {
             ScheduleData currentData = iData.clone();
 
-            List<Double> ratios = new NTimeScheduleTester(scheduler, currentData, times).call();
+            List<Double> ratios = nTimeTester.setData(currentData).call();
             ratiosPerDataset.add(ratios);
 
 // todo uncomment this if you wand multithreading

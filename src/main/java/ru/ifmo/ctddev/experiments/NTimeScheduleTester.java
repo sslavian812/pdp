@@ -44,4 +44,9 @@ public class NTimeScheduleTester implements Callable<List<Double>> {
     public Scheduler getScheduler() {
         return scheduler;
     }
+
+    public NTimeScheduleTester setData(ScheduleData data) {
+        this.data = data;
+        return this;
+    }
 }
