@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * This class extracts features from dataset, packed in {@link ScheduleData} object.
+ * This class extracts features from original, packed in {@link ScheduleData} object.
  * Created by viacheslav on 14.02.2016.
  *
  * Features:

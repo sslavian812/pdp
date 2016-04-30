@@ -14,7 +14,7 @@ import java.util.*;
 
 /**
  * This class provides custom datasets from the whole one.
- * The whole dataset is stored in a file, whose path is written in the {@code application.properties} file.
+ * The whole original is stored in a file, whose path is written in the {@code application.properties} file.
  * <p>
  * Created by viacheslav on 14.02.2016.
  */
@@ -26,7 +26,7 @@ public class DatasetProvider {
     }
 
     /**
-     * get some sub-dataset of the whole.
+     * get some sub-original of the whole.
      *
      * @param size
      * @param position
@@ -51,10 +51,10 @@ public class DatasetProvider {
     }
 
     /**
-     * Provides dataset from file.
+     * Provides original from file.
      *
      * @param file path to file.
-     * @return dataset from file.
+     * @return original from file.
      */
     public static ScheduleData getFromFile(String file) {
         try {
@@ -97,15 +97,15 @@ public class DatasetProvider {
     }
 
     /**
-     * This methos provides a dataset of specified size according to other parameters.
+     * This methos provides a original of specified size according to other parameters.
      * If {@code outputFilePath} is specified(is not null),
-     * then this dataset will be alse written to the file.
+     * then this original will be alse written to the file.
      *
-     * @param size           size of dataset(size of orders).
+     * @param size           size of original(size of orders).
      * @param position       position of start
-     * @param direction      if LEFT: src is the left column, and des is the right column. RIGHT: vice versa. DEFAULT: as in dataset-file specified.
-     * @param shuffled       if true: all the dataset will be shuffled beforehand. if false: first {@code size} orders will be taken.
-     * @param outputFilePath if not null, the dataset will be written to this file (if not exists - create this file).
+     * @param direction      if LEFT: src is the left column, and des is the right column. RIGHT: vice versa. DEFAULT: as in original-file specified.
+     * @param shuffled       if true: all the original will be shuffled beforehand. if false: first {@code size} orders will be taken.
+     * @param outputFilePath if not null, the original will be written to this file (if not exists - create this file).
      * @return
      */
     private static ScheduleData getDataset(int size, int position, Direction direction, boolean shuffled, String outputFilePath) {
@@ -116,7 +116,7 @@ public class DatasetProvider {
             try {
                 orders = CSVReader.read(App.class.getClassLoader().getResource(resourceName).getFile(), ",");
             } catch (FileNotFoundException e) {
-                orders = CSVReader.read("./dataset/full.csv", ",");
+                orders = CSVReader.read("./datasets/taxi8129.csv", ",");
             }
 
             if (shuffled) {

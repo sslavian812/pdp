@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * Runs scheduler N times with specified strategy and the same dataset each time.
+ * Runs scheduler N times with specified strategy and the same original each time.
  * <p>
  * Created by viacheslav on 14.02.2016.
  */
@@ -26,7 +26,7 @@ public class NTimeScheduleTester implements Callable<List<Double>> {
     }
 
     /**
-     * Repeats {@code times} times a schedule for the same dataset and returns optimisation ratios.
+     * Repeats {@code times} times a schedule for the same original and returns optimisation ratios.
      * @return return list of optimisation ratios.
      */
     @Override

@@ -5,11 +5,11 @@ import ru.ifmo.ctddev.generate.GausianDatasetGeneratorImpl;
 import ru.ifmo.ctddev.generate.UniformDatasetGeneratorImpl;
 
 import java.awt.geom.Point2D;
-import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class generates uniform and gaussian datasets to files.
  * Created by viacheslav on 30.04.2016.
  */
 public class GenerateDatasetToFile {
@@ -41,9 +41,13 @@ public class GenerateDatasetToFile {
         List<String[]> records = new ArrayList<String[]>(8001);
         records.add(header.split(","));
         for (int i = 0; i < points.size(); i += 2) {
-            records.add(new String[]{"" + i / 2,
+            records.add(new String[]{
+                    "" + i / 2,
                     "" + points.get(i).getX(), "" + points.get(i).getY(),
-                    "" + points.get(i + 1).getX(), "" + points.get(i + 1).getY(), ">"});
+                    "" + i / 2,
+                    "" + points.get(i + 1).getX(), "" + points.get(i + 1).getY(),
+                    ">"   // direction. for generated datasets it's not used
+            });
         }
 
         CSVWriter.write("C:/tmp/" + fileName, records);

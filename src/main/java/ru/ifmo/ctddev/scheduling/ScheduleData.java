@@ -46,7 +46,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
     private int ordersNum;
 
     /**
-     * Id's from dataset file. For future feature extraction.
+     * Id's from original file. For future feature extraction.
      * Each integer here is an identifier of concrete src-dst pair.
      */
     private List<Integer> ids;
