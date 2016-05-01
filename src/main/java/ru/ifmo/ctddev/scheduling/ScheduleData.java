@@ -1,5 +1,6 @@
 package ru.ifmo.ctddev.scheduling;
 
+import javafx.util.Pair;
 import ru.ifmo.ctddev.Config;
 
 import java.awt.geom.Point2D;
@@ -59,6 +60,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     /**
      * This publi constructor specifies coordinates of considered points and the depot-point.
+     *
      * @param points
      * @param depot
      */
@@ -82,6 +84,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     /**
      * Calculates the mass center of points.
+     *
      * @param points
      * @return
      */
@@ -153,6 +156,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     /**
      * Provides the number of points, which is equal 2*N
+     *
      * @return
      */
     public int getSize() {
@@ -162,6 +166,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     /**
      * Provides Cost of internal data.
+     *
      * @return
      */
     public double getCost() {
@@ -174,6 +179,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
     /**
      * Calculates cost of given route, according to distance-function implemented in this ScheduleData.
      * Increments fitFunctionCallCount.
+     *
      * @param route
      * @return
      */
@@ -188,6 +194,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     /**
      * Calculates cost of given route as a List, according to distance-function implemented in this ScheduleData.
+     *
      * @param route
      * @return
      */
@@ -202,6 +209,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     /**
      * Calculated distance between two points according to the Euclidean metric.
+     *
      * @param s1
      * @param d1
      * @return
@@ -209,12 +217,19 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
     private double dist(int s1, int d1) {
         int s = s1 < 0 ? -s1 : s1;
         int d = d1 < 0 ? -d1 : d1;
-        return Math.sqrt((points[s].getX() - points[d].getX()) * (points[s].getX() - points[d].getX())
-                + (points[s].getY() - points[d].getY()) * (points[s].getY() - points[d].getY()));
+        return dist(points[s], points[d]);
+//        return Math.sqrt((points[s].getX() - points[d].getX()) * (points[s].getX() - points[d].getX())
+//                + (points[s].getY() - points[d].getY()) * (points[s].getY() - points[d].getY()));
+    }
+
+    public static double dist(Point2D.Double p1, Point2D.Double p2) {
+        return Math.sqrt((p1.getX() - p2.getX()) * (p1.getX() - p2.getX())
+                + (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
     }
 
     /**
      * Provdes the number of pairs, N.
+     *
      * @return
      */
     public int getOrdersNum() {
@@ -229,6 +244,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
     /**
      * Provides current route as list of points.
      * For future use by visualization.
+     *
      * @return
      */
     public List<Point2D.Double> getRouteAsPoints() {
@@ -301,6 +317,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 
     /**
      * compares two routes through points, which are in this ScheduleData object.
+     *
      * @param o1
      * @param o2
      * @return
@@ -318,6 +335,25 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
         return fitFunctionCallsCount;
     }
 
+    public List<Point2D.Double> getSrcOrDstPoints(boolean getSrc) {
+//        List<Point2D.Double> result = new ArrayList<>();
+//        for (int p : route) {
+//            if (getSrc && p >= 0)
+//                result.add(points[p]);
+//            else if (!getSrc && p < 0)
+//                result.add(points[-p]);
+//        }
+//        return result;
+        return Arrays.asList(points).subList(0, getOrdersNum());
+    }
+
+    public List<Pair<Point2D.Double, Point2D.Double>> getAllSrcDstPairs() {
+        List<Pair<Point2D.Double, Point2D.Double>> result = new ArrayList<>(getOrdersNum());
+        for (int i = 0; i < getOrdersNum(); ++i) {
+            Pair<Point2D.Double, Point2D.Double> pair = new Pair<>(points[i], points[getOrdersNum() + i]);
+        }
+        return result;
+    }
 
     // todo: ad method to serialize and deserialise data to/from file as json.
 }
