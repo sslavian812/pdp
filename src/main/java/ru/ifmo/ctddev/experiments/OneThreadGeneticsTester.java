@@ -4,6 +4,7 @@ import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.Strategy;
+import ru.ifmo.ctddev.scheduling.StrategyProvider;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
 import ru.ifmo.ctddev.scheduling.smallmoves.*;
@@ -23,24 +24,26 @@ public class OneThreadGeneticsTester {
 
     public static void main(String[] args) {
 
-        List<SmallMove> all = new ArrayList<>(5);
-        all.add(new Lin2opt());
-        all.add(new CoupleExchange());
-        all.add(new DoubleBridge());
-        all.add(new PointExchange());
-
-
-        List<Strategy> strategies = new ArrayList<>();
-        strategies.add(new Strategy(new Lin2opt()));
-        strategies.add(new Strategy(new CoupleExchange()));
-        strategies.add(new Strategy(new DoubleBridge()));
-        strategies.add(new Strategy(new PointExchange()));
-        strategies.add(new Strategy(all));
-
-        strategies.get(strategies.size()-1).setComment("Mixed");
+//        List<SmallMove> all = new ArrayList<>(5);
+//        all.add(new Lin2opt());
+//        all.add(new CoupleExchange());
+//        all.add(new DoubleBridge());
+//        all.add(new PointExchange());
+//
+//
+//        List<Strategy> strategies = new ArrayList<>();
+//        strategies.add(new Strategy(new Lin2opt()));
+//        strategies.add(new Strategy(new CoupleExchange()));
+//        strategies.add(new Strategy(new DoubleBridge()));
+//        strategies.add(new Strategy(new PointExchange()));
+//        strategies.add(new Strategy(all));
+//
+//        strategies.get(strategies.size()-1).setComment("Mixed");
+        List<Strategy> strategies = StrategyProvider.provideAllStrategies();
 
         GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
-        ScheduleData scheduleData = DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT, "taxi8129.csv", null);
+        ScheduleData scheduleData = DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
+                "taxi8129.csv", null);
         int size = scheduleData.getSize();
         int generations = size * size;
 
@@ -50,9 +53,9 @@ public class OneThreadGeneticsTester {
             schedulers.add(factory.getOnePlusNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
             schedulers.add(factory.getOneCommaNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
             schedulers.add(factory.getBigMutationsScheduler(strategy, generations, (int) Math.sqrt(size / 2)));
-        }
-        for (Strategy strategy: strategies)
             schedulers.add(factory.getKPlusKNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0), (int) Math.sqrt(size / 4.0)));
+        }
+//        for (Strategy strategy: strategies)
 
         long startTime = System.currentTimeMillis();
 
@@ -77,12 +80,13 @@ public class OneThreadGeneticsTester {
             long time = System.currentTimeMillis();
             List<Double> ratios = new NTimeScheduleTester(scheduler, scheduleData.clone(), times).call();
             long averagePerRun = (long) (((double) System.currentTimeMillis() - time) / ratios.size());
-//            System.out.println(scheduler.toString());
+            System.out.println(scheduler.getComment());
+            System.out.println(times + "x times");
             System.out.println("# averagePerRun: " + averagePerRun + " ms =~ " + averagePerRun/1000 + " s");
             System.out.println("# total time: " + (System.currentTimeMillis() - time) + " ms =~ " + (System.currentTimeMillis() - time)/1000 + " s");
             System.out.println("ratios=" + Arrays.toString(ratios.toArray()));
 
-            System.out.println(((GeneticStrategyScheduler)scheduler).getJuliaHist(5, 50, averagePerRun));
+//            System.out.println(((GeneticStrategyScheduler)scheduler).getJuliaHist(5, 50, averagePerRun));
             System.out.println("#================#");
             System.out.println();
         }

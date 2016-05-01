@@ -111,7 +111,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     @Override
     public double schedule(ScheduleData scheduleData) {
         try {
-            logFile = new BufferedWriter(new FileWriter("wolfram_uniform.txt", true));
+            logFile = new BufferedWriter(new FileWriter("wolfram.txt", true));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,37 +148,38 @@ public class GeneticStrategyScheduler implements Scheduler {
 
 
         // todo uncomment this if you want graphics
-//        try {
-//            logFile.write("\"" + comment + "_" + strategy.getComment() + ":\";");
-//            logFile.write("xs = {");
-//            logFile.write(String.join(", ", xs));
-//            logFile.write("};");
-//            logFile.newLine();
-//            logFile.write("ys = {");
-//            logFile.write(String.join(", ", ys));
-//            logFile.write("};");
-//            logFile.newLine();
-//            logFile.write("list = Transpose[{xs, ys}];");
-//            logFile.newLine();
-//            logFile.write("ListPlot[list, AxesLabel -> {\"fit function calls\", \"relative cost\"}, PlotLabel -> \"");
-//            logFile.write(comment + " - " + strategy.getComment());
-//                    logFile.write("\", Joined -> True, PlotRange -> {{0, 200500}, {0, 1}}]");
-//            logFile.newLine();
-////            logFile.write("\"===================================================\";");
-//            logFile.newLine();
-//            logFile.flush();
-//            logFile.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            logFile.write("\"" + comment + "_" + strategy.getComment() + ":\";");
+            logFile.write("xs = {");
+            logFile.write(String.join(", ", xs));
+            logFile.write("};");
+            logFile.newLine();
+            logFile.write("ys = {");
+            logFile.write(String.join(", ", ys));
+            logFile.write("};");
+            logFile.newLine();
+            logFile.write("list = Transpose[{xs, ys}];");
+            logFile.newLine();
+            logFile.write("ListPlot[list, AxesLabel -> {\"fit function calls\", \"relative cost\"}, PlotLabel -> \"");
+            logFile.write(comment + " - " + strategy.getComment());
+                    logFile.write("\", Joined -> True, PlotRange -> {{0, 200500}, {0, 1}}]");
+            logFile.newLine();
+//            logFile.write("\"===================================================\";");
+            logFile.newLine();
+            logFile.flush();
+            logFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         scheduleData.setRoute(currentGeneration.get(0));
         return (initialCost - scheduleData.getCost()) / initialCost;
     }
 
     private void printState(List<int[]> currentGeneration, ScheduleData originalScheduleData) {
+        //(initialCost - reachedCost) / initialCost;
         xs.add("" + originalScheduleData.getFitFunctionCallsCount());
-        ys.add("" + originalScheduleData.getCost(currentGeneration.get(0)) / initialCost);
+        ys.add("" + ((initialCost - originalScheduleData.getCost(currentGeneration.get(0))) / initialCost));
     }
 
 

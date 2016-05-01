@@ -3,6 +3,7 @@ package ru.ifmo.ctddev.experiments;
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Strategy;
+import ru.ifmo.ctddev.scheduling.StrategyProvider;
 import ru.ifmo.ctddev.scheduling.StrategyScheduler;
 import ru.ifmo.ctddev.scheduling.smallmoves.*;
 
@@ -17,45 +18,20 @@ import java.util.concurrent.*;
 public class StrategyRunner {
 
     public static final int times = 100;
-    public static final int size = 100;
-    public static final int start = 0;
+    public static final int size = 50;
+    public static int start = 0;
+    public static final int n_datasets = 5;
     public static final boolean shuffled = false;
 
     public static void main(String[] args) {
-
-        List<SmallMove> all = new ArrayList<>(5);
-        all.add(new Lin2opt());
-        all.add(new CoupleExchange());
-        all.add(new DoubleBridge());
-        all.add(new PointExchange());
-        all.add(new RelocateBlock());
-
-        List<SmallMove> two = new ArrayList<>(5);
-        two.add(new Lin2opt());
-        two.add(new PointExchange());
-
-
-
-        List<Strategy> strategies = new ArrayList<>();
-        strategies.add(new Strategy(new Lin2opt()));
-        strategies.add(new Strategy(new CoupleExchange()));
-        strategies.add(new Strategy(new DoubleBridge()));
-        strategies.add(new Strategy(new PointExchange()));
-        strategies.add(new Strategy(two));
-        strategies.add(new Strategy(all));
-        strategies.add(new Strategy(new RelocateBlock()));
-
-
+        List<Strategy> strategies = StrategyProvider.provideAllStrategies();
 
         List<ScheduleData> datasets = new ArrayList<>();
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
-        datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,"uniform8000.csv", null));
-
+        while (start + size < size * n_datasets) {
+            datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
+                    "uniform8000.csv", null));
+            start +=size;
+        }
 
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 4, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(100));
         List<Future<List<Double>>> futures = new ArrayList<>();
@@ -81,7 +57,7 @@ public class StrategyRunner {
             }
         }
 
-        System.out.println("time spent: " + (System.currentTimeMillis()-startTime) /1000 + " s");
+        System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
 
         threadPoolExecutor.shutdown();
 

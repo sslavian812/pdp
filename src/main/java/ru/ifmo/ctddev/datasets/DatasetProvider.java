@@ -119,7 +119,8 @@ public class DatasetProvider {
             try {
                 orders = CSVReader.read(App.class.getClassLoader().getResource(resourceName + inputFilePath).getFile(), ",");
             } catch (FileNotFoundException e) {
-                orders = CSVReader.read("./datasets/uniform8000.csv", ",");
+//                orders = CSVReader.read("./datasets/gaussian8000.csv", ",");
+                throw new RuntimeException(e);
             }
 
             if (shuffled) {

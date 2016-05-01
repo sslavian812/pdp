@@ -51,7 +51,6 @@ public class StrategyProvider {
         strategies.add(new Strategy(L2OandDB));
         strategies.add(new Strategy(L2Oand3more, new double[]{3.0/6, 1.0/6, 1.0/6, 1.0/6 }));
         strategies.add(new Strategy(allSmallMoves));
-//        strategies.get(strategies.size()-1).setComment("Mixed");
         strategies.add(new Strategy(L2OandRB));
         strategies.add(new Strategy(new RelocateBlock()));
 

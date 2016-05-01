@@ -28,31 +28,31 @@ public class GeneticsSchedulerFactory {
 
     public GeneticStrategyScheduler getOnePluOneScheduler(Strategy strategy, int generations) {
         GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, 1, 1.0, 1, 1, generations, false);
-        g.setComment("OnePluOneScheduler");
+        g.setComment("1+1");
         return g;
     }
 
     public GeneticStrategyScheduler getOnePlusNScheduler(Strategy strategy, int generations, int n) {
         GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, n, 1.0, 1, 1, generations, false);
-        g.setComment("OnePlusNScheduler");
+        g.setComment("1+N");
         return g;
     }
 
     public GeneticStrategyScheduler getOneCommaNScheduler(Strategy strategy, int generations, int n) {
         GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, n, 1.0, 1, 1, generations, true);
-        g.setComment("OneCommaNScheduler");
+        g.setComment("1,N");
         return g;
     }
 
     public GeneticStrategyScheduler getKPlusKNScheduler(Strategy strategy, int generations, int n, int k) {
         GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, k, n, 1.0, k, 1, generations, false);
-        g.setComment("KPlusKNScheduler");
+        g.setComment("K+KN");
         return g;
     }
 
     public GeneticStrategyScheduler getBigMutationsScheduler(Strategy strategy, int generations, int n) {
         GeneticStrategyScheduler g = new GeneticStrategyScheduler(strategy, 1, n, 1.0, 1, 1, generations, false, true);
-        g.setComment("BigMutationsScheduler");
+        g.setComment("1+N,BM");
         return g;
     }
 
