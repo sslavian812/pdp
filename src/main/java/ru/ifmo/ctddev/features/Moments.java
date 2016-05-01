@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * This class implements logic to extract statistical features from a range of numbers.
- *
+ * Completely stateless.
  * Created by viacheslav on 14.02.2016.
  */
 public class Moments {
@@ -151,14 +151,14 @@ public class Moments {
                 "the amount of dispersion"
         ));
         features.add(new Feature(
-                prefix + "variance", variance, "Ex2. measures, how far a set of numbers are spread out"
+                prefix + "variance", variance, "Ex2. measures how far a set of numbers are spread out"
         ));
         features.add(new Feature(
                 prefix + "skew", skew, "Ex3. measure of the lopsidedness of the distribution"
         ));
         features.add(new Feature(
                 prefix + "kurtosis", kurtosis,
-                "Ex4. measure of the heaviness of the tail of the distribution, compared to the normal distribution"
+                "Ex4. measure of the heaviness of the tail of the distribution compared to the normal distribution"
         ));
 
         return features;

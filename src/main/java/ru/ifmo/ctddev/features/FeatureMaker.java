@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 /**
  * This class extracts features from original, packed in {@link ScheduleData} object.
+ * Completely stateless.
+ * <p>
  * Created by viacheslav on 14.02.2016.
  * <p>
  * Features:
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
  * height = maxY-minY
  * meanX
  * meanY
+ * ...
  */
 public class FeatureMaker {
 
@@ -40,8 +43,13 @@ public class FeatureMaker {
 
         features.addAll(getMomentsForEdgesLengths(scheduleData));
 
+
+        features.add(getDstLength(scheduleData));
         features.add(getSrcLength(scheduleData));
         features.add(getDstLength(scheduleData));
+
+        features.add(getRelativeSrcLength(scheduleData));
+        features.add(getRelativeDstLength(scheduleData));
 
         features.add(new Feature(
                 "n", scheduleData.getOrdersNum(), "amount of pairs in dataset"
@@ -91,6 +99,11 @@ public class FeatureMaker {
         return momentsCalculator.extractStatisticalFeatures(xs, "edges_");
     }
 
+    public Feature getLength(ScheduleData scheduleData) {
+        return new Feature("length", getCostByPoints(Arrays.asList(scheduleData.getPoints())),
+                "length of path through all points");
+    }
+
     public Feature getSrcLength(ScheduleData scheduleData) {
         return new Feature("src_length", getCostByPoints(scheduleData.getSrcOrDstPoints(true)),
                 "length of path through src points only");
@@ -100,6 +113,20 @@ public class FeatureMaker {
         return new Feature("dst_length", getCostByPoints(scheduleData.getSrcOrDstPoints(false)),
                 "length of path through dst points only");
     }
+
+    public Feature getRelativeSrcLength(ScheduleData scheduleData) {
+        return new Feature("relative_src_length",
+                getCostByPoints(scheduleData.getSrcOrDstPoints(true)) / getCostByPoints(Arrays.asList(scheduleData.getPoints())),
+                "length of path through src points relative to he whole path");
+    }
+
+    public Feature getRelativeDstLength(ScheduleData scheduleData) {
+        return new Feature("relative_dst_length",
+                getCostByPoints(scheduleData.getSrcOrDstPoints(false)) / getCostByPoints(Arrays.asList(scheduleData.getPoints())),
+                "length of path through dst points relative to he whole path");
+    }
+
+
 
     private double getCostByPoints(List<Point2D.Double> route) {
         double acc = 0.0;

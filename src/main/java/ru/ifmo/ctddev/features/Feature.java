@@ -25,10 +25,15 @@ public class Feature {
 
     /**
      * provides comma separated name,value,description as a line
+     *
      * @return
      */
     public String toCSVString() {
         return name + "," + value + "," + description;
+    }
+
+    public static String getHeadOfCSV() {
+        return "name,value,description";
     }
 
 }

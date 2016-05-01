@@ -244,7 +244,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
     /**
      * Provides current route as list of points.
      * For future use by visualization.
-     *
+     * todo IndexOutOfBound possible
      * @return
      */
     public List<Point2D.Double> getRouteAsPoints() {
@@ -344,13 +344,17 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 //                result.add(points[-p]);
 //        }
 //        return result;
-        return Arrays.asList(points).subList(0, getOrdersNum());
+        if(getSrc)
+            return Arrays.asList(points).subList(0, getOrdersNum());
+        else
+            return Arrays.asList(points).subList(getOrdersNum(), points.length);
     }
 
     public List<Pair<Point2D.Double, Point2D.Double>> getAllSrcDstPairs() {
         List<Pair<Point2D.Double, Point2D.Double>> result = new ArrayList<>(getOrdersNum());
         for (int i = 0; i < getOrdersNum(); ++i) {
             Pair<Point2D.Double, Point2D.Double> pair = new Pair<>(points[i], points[getOrdersNum() + i]);
+            result.add(pair);
         }
         return result;
     }
