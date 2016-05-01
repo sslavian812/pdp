@@ -44,15 +44,15 @@ public class StrategyProvider {
 
         List<Strategy> strategies = new ArrayList<>();
         strategies.add(new Strategy(new Lin2opt()));
-        strategies.add(new Strategy(new CoupleExchange()));
-        strategies.add(new Strategy(new DoubleBridge()));
-        strategies.add(new Strategy(new PointExchange()));
-        strategies.add(new Strategy(L2OandPX));
-        strategies.add(new Strategy(L2OandDB));
-        strategies.add(new Strategy(L2Oand3more, new double[]{3.0/6, 1.0/6, 1.0/6, 1.0/6 }));
-        strategies.add(new Strategy(allSmallMoves));
-        strategies.add(new Strategy(L2OandRB));
-        strategies.add(new Strategy(new RelocateBlock()));
+//        strategies.add(new Strategy(new CoupleExchange()));
+//        strategies.add(new Strategy(new DoubleBridge()));
+//        strategies.add(new Strategy(new PointExchange()));
+//        strategies.add(new Strategy(L2OandPX));
+//        strategies.add(new Strategy(L2OandDB));
+//        strategies.add(new Strategy(L2Oand3more, new double[]{3.0/6, 1.0/6, 1.0/6, 1.0/6 }));
+//        strategies.add(new Strategy(allSmallMoves));
+//        strategies.add(new Strategy(L2OandRB));
+//        strategies.add(new Strategy(new RelocateBlock()));
 
         return strategies;
     }

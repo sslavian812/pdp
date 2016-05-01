@@ -22,4 +22,13 @@ public class Feature {
                 ",\n    description='" + description + '\'' +
                 "\n}";
     }
+
+    /**
+     * provides comma separated name,value,description as a line
+     * @return
+     */
+    public String toCSVString() {
+        return name + "," + value + "," + description;
+    }
+
 }

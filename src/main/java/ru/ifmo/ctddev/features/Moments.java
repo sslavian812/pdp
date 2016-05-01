@@ -34,7 +34,7 @@ public class Moments {
      * @param prefix  prefix, which should be appended to feature name, if needed.
      * @return extracted statistical features.
      */
-    public List<Feature> extractStatisticalFeatures(List<Double> doubles, String prefix) {
+     public List<Feature> extractStatisticalFeatures(List<Double> doubles, String prefix) {
 
         /**
          * the median value of numbers range.
