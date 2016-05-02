@@ -1,6 +1,5 @@
 package ru.ifmo.ctddev.ml;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.util.Pair;
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.ConcurrentStrategyScheduler;
@@ -24,12 +23,12 @@ public class AsnwerBuilder {
     private static List<Strategy> strategies = StrategyProvider.provideAllStrategies();
     private static BlockingQueue<Pair<String, Future<List<Double>>>> queue = new ArrayBlockingQueue<>(1000);
 
-    private static final String targetDir = "src/resources/ml/data/";
+    private static final String targetDir = "./src/main/resources/ml";
 
     public static void main(String[] args) {
-        File dir = new File(targetDir);
+        File dir = new File(targetDir + "/data");
         File[] directoryListing = dir.listFiles();
-        threadPoolExecutor = new ThreadPoolExecutor(4, 8, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(50));
+        threadPoolExecutor = new ThreadPoolExecutor(4, 8, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
         long startTime = System.currentTimeMillis();
 
         writeAnswersInSeparateThread();
@@ -56,6 +55,7 @@ public class AsnwerBuilder {
 
         threadPoolExecutor.shutdown();
 
+
         System.out.println();
         System.out.println("answers generation is complete.");
         System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
@@ -64,8 +64,9 @@ public class AsnwerBuilder {
 
     private static void initTasks(ScheduleData data, String datasetName) {
         try {
-            FileWriter writer = new FileWriter(targetDir + "answers/" + datasetName + ".csv", false);
-            writer.write("strategyName;Probabilities;result");
+            FileWriter writer = new FileWriter(targetDir + "/answers/" + datasetName + ".csv", false);
+            writer.write("S=[LO,CX,DB,PX,RB];result");
+            writer.write(System.lineSeparator());
             writer.flush();
             writer.close();
         } catch (IOException e) {
@@ -74,11 +75,17 @@ public class AsnwerBuilder {
         System.out.println("task initialized for file " + datasetName);
 
         for (Strategy s : strategies) {
-            Future<List<Double>> ratios = threadPoolExecutor.submit(new NTimeStatelessRepeater(
-                    scheduler, s, data.clone(), 1, 12 * data.getOrdersNum() * data.getOrdersNum()));
+            Future<List<Double>> ratios = null;
+            try {
+                ratios = threadPoolExecutor.submit(new NTimeStatelessRepeater(
+                        scheduler, s, data.clone(), 2, 12 * data.getOrdersNum() * data.getOrdersNum()));
+            } catch (RejectedExecutionException e) {
+                System.err.println("rejected: " + datasetName);
+                e.printStackTrace();
+            }
             try {
                 queue.put(new Pair<String, Future<List<Double>>>(
-                        datasetName + "#" + StrategyProvider.getNameAndProbabilities(s), ratios));
+                        datasetName + "#" + StrategyProvider.getProbabilities(s), ratios));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -93,16 +100,17 @@ public class AsnwerBuilder {
                     try {
                         Pair<String, Future<List<Double>>> pair = queue.take();
                         String name = pair.getKey().split("#")[0];
-                        String strategy = pair.getKey().split("#")[1];
                         if (name.equals("stop"))
                             return;
+                        String strategy = pair.getKey().split("#")[1];
                         List<Double> ratios = pair.getValue().get();
                         double result = calcAverage(ratios);
-                        FileWriter writer = new FileWriter(targetDir + "answers/" + name + ".csv", true);
+                        FileWriter writer = new FileWriter(targetDir + "/answers/" + name + ".csv", true);
                         writer.write(strategy + ";" + result);
                         writer.write(System.lineSeparator());
                         writer.flush();
                         writer.close();
+                        System.out.println(name + " - " + strategy + " - OK");
                     } catch (ExecutionException | IOException | InterruptedException e) {
                         e.printStackTrace();
                     }

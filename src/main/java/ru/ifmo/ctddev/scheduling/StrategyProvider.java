@@ -48,15 +48,15 @@ public class StrategyProvider {
 
         List<Strategy> strategies = new ArrayList<>();
         strategies.add(new Strategy(new Lin2opt()));
-//        strategies.add(new Strategy(new CoupleExchange()));
-//        strategies.add(new Strategy(new DoubleBridge()));
-//        strategies.add(new Strategy(new PointExchange()));
-//        strategies.add(new Strategy(L2OandPX));
-//        strategies.add(new Strategy(L2OandDB));
-//        strategies.add(new Strategy(L2Oand3more, new double[]{3.0/6, 1.0/6, 1.0/6, 1.0/6 }));
-//        strategies.add(new Strategy(allSmallMoves));
-//        strategies.add(new Strategy(L2OandRB));
-//        strategies.add(new Strategy(new RelocateBlock()));
+        strategies.add(new Strategy(new CoupleExchange()));
+        strategies.add(new Strategy(new DoubleBridge()));
+        strategies.add(new Strategy(new PointExchange()));
+        strategies.add(new Strategy(L2OandPX));
+        strategies.add(new Strategy(L2OandDB));
+        strategies.add(new Strategy(L2Oand3more, new double[]{3.0/6, 1.0/6, 1.0/6, 1.0/6 }));
+        strategies.add(new Strategy(allSmallMoves));
+        strategies.add(new Strategy(L2OandRB));
+        strategies.add(new Strategy(new RelocateBlock()));
 
         return strategies;
     }
@@ -81,7 +81,7 @@ public class StrategyProvider {
         return map;
     }
 
-    public static String getNameAndProbabilities(Strategy strategy) {
+    public static String getProbabilities(Strategy strategy) {
         Map<String, Double> map = new HashMap<>();
         List<SmallMove> smallMoves = strategy.getSmallMoves();
         double[] probabilities = strategy.getProbabilities();
@@ -91,11 +91,11 @@ public class StrategyProvider {
         }
 
         StringBuilder stringBuilder = new StringBuilder("[");
-        Map<String, String > shortMap = getShortNamesMap();
-        stringBuilder.append(String.join(",", getAllSmallMoves().stream()
-                .map(smallMove -> shortMap.get(smallMove.toString()))
-                .collect(Collectors.toList())));
-        stringBuilder.append("];[");
+//        Map<String, String > shortMap = getShortNamesMap();
+//        stringBuilder.append(String.join(",", getAllSmallMoves().stream()
+//                .map(smallMove -> shortMap.get(smallMove.toString()))
+//                .collect(Collectors.toList())));
+//        stringBuilder.append("];[");
 
         stringBuilder.append(String.join(",", getAllSmallMoves().stream().map(smallMove -> {
             if (map.containsKey(smallMove.toString()))
