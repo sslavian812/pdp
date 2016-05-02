@@ -32,13 +32,14 @@ public class SplitAndCalculateFeaturesToFile {
             int size = 50;
 
             while (start + size <= 8000) {
-                String newFileName = "./src/main/resources/ml/" + file + "_" + start + "_" + (start + size);
+                String dataFilePath = "./src/main/resources/ml/data/" + file.split("\\.")[0] + "_" + start + "_" + (start + size);
+                String featuresFilePath = "./src/main/resources/ml/features/" + file.split("\\.")[0] + "_" + start + "_" + (start + size);
                 ScheduleData scheduleData = DatasetProvider.getDataset(
                         size, start, DatasetProvider.Direction.RIGHT,
-                        file, newFileName + ".csv");
+                        file, dataFilePath + ".csv");
 
                 BufferedWriter writer = new BufferedWriter(new FileWriter(
-                        newFileName + "_features.csv", false));
+                        featuresFilePath + ".csv", false));
 
                 writer.write(Feature.getHeadOfCSV());
                 writer.newLine();
@@ -56,7 +57,7 @@ public class SplitAndCalculateFeaturesToFile {
                 writer.close();
 
                 start += size;
-                System.out.println(newFileName + " - OK");
+                System.out.println(dataFilePath + " - OK");
             }
 
         } catch (IOException e) {

@@ -1,0 +1,56 @@
+name,value,description
+all_xs_median,-7.928952251993899,the median value of numbers range
+all_xs_mean,-12.991157958328252,Ex. The average value of numbers in range. mean = sum / n
+all_xs_average_deviation,11.48564406091625,average difference between the observed value and mean of values
+all_xs_standatd_deviation,15.924568010896964,the amount of dispersion
+all_xs_variance,253.59186633368287,Ex2. measures how far a set of numbers are spread out
+all_xs_skew,-1.3767428771384027,Ex3. measure of the lopsidedness of the distribution
+all_xs_kurtosis,2.0298392105237415,Ex4. measure of the heaviness of the tail of the distribution compared to the normal distribution
+all_ys_median,1051.225485494318,the median value of numbers range
+all_ys_mean,1061.8260377669803,Ex. The average value of numbers in range. mean = sum / n
+all_ys_average_deviation,18.193414604771185,average difference between the observed value and mean of values
+all_ys_standatd_deviation,23.266134847303853,the amount of dispersion
+all_ys_variance,541.3130307329267,Ex2. measures how far a set of numbers are spread out
+all_ys_skew,1.3886113688900197,Ex3. measure of the lopsidedness of the distribution
+all_ys_kurtosis,1.2456690539195048,Ex4. measure of the heaviness of the tail of the distribution compared to the normal distribution
+src_xs_median,-18.702703918275958,the median value of numbers range
+src_xs_mean,-17.983452337265692,Ex. The average value of numbers in range. mean = sum / n
+src_xs_average_deviation,16.932618972021878,average difference between the observed value and mean of values
+src_xs_standatd_deviation,21.19729617975616,the amount of dispersion
+src_xs_variance,449.3253653323052,Ex2. measures how far a set of numbers are spread out
+src_xs_skew,-0.47104717942294355,Ex3. measure of the lopsidedness of the distribution
+src_xs_kurtosis,-0.5844484702925574,Ex4. measure of the heaviness of the tail of the distribution compared to the normal distribution
+src_ys_median,1071.954226259416,the median value of numbers range
+src_ys_mean,1072.5767350020346,Ex. The average value of numbers in range. mean = sum / n
+src_ys_average_deviation,24.407264031794515,average difference between the observed value and mean of values
+src_ys_standatd_deviation,28.907651705241516,the amount of dispersion
+src_ys_variance,835.6523271115527,Ex2. measures how far a set of numbers are spread out
+src_ys_skew,0.367560399912049,Ex3. measure of the lopsidedness of the distribution
+src_ys_kurtosis,-0.8512482357327,Ex4. measure of the heaviness of the tail of the distribution compared to the normal distribution
+dst_xs_median,-18.702703918275958,the median value of numbers range
+dst_xs_mean,-17.983452337265692,Ex. The average value of numbers in range. mean = sum / n
+dst_xs_average_deviation,16.932618972021878,average difference between the observed value and mean of values
+dst_xs_standatd_deviation,21.19729617975616,the amount of dispersion
+dst_xs_variance,449.3253653323052,Ex2. measures how far a set of numbers are spread out
+dst_xs_skew,-0.47104717942294355,Ex3. measure of the lopsidedness of the distribution
+dst_xs_kurtosis,-0.5844484702925574,Ex4. measure of the heaviness of the tail of the distribution compared to the normal distribution
+dst_ys_median,1051.225485494318,the median value of numbers range
+dst_ys_mean,1051.075340531926,Ex. The average value of numbers in range. mean = sum / n
+dst_ys_average_deviation,1.3893112065613469,average difference between the observed value and mean of values
+dst_ys_standatd_deviation,4.706220178623036,the amount of dispersion
+dst_ys_variance,22.14850836967864,Ex2. measures how far a set of numbers are spread out
+dst_ys_skew,3.6988416409745724,Ex3. measure of the lopsidedness of the distribution
+dst_ys_kurtosis,22.901737877276762,Ex4. measure of the heaviness of the tail of the distribution compared to the normal distribution
+edges_median,33.22790562931279,the median value of numbers range
+edges_mean,35.10198417462052,Ex. The average value of numbers in range. mean = sum / n
+edges_average_deviation,19.78338241429832,average difference between the observed value and mean of values
+edges_standatd_deviation,23.74663157538313,the amount of dispersion
+edges_variance,563.9025111769831,Ex2. measures how far a set of numbers are spread out
+edges_skew,0.46082499726062987,Ex3. measure of the lopsidedness of the distribution
+edges_kurtosis,-0.8378912122218272,Ex4. measure of the heaviness of the tail of the distribution compared to the normal distribution
+dst_length,91.63081498334726,length of path through dst points only
+src_length,1999.5125464835942,length of path through src points only
+length,2183.9692076727533,length of path through all points
+relative_src_length,0.91554063100289,length of path through src points relative to he whole path
+relative_dst_length,0.04195609290709251,length of path through dst points relative to he whole path
+n,50.0,amount of pairs in dataset

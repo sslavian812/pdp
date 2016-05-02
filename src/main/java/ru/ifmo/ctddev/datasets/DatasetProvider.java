@@ -168,6 +168,7 @@ public class DatasetProvider {
 
 
             if (outputFilePath != null)
+                orders.add(0, "id1,x1,y1,id2,x2,y2,direction".split(","));
                 CSVWriter.write(outputFilePath, orders);
 
             return scheduleData;

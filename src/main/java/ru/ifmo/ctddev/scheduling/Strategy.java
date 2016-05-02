@@ -121,4 +121,12 @@ public class Strategy {
     public String getComment() {
         return comment == null ? "" : comment + " - " + Arrays.toString(probabilities);
     }
+
+    public double[] getProbabilities() {
+        return probabilities;
+    }
+
+    public List<SmallMove> getSmallMoves() {
+        return smallMoves;
+    }
 }

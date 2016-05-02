@@ -46,7 +46,7 @@ public class FeatureMaker {
 
         features.add(getDstLength(scheduleData));
         features.add(getSrcLength(scheduleData));
-        features.add(getDstLength(scheduleData));
+        features.add(getLength(scheduleData));
 
         features.add(getRelativeSrcLength(scheduleData));
         features.add(getRelativeDstLength(scheduleData));
