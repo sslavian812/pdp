@@ -45,5 +45,8 @@
             <artifactId>colt</artifactId>
             <version>1.2.0</version>
         </dependency>
+
+        <!--todo add jar-dependencies here-->
+
     </dependencies>
 </project>
