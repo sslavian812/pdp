@@ -53,7 +53,7 @@ public class StrategyProvider {
         strategies.add(new Strategy(new PointExchange()));
         strategies.add(new Strategy(L2OandPX));
         strategies.add(new Strategy(L2OandDB));
-        strategies.add(new Strategy(L2Oand3more, new double[]{3.0/6, 1.0/6, 1.0/6, 1.0/6 }));
+        strategies.add(new Strategy(L2Oand3more, new double[]{3.0 / 6, 1.0 / 6, 1.0 / 6, 1.0 / 6}));
         strategies.add(new Strategy(allSmallMoves));
         strategies.add(new Strategy(L2OandRB));
         strategies.add(new Strategy(new RelocateBlock()));
@@ -108,5 +108,17 @@ public class StrategyProvider {
 
         stringBuilder.append("]");
         return stringBuilder.toString();
+    }
+
+    public static Map<String, String> getStrategiesMapToClasses() {
+        Map<String, String> propToClassMap = new HashMap<>();
+        final int[] i = {1};
+
+        provideAllStrategies().stream().map(s -> getProbabilities(s))
+                .forEach(p -> {
+                    propToClassMap.put(p, "" + i[0]);
+                    ++i[0];
+                });
+        return propToClassMap;
     }
 }
