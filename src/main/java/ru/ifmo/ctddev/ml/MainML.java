@@ -1,5 +1,6 @@
 package ru.ifmo.ctddev.ml;
 
+import weka.classifiers.trees.J48;
 import weka.core.Instances;
 
 import java.io.BufferedReader;
@@ -13,14 +14,18 @@ public class MainML {
     public static void main(String[] args) {
         try {
             BufferedReader reader = new BufferedReader(
-                    new FileReader("src/main/resources/tmp/data.arff"));
+                    new FileReader("src/main/resources/ml/train.arff"));
             Instances data = new Instances(reader);
             reader.close();
             data.setClassIndex(data.numAttributes() - 1);
 
+            String[] options = {"-U"};
+            J48 tree = new J48();         // new instance of tree
+            tree.setOptions(options);     // set the options
+            tree.buildClassifier(data);   // build classifier
 
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

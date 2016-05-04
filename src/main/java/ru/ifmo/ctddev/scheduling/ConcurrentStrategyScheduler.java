@@ -46,6 +46,7 @@ public class ConcurrentStrategyScheduler {
         if (scheduleData.checkConstraints(r)) {
             if (scheduleData.getCost(r) < scheduleData.getCost()) {
                 scheduleData.setRoute(r);
+                strategy.receiveReward(1.0);
             }
         }
     }

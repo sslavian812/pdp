@@ -147,7 +147,7 @@ public class Moments {
                 "average difference between the observed value and mean of values"
         ));
         features.add(new Feature(
-                prefix + "standatd_deviation", standardDeviation,
+                prefix + "standard_deviation", standardDeviation,
                 "the amount of dispersion"
         ));
         features.add(new Feature(

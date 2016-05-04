@@ -35,11 +35,32 @@ public class ARFFConverter {
 
         writer.write("%features,targetClass");
         writer.newLine();
+        writer.write("@RELATION pdp");
+        writer.newLine();
+
+        boolean firstTime = true;
 
         Map<String, String> strategyToClass = StrategyProvider.getStrategiesMapToClasses();
         for (File file : directoryListing) {
             List<String[]> featuresCSV = CSVReader.read(file.getAbsolutePath(), ",");
             List<String[]> targetCSV = CSVReader.read(targetDir + answers + "/" + file.getName(), ";");
+
+            if (firstTime) {
+                featuresCSV.stream().forEach(f -> {
+                    try {
+                        writer.write("@ATTRIBUTE " + f[0] + " NUMERIC");
+                        writer.newLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                writer.write("@ATTRIBUTE class {1,2,3,4,5,6,7,8,9,10}");
+                writer.newLine();
+                writer.write("@DATA");
+                writer.newLine();
+                firstTime = false;
+            }
 
             List<String> featuredDouble = featuresCSV.stream()
                     .map(f -> f[1]).collect(Collectors.toList());
