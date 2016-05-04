@@ -1,13 +1,12 @@
 package ru.ifmo.ctddev.ml;
 
 import ru.ifmo.ctddev.datasets.CSVReader;
-import ru.ifmo.ctddev.scheduling.StrategyProvider;
+import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

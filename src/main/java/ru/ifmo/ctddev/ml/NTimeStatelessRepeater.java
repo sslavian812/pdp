@@ -1,10 +1,8 @@
 package ru.ifmo.ctddev.ml;
 
-import ru.ifmo.ctddev.experiments.NTimeScheduleTester;
 import ru.ifmo.ctddev.scheduling.ConcurrentStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.Scheduler;
-import ru.ifmo.ctddev.scheduling.Strategy;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 
 import java.util.ArrayList;
 import java.util.List;

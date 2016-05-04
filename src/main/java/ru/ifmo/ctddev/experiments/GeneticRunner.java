@@ -2,16 +2,16 @@ package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.Scheduler;
-import ru.ifmo.ctddev.scheduling.StrategyProvider;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
+import ru.ifmo.ctddev.scheduling.strategies.ConstantStrategy;
+import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.Strategy;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.*;
 
 /**
  * Created by viacheslav on 21.02.2016.
@@ -30,7 +30,7 @@ public class GeneticRunner {
         GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
 
         List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
-        for (Strategy strategy : strategies) {
+        for (ConstantStrategy strategy : strategies) {
             schedulers.add(factory.getOnePluOneScheduler(strategy, generations));
             schedulers.add(factory.getOnePlusNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
             schedulers.add(factory.getOneCommaNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));

@@ -1,6 +1,6 @@
 package ru.ifmo.ctddev.scheduling;
 
-import ru.ifmo.ctddev.Config;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 
 /**
  * This class is a lightweight stateless version of StrategyScheduler.
@@ -36,6 +36,7 @@ public class ConcurrentStrategyScheduler {
      * Is constructed route is acceptable, new route is set to {@code scheduleData}.
      * Otherwise, {@code scheduleData} will be left unchanged.
      * <p>
+     *
      * @param scheduleData data to be scheduled
      * @param strategy
      */
@@ -47,6 +48,8 @@ public class ConcurrentStrategyScheduler {
             if (scheduleData.getCost(r) < scheduleData.getCost()) {
                 scheduleData.setRoute(r);
                 strategy.receiveReward(1.0);
+            } else {
+                strategy.receiveReward(-1.0);
             }
         }
     }

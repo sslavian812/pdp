@@ -1,11 +1,11 @@
-package ru.ifmo.ctddev.scheduling;
+package ru.ifmo.ctddev.scheduling.strategies;
 
 import ru.ifmo.ctddev.scheduling.smallmoves.SmallMove;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static ru.ifmo.ctddev.scheduling.strategies.StrategyProvider.getAllSmallMoves;
 
 /**
  * Created by viacheslav on 14.02.2016.
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * This class represents an {@code optimisation strategy}.
  * Strategy is a probability distribution on {@code smallMoves}.
  */
-public class Strategy {
+public class ConstantStrategy implements Strategy {
 
     protected List<SmallMove> smallMoves;
     protected double[] probabilities;
@@ -27,7 +27,7 @@ public class Strategy {
      *
      * @param smallMoves
      */
-    public Strategy(List<SmallMove> smallMoves) {
+    public ConstantStrategy(List<SmallMove> smallMoves) {
         this.smallMoves = smallMoves;
         this.random = new Random();
         this.comment = smallMoves.stream().map(s -> s.toString()).collect(Collectors.joining(","));
@@ -41,7 +41,8 @@ public class Strategy {
         }
     }
 
-    public Strategy(SmallMove smallMove) {
+
+    public ConstantStrategy(SmallMove smallMove) {
         this(Arrays.asList(smallMove));
     }
 
@@ -51,7 +52,7 @@ public class Strategy {
      * @param smallMoves
      * @param probabilities
      */
-    public Strategy(List<SmallMove> smallMoves, double[] probabilities) {
+    public ConstantStrategy(List<SmallMove> smallMoves, double[] probabilities) {
         this.smallMoves = smallMoves;
         this.random = new Random();
         this.comment = smallMoves.stream().map(s -> s.toString()).collect(Collectors.joining(","));
@@ -74,6 +75,7 @@ public class Strategy {
      *
      * @return SmallMove according to the strategy
      */
+    @Override
     public SmallMove getSmallMove() {
         double p = random.nextDouble();
         for (int i = 0; i < partialSums.length; ++i) {
@@ -83,20 +85,39 @@ public class Strategy {
         return smallMoves.get(smallMoves.size() - 1);
     }
 
+
     public void setComment(String comment) {
         this.comment = comment;
     }
 
-
-    /**
-     * This method gets called, when the strategy gets a reward.
-     * For future active learning.
-     *
-     * @param reward
-     */
-    public void receiveReward(double reward) {
-        return;
+    @Override
+    public String getComment() {
+        return comment == null ? "" : comment + " - " + Arrays.toString(probabilities);
     }
+
+    @Override
+    public String getDisplayName() {
+        Map<String, Double> map = new HashMap<>();
+
+        for (int i = 0; i < smallMoves.size(); ++i) {
+            map.put(smallMoves.get(i).toString(), probabilities[i]);
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("[");
+
+        stringBuilder.append(String.join(",", getAllSmallMoves().stream().map(smallMove -> {
+            if (map.containsKey(smallMove.toString()))
+                return "" + map.get(smallMove.toString());
+            else
+                return "" + 0.0;
+
+        }).collect(Collectors.toList())));
+
+
+        stringBuilder.append("]");
+        return stringBuilder.toString();
+    }
+
 
     @Override
     public String toString() {
@@ -118,15 +139,16 @@ public class Strategy {
                 + indent + "}";
     }
 
-    public String getComment() {
-        return comment == null ? "" : comment + " - " + Arrays.toString(probabilities);
-    }
-
     public double[] getProbabilities() {
         return probabilities;
     }
 
+//    @Override
     public List<SmallMove> getSmallMoves() {
         return smallMoves;
     }
+
+
+
+
 }

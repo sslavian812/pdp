@@ -1,6 +1,7 @@
 package ru.ifmo.ctddev.scheduling;
 
 import ru.ifmo.ctddev.Config;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 
 /**
  * This class is a scheduler, which uses a fixed strategy to choose an {@code SmallMove} for each step.

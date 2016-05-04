@@ -2,7 +2,7 @@ package ru.ifmo.ctddev.scheduling.genetics;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
-import ru.ifmo.ctddev.scheduling.Strategy;
+import ru.ifmo.ctddev.scheduling.strategies.ConstantStrategy;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -23,7 +23,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     private String comment;
 
     // internals:
-    private Strategy strategy;
+    private ConstantStrategy strategy;
     private ScheduleData originalScheduleData;
     private List<int[]> currentGeneration;
 
@@ -49,11 +49,11 @@ public class GeneticStrategyScheduler implements Scheduler {
     private List<String> ys = new ArrayList<>();
 
 
-    public GeneticStrategyScheduler(Strategy strategy) {
+    public GeneticStrategyScheduler(ConstantStrategy strategy) {
         this(strategy, 100, 10, 1.0, 20, 10, 200, false);
     }
 
-    public GeneticStrategyScheduler(Strategy strategy, int g, int r, double pm, int e, int t, int s) {
+    public GeneticStrategyScheduler(ConstantStrategy strategy, int g, int r, double pm, int e, int t, int s) {
         this.strategy = strategy;
         currentGeneration = new ArrayList<>();
         G = g;
@@ -68,7 +68,7 @@ public class GeneticStrategyScheduler implements Scheduler {
             throw new RuntimeException("should be E <= G. ");
     }
 
-    public GeneticStrategyScheduler(Strategy strategy, int g, int r, double pm, int e, int t, int s, boolean onlyChildren) {
+    public GeneticStrategyScheduler(ConstantStrategy strategy, int g, int r, double pm, int e, int t, int s, boolean onlyChildren) {
         this.strategy = strategy;
         currentGeneration = new ArrayList<>();
         G = g;
@@ -84,7 +84,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     }
 
 
-    public GeneticStrategyScheduler(Strategy strategy, int g, int r, double pm, int e, int t, int s, boolean onlyChildren, boolean isBigMutationAllowed) {
+    public GeneticStrategyScheduler(ConstantStrategy strategy, int g, int r, double pm, int e, int t, int s, boolean onlyChildren, boolean isBigMutationAllowed) {
         this.strategy = strategy;
         currentGeneration = new ArrayList<>();
         G = g;

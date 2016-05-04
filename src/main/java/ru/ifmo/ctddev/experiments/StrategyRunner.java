@@ -2,10 +2,9 @@ package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.Strategy;
-import ru.ifmo.ctddev.scheduling.StrategyProvider;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
+import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 import ru.ifmo.ctddev.scheduling.StrategyScheduler;
-import ru.ifmo.ctddev.scheduling.smallmoves.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

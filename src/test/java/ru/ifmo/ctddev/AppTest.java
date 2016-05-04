@@ -9,7 +9,8 @@ import ru.ifmo.ctddev.datasets.Util;
 import ru.ifmo.ctddev.features.Feature;
 import ru.ifmo.ctddev.features.FeatureMaker;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.Strategy;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
+import ru.ifmo.ctddev.scheduling.strategies.ConstantStrategy;
 import ru.ifmo.ctddev.scheduling.smallmoves.*;
 
 import java.awt.geom.Point2D;
@@ -45,7 +46,7 @@ public class AppTest extends TestCase {
 
 
     public void testToString() {
-        Strategy strategy = new Strategy(
+        Strategy strategy = new ConstantStrategy(
                 Arrays.asList(
                         new CoupleExchange(),
                         new DoubleBridge(),

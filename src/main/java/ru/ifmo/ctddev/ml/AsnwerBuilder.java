@@ -4,8 +4,8 @@ import javafx.util.Pair;
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.ConcurrentStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.Strategy;
-import ru.ifmo.ctddev.scheduling.StrategyProvider;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
+import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -85,7 +85,8 @@ public class AsnwerBuilder {
             }
             try {
                 queue.put(new Pair<String, Future<List<Double>>>(
-                        datasetName + "#" + StrategyProvider.getProbabilities(s), ratios));
+                        datasetName + "#" + s.getDisplayName(), ratios));
+//                        datasetName + "#" + StrategyProvider.getProbabilities(s), ratios));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
