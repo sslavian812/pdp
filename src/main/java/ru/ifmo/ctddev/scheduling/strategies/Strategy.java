@@ -22,6 +22,7 @@ public interface Strategy {
         return;
     }
 
+    @Deprecated
     String getComment();
 
     /**

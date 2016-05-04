@@ -4,12 +4,11 @@ import ru.ifmo.ctddev.scheduling.smallmoves.Lin2opt;
 import ru.ifmo.ctddev.scheduling.smallmoves.RelocateBlock;
 import ru.ifmo.ctddev.scheduling.smallmoves.SmallMove;
 
-import java.util.List;
 
 /**
  * Created by viacheslav on 04.05.2016.
  */
-public class SmartL2OandRBStragety implements Strategy {
+public class SmartL2OandRBStrategy implements Strategy {
 
     SmallMove lin2Opt = new Lin2opt();
     SmallMove relocateBlock = new RelocateBlock();
@@ -39,13 +38,19 @@ public class SmartL2OandRBStragety implements Strategy {
         }
     }
 
+    @Deprecated
     @Override
     public String getComment() {
-        return null;
+        return "smart L2O & RB";
     }
 
     @Override
     public String getDisplayName() {
-        return null;
+        return "smart L2O & RB";
+    }
+
+    @Override
+    public void setDisplayName(String displayName) {
+        return;
     }
 }

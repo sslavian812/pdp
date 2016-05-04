@@ -125,8 +125,9 @@ public class StrategyProvider {
     public static Strategy getEconomicStrategy(int ordersNum) {
         List<SmallMove> sm = StrategyProvider.getAllSmallMoves();
 
-        // todo fix doubles here
-        double[] probabilities = distributeAccordingTo(new double[]{0.2, 0.2, 0.2, 0.2, 0.2});
+        double t = 2.0 * ordersNum + 3.0;
+        double[] probabilities = distributeAccordingTo(
+                new double[]{ordersNum / t, ordersNum / t, 1.0 / t, 1.0 / t, 1.0 / t});
 
         ConstantStrategy strategy = new ConstantStrategy(sm, probabilities);
         strategy.setComment("economic strategy");
@@ -160,6 +161,7 @@ public class StrategyProvider {
 
     /**
      * Provides an array with probabilities according to double[] arguments
+     *
      * @param doubles
      * @return
      */
