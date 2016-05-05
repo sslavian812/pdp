@@ -17,7 +17,7 @@ public class StrategyScheduler implements Scheduler {
      * The scheduler will perform {@code convergenceReserve * N^2} operations.
      * {@code 10 * N^2} by default
      */
-    private int convergenceReserve = 10;
+    private int convergenceReserve = 12;
 
     public StrategyScheduler(Strategy strategy) {
         this.strategy = strategy;

@@ -51,6 +51,8 @@ public class ConcurrentStrategyScheduler {
             } else {
                 strategy.receiveReward(-1.0);
             }
+        } else {
+            strategy.receiveReward(0.0);
         }
     }
 }

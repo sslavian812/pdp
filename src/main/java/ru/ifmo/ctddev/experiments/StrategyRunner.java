@@ -26,7 +26,7 @@ public class StrategyRunner {
         List<Strategy> strategies = StrategyProvider.provideAllStrategies();
 
         List<ScheduleData> datasets = new ArrayList<>();
-        while (start + size < size * n_datasets) {
+        while (start + size <= size * n_datasets) {
             datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
                     "uniform8000.csv", null));
             start +=size;

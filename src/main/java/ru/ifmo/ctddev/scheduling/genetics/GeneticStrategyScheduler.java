@@ -3,6 +3,7 @@ package ru.ifmo.ctddev.scheduling.genetics;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.strategies.ConstantStrategy;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -23,7 +24,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     private String comment;
 
     // internals:
-    private ConstantStrategy strategy;
+    private Strategy strategy;
     private ScheduleData originalScheduleData;
     private List<int[]> currentGeneration;
 
@@ -68,7 +69,7 @@ public class GeneticStrategyScheduler implements Scheduler {
             throw new RuntimeException("should be E <= G. ");
     }
 
-    public GeneticStrategyScheduler(ConstantStrategy strategy, int g, int r, double pm, int e, int t, int s, boolean onlyChildren) {
+    public GeneticStrategyScheduler(Strategy strategy, int g, int r, double pm, int e, int t, int s, boolean onlyChildren) {
         this.strategy = strategy;
         currentGeneration = new ArrayList<>();
         G = g;
@@ -84,7 +85,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     }
 
 
-    public GeneticStrategyScheduler(ConstantStrategy strategy, int g, int r, double pm, int e, int t, int s, boolean onlyChildren, boolean isBigMutationAllowed) {
+    public GeneticStrategyScheduler(Strategy strategy, int g, int r, double pm, int e, int t, int s, boolean onlyChildren, boolean isBigMutationAllowed) {
         this.strategy = strategy;
         currentGeneration = new ArrayList<>();
         G = g;
@@ -360,7 +361,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     public String toString() {
         return "GeneticStrategyScheduler{" + System.lineSeparator() +
                 "    comment='" + comment + '\'' + "," + System.lineSeparator() +
-                "    strategy=" + strategy.toString("    ") + "," + System.lineSeparator() +
+                "    strategy=" + strategy.toString() + "," + System.lineSeparator() +
                 "    G=" + G + "," + System.lineSeparator() +
                 "    R=" + R + "," + System.lineSeparator() +
                 "    Pm=" + Pm + "," + System.lineSeparator() +

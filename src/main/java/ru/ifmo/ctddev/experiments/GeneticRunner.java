@@ -30,7 +30,7 @@ public class GeneticRunner {
         GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
 
         List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
-        for (ConstantStrategy strategy : strategies) {
+        for (Strategy strategy : strategies) {
             schedulers.add(factory.getOnePluOneScheduler(strategy, generations));
             schedulers.add(factory.getOnePlusNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
             schedulers.add(factory.getOneCommaNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));

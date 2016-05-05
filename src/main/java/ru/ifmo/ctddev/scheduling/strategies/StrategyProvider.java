@@ -60,6 +60,16 @@ public class StrategyProvider {
         return strategies;
     }
 
+    public static List<Strategy> provideStatefulStrategies() {
+        List<Strategy> strategies = new ArrayList<>();
+        strategies.add(new StatefulStrategy(new Lin2opt()));
+        strategies.add(new StatefulStrategy(new CoupleExchange()));
+        strategies.add(new StatefulStrategy(new DoubleBridge()));
+        strategies.add(new StatefulStrategy(new PointExchange()));
+        strategies.add(new StatefulStrategy(new RelocateBlock()));
+        return strategies;
+    }
+
     public static List<SmallMove> getAllSmallMoves() {
         List<SmallMove> allSmallMoves = new ArrayList<>(5);
         allSmallMoves.add(new Lin2opt());
@@ -135,23 +145,44 @@ public class StrategyProvider {
         return strategy;
     }
 
-    public static Strategy getRespectStrategy() {
+    public static Strategy getProportionalStrategy() {
         List<SmallMove> sm = StrategyProvider.getAllSmallMoves();
 
-        // todo fix doubles here
-        double[] probabilities = distributeAccordingTo(new double[]{0.3, 0.3, 0.2, 0.1, 0.1});
+        double[] probabilities = distributeAccordingTo(new double[]{198.0, 95.0, 55.0, 100.0, 101.0});
 
         ConstantStrategy strategy = new ConstantStrategy(sm, probabilities);
-        strategy.setComment("respectful strategy");
+        strategy.setComment("proportional strategy");
         strategy.setDisplayName(strategy.getComment());
         return strategy;
     }
 
-    public static Strategy getRespectfulEconomicStrategy(int ordersNum) {
+    public static Strategy getYNStrategy() {
         List<SmallMove> sm = StrategyProvider.getAllSmallMoves();
 
-        // todo fix doubles here
-        double[] probabilities = distributeAccordingTo(new double[]{0.3, 0.3, 0.2, 0.1, 0.1});
+        double[] probabilities = distributeAccordingTo(new double[]{
+                0.007035994667456673,
+                0.0031666666666666666,
+                0.0032899293530959965,
+                0.0031666666666666666,
+                0.003823706983296438});
+
+        ConstantStrategy strategy = new ConstantStrategy(sm, probabilities);
+        strategy.setComment("yn strategy");
+        strategy.setDisplayName(strategy.getComment());
+        return strategy;
+    }
+
+    public static Strategy getProportionalEconomicStrategy(int ordersNum) {
+        List<SmallMove> sm = StrategyProvider.getAllSmallMoves();
+
+        double[] probabilities = distributeAccordingTo(new double[]{
+                198.0 * ordersNum,
+                95.0 * ordersNum,
+                55.0,
+                100.0,
+                101.0
+        });
+
 
         ConstantStrategy strategy = new ConstantStrategy(sm, probabilities);
         strategy.setComment("res-econ strategy");

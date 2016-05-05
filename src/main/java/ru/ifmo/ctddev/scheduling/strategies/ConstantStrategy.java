@@ -118,6 +118,11 @@ public class ConstantStrategy implements Strategy {
         return stringBuilder.toString();
     }
 
+    @Override
+    public void setDisplayName(String displayName) {
+        return;
+    }
+
 
     @Override
     public String toString() {
