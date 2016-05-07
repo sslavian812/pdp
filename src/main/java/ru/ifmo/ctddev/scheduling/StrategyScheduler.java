@@ -107,13 +107,16 @@ public class StrategyScheduler implements Scheduler {
                 }
 
                 scheduleData.setRoute(r);
+                strategy.receiveReward(1.0);
             } else {
                 if (Config.showTrace)
                     System.out.println("rejected");
+                strategy.receiveReward(-1.0);
             }
         } else {
             if (Config.showTrace)
                 System.out.println("constraints NO");
+            strategy.receiveReward(0.0);
         }
     }
 
