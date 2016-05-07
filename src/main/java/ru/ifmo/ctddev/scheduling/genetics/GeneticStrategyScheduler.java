@@ -139,7 +139,7 @@ public class GeneticStrategyScheduler implements Scheduler {
             currentGeneration = selection(mutated);
 
 
-            printState(currentGeneration, originalScheduleData);
+//            printState(currentGeneration, originalScheduleData);
 
             if(originalScheduleData.getFitFunctionCallsCount() >= 200000)
                 break;
@@ -189,7 +189,7 @@ public class GeneticStrategyScheduler implements Scheduler {
     }
 
     public String getComment() {
-        return comment + " " + strategy.getComment();
+        return comment + " " + strategy.getDisplayName();
     }
 
     public String getJuliaHist(int bins, int pairs, long ms) {
