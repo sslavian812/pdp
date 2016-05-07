@@ -119,6 +119,11 @@ public class StrategyProvider {
 //        return stringBuilder.toString();
 //    }
 
+    public static Strategy getSmartL2ORBStrategy()
+    {
+        return new SmartL2OandRBStrategy();
+    }
+
     public static Map<String, String> getStrategiesMapToClasses() {
         Map<String, String> propToClassMap = new HashMap<>();
         final int[] i = {1};

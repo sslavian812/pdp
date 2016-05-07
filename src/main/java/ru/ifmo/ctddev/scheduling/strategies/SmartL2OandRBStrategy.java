@@ -8,17 +8,17 @@ import ru.ifmo.ctddev.scheduling.smallmoves.SmallMove;
 /**
  * Created by viacheslav on 04.05.2016.
  */
-public class SmartL2OandRBStrategy implements Strategy {
+public class SmartL2OandRBStrategy implements Strategy, Cloneable {
 
-    SmallMove lin2Opt = new Lin2opt();
-    SmallMove relocateBlock = new RelocateBlock();
-    boolean isL2O = true;
-    int misses = 0;
+    private SmallMove lin2Opt = new Lin2opt();
+    private SmallMove relocateBlock = new RelocateBlock();
+    private boolean isL2O = true;
+    private int misses = 0;
     public static final int bound = 10;
 
     @Override
     public SmallMove getSmallMove() {
-        if(isL2O)
+        if (isL2O)
             return lin2Opt;
         else {
             isL2O = true;
@@ -29,11 +29,11 @@ public class SmartL2OandRBStrategy implements Strategy {
 
     @Override
     public void receiveReward(double reward) {
-        if(reward > 0)
+        if (reward > 0)
             misses = 0;
-        else{
+        else {
             ++misses;
-            if(misses >= bound)
+            if (misses >= bound)
                 isL2O = false;
         }
     }
@@ -52,5 +52,17 @@ public class SmartL2OandRBStrategy implements Strategy {
     @Override
     public void setDisplayName(String displayName) {
         return;
+    }
+
+    public SmartL2OandRBStrategy clone() {
+        try {
+            SmartL2OandRBStrategy copy = (SmartL2OandRBStrategy) super.clone();
+            copy.isL2O = true;
+            copy.misses = 0;
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

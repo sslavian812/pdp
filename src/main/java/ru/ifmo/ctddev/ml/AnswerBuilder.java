@@ -16,7 +16,7 @@ import java.util.concurrent.*;
 /**
  * Created by viacheslav on 02.05.2016.
  */
-public class AsnwerBuilder {
+public class AnswerBuilder {
 
     private static ThreadPoolExecutor threadPoolExecutor;
     private static ConcurrentStrategyScheduler scheduler = new ConcurrentStrategyScheduler();
@@ -120,7 +120,7 @@ public class AsnwerBuilder {
         }.start();
     }
 
-    private static Double calcAverage(List<Double> list) {
+    public static Double calcAverage(List<Double> list) {
         double acc = 0;
         for (Double x : list) {
             acc += x;
