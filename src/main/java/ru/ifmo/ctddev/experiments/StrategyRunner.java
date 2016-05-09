@@ -62,6 +62,8 @@ public class StrategyRunner {
             ));
         }
 
+        System.out.println(strategy.getDisplayName());
+
         processFutures(uFutures, "uniform");
         processFutures(nFutures, "gaussian");
         processFutures(tFutures, "taxi");

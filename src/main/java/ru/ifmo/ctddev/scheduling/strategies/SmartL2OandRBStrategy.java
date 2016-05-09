@@ -46,7 +46,7 @@ public class SmartL2OandRBStrategy implements Strategy, Cloneable {
 
     @Override
     public String getDisplayName() {
-        return "smart L2O & RB";
+        return "smart L2O & RB [" + bound + "]";
     }
 
     @Override

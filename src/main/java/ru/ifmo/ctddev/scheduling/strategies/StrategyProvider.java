@@ -55,7 +55,11 @@ public class StrategyProvider {
         strategies.add(new ConstantStrategy(L2OandDB));
         strategies.add(new ConstantStrategy(L2OandPX));
         strategies.add(new ConstantStrategy(L2OandRB));
-        strategies.add(new ConstantStrategy(L2Oand3more, new double[]{3.0 / 6, 1.0 / 6, 1.0 / 6, 1.0 / 6}));
+        strategies.add(new ConstantStrategy(L2Oand3more, new double[]{
+                3.0 / 6,
+                1.0 / 6,
+                1.0 / 6,
+                1.0 / 6}));
 
         return strategies;
     }
@@ -119,8 +123,7 @@ public class StrategyProvider {
 //        return stringBuilder.toString();
 //    }
 
-    public static Strategy getSmartL2ORBStrategy()
-    {
+    public static Strategy getSmartL2ORBStrategy() {
         return new SmartL2OandRBStrategy();
     }
 
@@ -140,9 +143,9 @@ public class StrategyProvider {
     public static Strategy getEconomicStrategy(int ordersNum) {
         List<SmallMove> sm = StrategyProvider.getAllSmallMoves();
 
-        double t = 2.0 * ordersNum + 3.0;
+
         double[] probabilities = distributeAccordingTo(
-                new double[]{ordersNum / t, ordersNum / t, 1.0 / t, 1.0 / t, 1.0 / t});
+                new double[]{1, 1, 1, 1, 1.0/ordersNum});
 
         ConstantStrategy strategy = new ConstantStrategy(sm, probabilities);
         strategy.setComment("economic strategy");
@@ -183,8 +186,8 @@ public class StrategyProvider {
         double[] probabilities = distributeAccordingTo(new double[]{
                 198.0 * ordersNum,
                 95.0 * ordersNum,
-                55.0,
-                100.0,
+                55.0 * ordersNum,
+                100.0 * ordersNum,
                 101.0
         });
 
