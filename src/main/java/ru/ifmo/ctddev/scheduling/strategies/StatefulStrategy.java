@@ -43,15 +43,8 @@ public class StatefulStrategy implements Strategy {
         return "stateful: " + smallMove.toString();
     }
 
-    /**
-     * DANGER: drops the counters
-     *
-     * @param displayName
-     */
     @Override
     public void setDisplayName(String displayName) {
-        called = 0;
-        succeed = 0;
     }
 
     public void trim() {

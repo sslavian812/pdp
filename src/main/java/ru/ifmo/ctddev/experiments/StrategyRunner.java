@@ -25,9 +25,9 @@ public class StrategyRunner {
     public static final boolean shuffled = false;
 
     public static void main(String[] args) {
-//        List<Strategy> strategies = StrategyProvider.provideAllStrategies();
+        List<Strategy> strategies = StrategyProvider.provideAllStrategies();
 
-        SmartL2OandRBStrategy strategy = (SmartL2OandRBStrategy) StrategyProvider.getSmartL2ORBStrategy();
+//        SmartL2OandRBStrategy strategy = (SmartL2OandRBStrategy) StrategyProvider.getSmartL2ORBStrategy();
         List<ScheduleData> uDatasets = new ArrayList<>();
         List<ScheduleData> nDatasets = new ArrayList<>();
         List<ScheduleData> tDatasets = new ArrayList<>();
@@ -49,26 +49,37 @@ public class StrategyRunner {
 
         long startTime = System.currentTimeMillis();
 
+        for(Strategy strategy: strategies) {
 
-        for (int i = 0; i < uDatasets.size(); ++i) {
-            uFutures.add(threadPoolExecutor.submit(
-                    new NTimeScheduleTester(new StrategyScheduler(strategy.clone()), uDatasets.get(i), times)
-            ));
-            nFutures.add(threadPoolExecutor.submit(
-                    new NTimeScheduleTester(new StrategyScheduler(strategy.clone()), nDatasets.get(i), times)
-            ));
-            tFutures.add(threadPoolExecutor.submit(
-                    new NTimeScheduleTester(new StrategyScheduler(strategy.clone()), tDatasets.get(i), times)
-            ));
+            uFutures.clear();
+            nFutures.clear();
+            tFutures.clear();
+
+            System.out.println("# Processing strategy: " + strategy.getComment());
+//            System.out.println(strategy.getDisplayName());
+
+
+            for (int i = 0; i < uDatasets.size(); ++i) {
+                uFutures.add(threadPoolExecutor.submit(
+                        new NTimeScheduleTester(new StrategyScheduler(strategy), uDatasets.get(i).clone(), times)
+                ));
+                nFutures.add(threadPoolExecutor.submit(
+                        new NTimeScheduleTester(new StrategyScheduler(strategy), nDatasets.get(i).clone(), times)
+                ));
+                tFutures.add(threadPoolExecutor.submit(
+                        new NTimeScheduleTester(new StrategyScheduler(strategy), tDatasets.get(i).clone(), times)
+                ));
+            }
+
+
+            processFutures(uFutures, "uniform");
+            processFutures(nFutures, "gaussian");
+            processFutures(tFutures, "taxi");
+
+            System.out.println();
+            System.out.println("==========================================");
+
         }
-
-        System.out.println(strategy.getDisplayName());
-
-        processFutures(uFutures, "uniform");
-        processFutures(nFutures, "gaussian");
-        processFutures(tFutures, "taxi");
-
-
         System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
 
         threadPoolExecutor.shutdown();
@@ -89,9 +100,10 @@ public class StrategyRunner {
             }
         }
 
-        System.out.println();
-        System.out.println("average per all datasets: " + AnswerBuilder.calcAverage(avearagesPerDataset));
 
-        System.out.println("================");
+        System.out.println("average per all datasets: " + AnswerBuilder.calcAverage(avearagesPerDataset));
+        System.out.println("---------------------------------");
+        System.out.println();
+
     }
 }
