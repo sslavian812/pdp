@@ -12,6 +12,7 @@ import java.util.Map;
  */
 public class StrategyProvider {
 
+
     /**
      * Provides all existing base(hardcoded, manualy created) strategies.
      *
@@ -153,7 +154,7 @@ public class StrategyProvider {
 
 
         double[] probabilities = distributeAccordingTo(
-                new double[]{1, 1, 1, 1, 1.0/ordersNum}); // this is 1/ni
+                new double[]{1, 1, 1, 1, 1.0 / ordersNum}); // this is 1/ni
 
         ConstantStrategy strategy = new ConstantStrategy(sm, probabilities);
         strategy.setComment("economic (ni-)strategy");
@@ -203,7 +204,7 @@ public class StrategyProvider {
                 95,
                 54,
                 96,
-                159.0/ordersNum
+                159.0 / ordersNum
         });
 
 
@@ -227,5 +228,15 @@ public class StrategyProvider {
         for (int i = 0; i < doubles.length; ++i)
             probabilities[i] = doubles[i] / sum;
         return probabilities;
+    }
+
+    public static Map<String, String> getTop5() {
+        Map<String, String> map = new HashMap<>();
+        map.put("[0.32666666666666666,0.15833333333333333,0.09,0.16,0.265]", "1");
+        map.put("[0.3482862903225806,0.15977822580645162,0.1658266129032258,0.15977822580645162,0.1663306451612903]", "2");
+        map.put("smart L2O & RB [10]", "3");
+        map.put("[0.5,0.0,0.16666666666666666,0.16666666666666666,0.16666666666666666]", "4");
+        map.put("[0.5,0.0,0.0,0.0,0.5]", "5");
+        return map;
     }
 }
