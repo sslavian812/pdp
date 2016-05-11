@@ -21,7 +21,7 @@ public class StrategyRunner {
     public static final int times = 10;
     public static final int size = 50;
     public static int start = 0;
-    public static final int n_datasets = 5;
+    public static final int n_datasets = 10;
     public static final boolean shuffled = false;
 
     public static void main(String[] args) {

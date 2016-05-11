@@ -11,13 +11,17 @@ import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static util.Util.calcAverage;
 
 /**
- * Created by viacheslav on 21.02.2016.
+ * Created by viacheslav on 11.05.2016.
  */
-public class GeneticRunner {
+public class ParallelGeneticRunner {
     public static final int times = 10;
     public static final int size = 50;
 
@@ -49,8 +53,8 @@ public class GeneticRunner {
             start += size;
         }
 
-//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
-//        List<Future<List<Double>>> futures = new ArrayList<>();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        List<Future<List<Double>>> futures = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
 
@@ -89,13 +93,4 @@ public class GeneticRunner {
         System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
 //        threadPoolExecutor.shutdown();
     }
-
-//    private static Double calcAverage(List<Double> list) {
-//        double acc = 0;
-//        for (Double x : list) {
-//            acc += x;
-//        }
-//        acc /= list.size();
-//        return acc;
-//    }
 }
