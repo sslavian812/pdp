@@ -24,28 +24,14 @@ public class OneThreadGeneticsTester {
 
     public static void main(String[] args) {
 
-//        List<SmallMove> all = new ArrayList<>(5);
-//        all.add(new Lin2opt());
-//        all.add(new CoupleExchange());
-//        all.add(new DoubleBridge());
-//        all.add(new PointExchange());
-//
-//
-//        List<Strategy> strategies = new ArrayList<>();
-//        strategies.add(new Strategy(new Lin2opt()));
-//        strategies.add(new Strategy(new CoupleExchange()));
-//        strategies.add(new Strategy(new DoubleBridge()));
-//        strategies.add(new Strategy(new PointExchange()));
-//        strategies.add(new Strategy(all));
-//
-//        strategies.get(strategies.size()-1).setComment("Mixed");
+
         List<Strategy> strategies = StrategyProvider.provideAllStrategies();
 
         GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
         ScheduleData scheduleData = DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
-                "taxi8129.csv", null);
-        int size = scheduleData.getSize();
-        int generations = size * size;
+                "gaussian8000.csv", null);
+        int size = scheduleData.getOrdersNum();
+        int generations = 12 * size * size;
 
         List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
         for (Strategy strategy : strategies) {

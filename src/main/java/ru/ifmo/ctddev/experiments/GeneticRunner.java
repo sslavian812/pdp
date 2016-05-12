@@ -20,6 +20,7 @@ import static util.Util.calcAverage;
 public class GeneticRunner {
     public static final int times = 10;
     public static final int size = 50;
+    public static final int from = 250;
 
     public static final int n_datasets = 5;
     public static final int generations = 12 * size * size;
@@ -43,9 +44,9 @@ public class GeneticRunner {
         int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
 
-        while (start + size <= (size * n_datasets)) {
-            datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
-                    "taxi8129.csv", null));
+        while (from + start + size <= from + (size * n_datasets)) {
+            datasets.add(DatasetProvider.getDataset(size, from + start, DatasetProvider.Direction.RIGHT,
+                    "uniform8000.csv", null));
             start += size;
         }
 
@@ -70,7 +71,7 @@ public class GeneticRunner {
             int i = 0;
             for (List<Double> list : ratios) {
                 String indent = "    ";
-                System.out.println(indent + "dataset: " + i + "-" + (i + size) + ": ");
+                System.out.println(indent + "dataset: " + (from  +i) + "-" + (from + i + size) + ": ");
                 i+=size;
                 System.out.println(indent + "ratios=" + Arrays.toString(list.toArray()));
                 averagePerNTimes.add(calcAverage(list));

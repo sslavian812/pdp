@@ -45,7 +45,7 @@ public class NDataSetsNTimesScheduleTester implements Callable<List<List<Double>
 //        if (executor == null)
 //            executor = new ThreadPoolExecutor(4, 10, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
-        List<Future<List<Double>>> futures = new ArrayList<>();
+//        List<Future<List<Double>>> futures = new ArrayList<>();
 
         NTimeScheduleTester  nTimeTester = new NTimeScheduleTester(scheduler, null, times);
 

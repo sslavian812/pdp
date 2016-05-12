@@ -56,7 +56,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
      * This counter shows, how much times, the fit-function was couted.
      * The fit-function is the length of the path.
      */
-    private int fitFunctionCallsCount = 0;
+    private static int fitFunctionCallsCount = 0;
 
     /**
      * This publi constructor specifies coordinates of considered points and the depot-point.
@@ -245,6 +245,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
      * Provides current route as list of points.
      * For future use by visualization.
      * todo IndexOutOfBound possible
+     *
      * @return
      */
     public List<Point2D.Double> getRouteAsPoints() {
@@ -324,15 +325,23 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
      */
     @Override
     public int compare(int[] o1, int[] o2) {
-        if (getCost(o1) < getCost(o2))
-            return -1;
-        if (getCost(o1) > getCost(o2))
-            return 1;
-        return 0;
+        if (o1.length % 2 == 0 && o2.length % 2 == 0) {
+            if (getCost(o1) < getCost(o2))
+                return -1;
+            if (getCost(o1) > getCost(o2))
+                return 1;
+            return 0;
+        } else {
+            throw new RuntimeException("odd size of route");
+        }
     }
 
     public int getFitFunctionCallsCount() {
         return fitFunctionCallsCount;
+    }
+
+    public void trimFitFunctionCalls() {
+        fitFunctionCallsCount = 0;
     }
 
     public List<Point2D.Double> getSrcOrDstPoints(boolean getSrc) {
@@ -344,7 +353,7 @@ public class ScheduleData implements Cloneable, Comparable<ScheduleData>, Compar
 //                result.add(points[-p]);
 //        }
 //        return result;
-        if(getSrc)
+        if (getSrc)
             return Arrays.asList(points).subList(0, getOrdersNum());
         else
             return Arrays.asList(points).subList(getOrdersNum(), points.length);
