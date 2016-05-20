@@ -2,6 +2,7 @@ package ru.ifmo.ctddev.gui;
 
 import ru.ifmo.ctddev.generate.DatasetGenerator;
 import ru.ifmo.ctddev.generate.GausianDatasetGeneratorImpl;
+import ru.ifmo.ctddev.scheduling.DecartScheduleData;
 import ru.ifmo.ctddev.scheduling.smallmoves.*;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.old.SchedulerTemp;
@@ -37,32 +38,32 @@ public class App {
         System.out.println("============================================");
         System.out.println("Lin2Opt");
         SchedulerTemp scheduler = new SchedulerTemp(new Lin2opt());
-        scheduler.schedule(new ScheduleData(points));
+        scheduler.schedule(new DecartScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Relocate-couple");
         scheduler.setSmallMove(new RelocateCouple());
-        scheduler.schedule(new ScheduleData(points));
+        scheduler.schedule(new DecartScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Double-bridge");
         scheduler.setSmallMove(new DoubleBridge());
-        scheduler.schedule(new ScheduleData(points));
+        scheduler.schedule(new DecartScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Point-exchange");
         scheduler.setSmallMove(new PointExchange());
-        scheduler.schedule(new ScheduleData(points));
+        scheduler.schedule(new DecartScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Couple-exchange");
         scheduler.setSmallMove(new CoupleExchange());
-        scheduler.schedule(new ScheduleData(points));
+        scheduler.schedule(new DecartScheduleData(points));
 
         System.out.println("============================================");
         System.out.println("Relocate-Block");
         scheduler.setSmallMove(new RelocateBlock());
-        scheduler.schedule(new ScheduleData(points));
+        scheduler.schedule(new DecartScheduleData(points));
 
     }
 }

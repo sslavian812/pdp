@@ -3,10 +3,10 @@ package ru.ifmo.ctddev.experiments;
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.ml.AnswerBuilder;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.scheduling.strategies.SmartL2OandRBStrategy;
 import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 import ru.ifmo.ctddev.scheduling.StrategyScheduler;
+import static util.Util.calcAverage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,7 +93,7 @@ public class StrategyRunner {
             try {
                 List<Double> ratios = future.get();
                 System.out.println(Arrays.toString(ratios.toArray()));
-                avearagesPerDataset.add(AnswerBuilder.calcAverage(ratios));
+                avearagesPerDataset.add(calcAverage(ratios));
 
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
@@ -101,7 +101,7 @@ public class StrategyRunner {
         }
 
 
-        System.out.println("average per all datasets: " + AnswerBuilder.calcAverage(avearagesPerDataset));
+        System.out.println("average per all datasets: " + calcAverage(avearagesPerDataset));
         System.out.println("---------------------------------");
         System.out.println();
 

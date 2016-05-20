@@ -5,6 +5,7 @@ import ru.ifmo.ctddev.generate.DatasetGenerator;
 import ru.ifmo.ctddev.generate.GausianDatasetGeneratorImpl;
 import ru.ifmo.ctddev.generate.UniformDatasetGeneratorImpl;
 import ru.ifmo.ctddev.gui.App;
+import ru.ifmo.ctddev.scheduling.DecartScheduleData;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 import java.awt.geom.Point2D;
@@ -87,7 +88,7 @@ public class DatasetProvider {
             ScheduleData scheduleData;
             lhs.addAll(rhs);
             lhsIds.addAll(rhsIds);
-            scheduleData = new ScheduleData(lhs);
+            scheduleData = new DecartScheduleData(lhs);
             scheduleData.setIds(lhsIds);
 
             return scheduleData;
@@ -157,12 +158,12 @@ public class DatasetProvider {
             if (direction.equals(Direction.LEFT)) {
                 rhs.addAll(lhs);
                 rhsIds.addAll(lhsIds);
-                scheduleData = new ScheduleData(rhs);
+                scheduleData = new DecartScheduleData(rhs);
                 scheduleData.setIds(rhsIds);
             } else {
                 lhs.addAll(rhs);
                 lhsIds.addAll(rhsIds);
-                scheduleData = new ScheduleData(lhs);
+                scheduleData = new DecartScheduleData(lhs);
                 scheduleData.setIds(lhsIds);
             }
 
@@ -198,10 +199,10 @@ public class DatasetProvider {
     }
 
     public ScheduleData getGaussianDistributedDataset(int pairsNumber) {
-        return new ScheduleData(getGeneratePoints(pairsNumber, new GausianDatasetGeneratorImpl()));
+        return new DecartScheduleData(getGeneratePoints(pairsNumber, new GausianDatasetGeneratorImpl()));
     }
 
     public ScheduleData getUniformDistributedDataset(int pairsNumber) {
-        return new ScheduleData(getGeneratePoints(pairsNumber, new UniformDatasetGeneratorImpl()));
+        return new DecartScheduleData(getGeneratePoints(pairsNumber, new UniformDatasetGeneratorImpl()));
     }
 }

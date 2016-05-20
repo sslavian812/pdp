@@ -3,7 +3,6 @@ package ru.ifmo.ctddev.experiments;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;

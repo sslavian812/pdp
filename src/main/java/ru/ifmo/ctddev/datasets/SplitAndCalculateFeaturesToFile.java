@@ -7,8 +7,6 @@ import ru.ifmo.ctddev.scheduling.ScheduleData;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by viacheslav on 01.05.2016.

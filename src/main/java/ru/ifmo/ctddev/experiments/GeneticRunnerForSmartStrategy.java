@@ -6,7 +6,6 @@ import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
 import ru.ifmo.ctddev.scheduling.strategies.SmartL2OandRBStrategy;
-import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 
 import java.util.ArrayList;

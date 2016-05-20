@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.geom.Point2D;
 import java.util.List;
 
 /**
@@ -13,5 +14,10 @@ public class Util {
         }
         acc /= list.size();
         return acc;
+    }
+
+    public static double decartDist(Point2D.Double p1, Point2D.Double p2) {
+        return Math.sqrt((p1.getX() - p2.getX()) * (p1.getX() - p2.getX())
+                + (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
     }
 }

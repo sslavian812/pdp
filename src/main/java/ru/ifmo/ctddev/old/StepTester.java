@@ -1,6 +1,7 @@
 package ru.ifmo.ctddev.old;
 
 import ru.ifmo.ctddev.generate.DatasetGenerator;
+import ru.ifmo.ctddev.scheduling.DecartScheduleData;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.smallmoves.SmallMove;
 
@@ -46,7 +47,7 @@ public class StepTester {
         for (int i = 0; i < times; ++i) {
             List<Point2D.Double> points = generator.generate(leftUp, rightDown, sizes, centers);
             SchedulerTemp scheduler = new SchedulerTemp(smallMove);
-            double ratio = scheduler.schedule(new ScheduleData(points));
+            double ratio = scheduler.schedule(new DecartScheduleData(points));
             res.add(ratio);
         }
         String[] ss = new String[res.size()];

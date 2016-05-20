@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static util.Util.*;
+
 /**
  * This class extracts features from original, packed in {@link ScheduleData} object.
  * Completely stateless.
@@ -95,7 +97,7 @@ public class FeatureMaker {
 
     public List<Feature> getMomentsForEdgesLengths(ScheduleData scheduleData) {
         List<Double> xs = scheduleData.getAllSrcDstPairs().stream()
-                .map(p -> ScheduleData.dist(p.getKey(), p.getValue())).collect(Collectors.toList());
+                .map(p -> decartDist(p.getKey(), p.getValue())).collect(Collectors.toList());
         return momentsCalculator.extractStatisticalFeatures(xs, "edges_");
     }
 
@@ -127,11 +129,10 @@ public class FeatureMaker {
     }
 
 
-
     private double getCostByPoints(List<Point2D.Double> route) {
         double acc = 0.0;
         for (int i = 1; i < route.size(); ++i) {
-            acc += ScheduleData.dist(route.get(i - 1), route.get(i));
+            acc += decartDist(route.get(i - 1), route.get(i));
         }
         return acc;
     }

@@ -2,7 +2,6 @@ package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
-import ru.ifmo.ctddev.scheduling.StrategyScheduler;
 
 import java.util.ArrayList;
 import java.util.List;

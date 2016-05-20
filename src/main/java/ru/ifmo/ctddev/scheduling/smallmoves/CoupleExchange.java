@@ -3,7 +3,6 @@ package ru.ifmo.ctddev.scheduling.smallmoves;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,9 +22,9 @@ public class CoupleExchange implements SmallMove {
         }
 
         int pi = route.indexOf(i);
-        int pni = route.indexOf(-n -i);
+        int pni = route.indexOf(-n - i);
         int pj = route.indexOf(j);
-        int pnj = route.indexOf(-n -j);
+        int pnj = route.indexOf(-n - j);
 
         int t, tn;
         t = route.get(pi);

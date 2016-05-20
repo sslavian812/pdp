@@ -4,7 +4,6 @@ import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.strategies.Strategy;
-import ru.ifmo.ctddev.scheduling.strategies.ConstantStrategy;
 import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
