@@ -1,6 +1,7 @@
 package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.datasets.DatasetProvider;
+import ru.ifmo.ctddev.features.Moments;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
@@ -18,11 +19,11 @@ import static util.Util.calcAverage;
  * Created by viacheslav on 21.02.2016.
  */
 public class GeneticRunner {
-    public static final int times = 10;
+    public static final int times = 20;
     public static final int size = 50;
-    public static final int from = 250;
+    public static final int from = 0;
 
-    public static final int n_datasets = 5;
+    public static final int n_datasets = 10;
     public static final int generations = 12 * size * size;
 
 
@@ -57,6 +58,8 @@ public class GeneticRunner {
 
         NDataSetsNTimesScheduleTester nDataSetsNTimesScheduleTester = new NDataSetsNTimesScheduleTester(null, datasets, times);
 
+        Moments moments = new Moments();
+
         for (Scheduler scheduler : schedulers) {
 
             long time = System.currentTimeMillis();
@@ -77,6 +80,7 @@ public class GeneticRunner {
                 averagePerNTimes.add(calcAverage(list));
                 System.out.println(indent + "average ratio for i-th dataset: "
                         + averagePerNTimes.get(averagePerNTimes.size() - 1));
+                System.out.println(indent + moments.extractStatisticalFeatures(list).get(3).toCSVString());
                 System.out.println();
             }
 

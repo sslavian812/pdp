@@ -13,22 +13,26 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.*;
 
+import static util.Util.calcAverage;
+
 /**
  * Created by viacheslav on 02.05.2016.
  */
 public class AnswerBuilder {
 
+    private static int times = 10;
+
     private static ThreadPoolExecutor threadPoolExecutor;
     private static ConcurrentStrategyScheduler scheduler = new ConcurrentStrategyScheduler();
     private static List<Strategy> strategies = StrategyProvider.provideAllStrategies();
-    private static BlockingQueue<Pair<String, Future<List<Double>>>> queue = new ArrayBlockingQueue<>(1000);
+    private static BlockingQueue<Pair<String, Future<List<Double>>>> queue = new ArrayBlockingQueue<>(500);
 
     private static final String targetDir = "./src/main/resources/ml";
 
     public static void main(String[] args) {
         File dir = new File(targetDir + "/data");
         File[] directoryListing = dir.listFiles();
-        threadPoolExecutor = new ThreadPoolExecutor(4, 8, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        threadPoolExecutor = new ThreadPoolExecutor(4, 8, 15, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(500));
         long startTime = System.currentTimeMillis();
 
         writeAnswersInSeparateThread();
@@ -78,7 +82,7 @@ public class AnswerBuilder {
             Future<List<Double>> ratios = null;
             try {
                 ratios = threadPoolExecutor.submit(new NTimeStatelessRepeater(
-                        scheduler, s, data.clone(), 2, 12 * data.getOrdersNum() * data.getOrdersNum()));
+                        scheduler, s, data.clone(), times, 12 * data.getOrdersNum() * data.getOrdersNum()));
             } catch (RejectedExecutionException e) {
                 System.err.println("rejected: " + datasetName);
                 e.printStackTrace();
@@ -118,14 +122,5 @@ public class AnswerBuilder {
                 }
             }
         }.start();
-    }
-
-    public static Double calcAverage(List<Double> list) {
-        double acc = 0;
-        for (Double x : list) {
-            acc += x;
-        }
-        acc /= list.size();
-        return acc;
     }
 }

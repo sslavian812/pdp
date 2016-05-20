@@ -52,24 +52,24 @@ public class StrategyProvider {
         strategies.add(new ConstantStrategy(new DoubleBridge()));
         strategies.add(new ConstantStrategy(new PointExchange()));
 
-//        strategies.add(new ConstantStrategy(new RelocateBlock()));
-//
-//        strategies.add(new ConstantStrategy(allSmallMoves));
-//        strategies.add(new ConstantStrategy(L2OandDB));
-//        strategies.add(new ConstantStrategy(L2OandPX));
-//        strategies.add(new ConstantStrategy(L2OandRB));
-//        strategies.add(new ConstantStrategy(L2Oand3more, new double[]{
-//                3.0 / 6,
-//                1.0 / 6,
-//                1.0 / 6,
-//                1.0 / 6}));
-//
-//        strategies.add(new ConstantStrategy(L2Oand3more));
-//
-//        strategies.add(getEconomicStrategy(50));
-//        strategies.add(getProportionalStrategy());
-//        strategies.add(getYNStrategy());
-//        strategies.add(getProportionalEconomicStrategy(50));
+        strategies.add(new ConstantStrategy(new RelocateBlock()));
+
+        strategies.add(new ConstantStrategy(allSmallMoves));
+        strategies.add(new ConstantStrategy(L2OandDB));
+        strategies.add(new ConstantStrategy(L2OandPX));
+        strategies.add(new ConstantStrategy(L2OandRB));
+        strategies.add(new ConstantStrategy(L2Oand3more, new double[]{
+                3.0 / 6,
+                1.0 / 6,
+                1.0 / 6,
+                1.0 / 6}));
+
+        strategies.add(new ConstantStrategy(L2Oand3more));
+
+        strategies.add(getEconomicStrategy(50));
+        strategies.add(getProportionalStrategy());
+        strategies.add(getYNStrategy());
+        strategies.add(getProportionalEconomicStrategy(50));
 //
 //        strategies.add(getSmartL2ORBStrategy());
 
