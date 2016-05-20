@@ -215,7 +215,8 @@ public class DecartScheduleData implements ScheduleData {
      * @param d1
      * @return
      */
-    protected double dist(int s1, int d1) {
+    @Override
+    public double dist(int s1, int d1) {
         int s = s1 < 0 ? -s1 : s1;
         int d = d1 < 0 ? -d1 : d1;
         return dist(points[s], points[d]);

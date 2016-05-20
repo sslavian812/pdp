@@ -51,4 +51,6 @@ public interface ScheduleData extends Cloneable, Comparable<ScheduleData>, Compa
     default int getSize() {
         return getOrdersNum() * 2;
     }
+
+    double dist(int s1, int d1);
 }

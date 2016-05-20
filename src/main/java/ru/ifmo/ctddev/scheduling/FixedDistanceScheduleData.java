@@ -33,7 +33,7 @@ public class FixedDistanceScheduleData extends DecartScheduleData implements Sch
     }
 
     @Override
-    protected double dist(int s1, int d1) {
+    public double dist(int s1, int d1) {
         int s = s1 < 0 ? -s1 : s1;
         int d = d1 < 0 ? -d1 : d1;
         if (distances == null)
