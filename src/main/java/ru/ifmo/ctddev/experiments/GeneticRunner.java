@@ -45,9 +45,10 @@ public class GeneticRunner {
         int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
 
+        System.out.println("taxi8000.csv: \n\n");
         while (from + start + size <= from + (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, from + start, DatasetProvider.Direction.RIGHT,
-                    "uniform8000.csv", null));
+                    "taxi8000.csv", null));
             start += size;
         }
 

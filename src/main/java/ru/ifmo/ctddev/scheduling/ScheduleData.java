@@ -22,7 +22,13 @@ public interface ScheduleData extends Cloneable, Comparable<ScheduleData>, Compa
 
     double getCost(int[] route);
 
+    double getCycleCost();
+
+    double getCycleCost(int[] route);
+
     double getCost(List<Integer> route);
+
+    double getCycleCost(List<Integer> route);
 
     int getOrdersNum();
 

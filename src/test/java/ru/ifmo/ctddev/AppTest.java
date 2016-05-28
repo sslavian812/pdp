@@ -52,8 +52,8 @@ public class AppTest extends TestCase {
                         new DoubleBridge(),
                         new Lin2opt(),
                         new PointExchange(),
-                        new RelocateBlock(),
-                        new RelocateCouple()
+                        new RelocateBlock()
+//                        new RelocateCouple()
                 )
         );
 

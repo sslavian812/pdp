@@ -119,12 +119,4 @@ public class StrategyScheduler implements Scheduler {
             strategy.receiveReward(0.0);
         }
     }
-
-    public int getConvergenceReserve() {
-        return convergenceReserve;
-    }
-
-    public void setConvergenceReserve(int convergenceReserve) {
-        this.convergenceReserve = convergenceReserve;
-    }
 }

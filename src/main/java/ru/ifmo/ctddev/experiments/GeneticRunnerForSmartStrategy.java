@@ -16,10 +16,9 @@ import java.util.List;
  * Created by viacheslav on 07.05.2016.
  */
 public class GeneticRunnerForSmartStrategy {
-    public static final int times = 10;
+    public static final int times = 20;
     public static final int size = 50;
-
-    public static final int n_datasets = 5;
+    public static final int n_datasets = 10;
     public static final int generations = 12 * size * size;
 
 
@@ -45,9 +44,10 @@ public class GeneticRunnerForSmartStrategy {
 
         while (start + size <= (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
-                    "taxi8129.csv", null));
+                    "gaussian8000.csv", null));
             start += size;
         }
+        System.out.println("gaussian8000.csv: \n\n");
 
 //        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 //        List<Future<List<Double>>> futures = new ArrayList<>();

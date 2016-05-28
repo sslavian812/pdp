@@ -106,7 +106,8 @@ public class DecartScheduleData implements ScheduleData {
     /**
      * This function
      */
-    @Override public void clearRoute() {
+    @Override
+    public void clearRoute() {
         for (int i = 0; i < this.points.length; ++i) {
             if (i < ordersNum)
                 route[i] = i;
@@ -118,7 +119,8 @@ public class DecartScheduleData implements ScheduleData {
     }
 
 
-    @Override public void setRoute(int[] route) {
+    @Override
+    public void setRoute(int[] route) {
         this.route = route;
         this.cost = -1;
     }
@@ -128,7 +130,8 @@ public class DecartScheduleData implements ScheduleData {
      *
      * @return true, if constraint is satisfied.
      */
-    @Override public boolean checkConstraints(int[] route) {
+    @Override
+    public boolean checkConstraints(int[] route) {
         Set<Integer> picked = new HashSet<Integer>();
         for (int p : route) {
             if (p >= 0) {
@@ -150,7 +153,8 @@ public class DecartScheduleData implements ScheduleData {
      *
      * @return
      */
-    @Override public boolean checkConstraints() {
+    @Override
+    public boolean checkConstraints() {
         return checkConstraints(route);
     }
 
@@ -170,7 +174,8 @@ public class DecartScheduleData implements ScheduleData {
      *
      * @return
      */
-    @Override public double getCost() {
+    @Override
+    public double getCost() {
         if (cost < 0) {
             this.cost = getCost(route);
         }
@@ -184,7 +189,8 @@ public class DecartScheduleData implements ScheduleData {
      * @param route
      * @return
      */
-    @Override public double getCost(int[] route) {
+    @Override
+    public double getCost(int[] route) {
         double acc = 0.0;
         for (int i = 1; i < route.length; ++i) {
             acc += dist(route[i - 1], route[i]);
@@ -193,19 +199,35 @@ public class DecartScheduleData implements ScheduleData {
         return acc;
     }
 
+    @Override
+    public double getCycleCost() {
+        return getCost() + dist(route[route.length - 1], route[0]);
+    }
+
+    @Override
+    public double getCycleCost(int[] route) {
+        return getCost(route) + +dist(route[route.length - 1], route[0]);
+    }
+
     /**
      * Calculates cost of given route as a List, according to distance-function implemented in this ScheduleData.
      *
      * @param route
      * @return
      */
-    @Override public double getCost(List<Integer> route) {
+    @Override
+    public double getCost(List<Integer> route) {
         double acc = 0.0;
         for (int i = 1; i < route.size(); ++i) {
             acc += dist(route.get(i - 1), route.get(i));
         }
         ++fitFunctionCallsCount;
         return acc;
+    }
+
+    @Override
+    public double getCycleCost(List<Integer> route) {
+        return getCost(route) + dist(route.get(route.size() - 1), route.get(0));
     }
 
     /**
@@ -234,7 +256,8 @@ public class DecartScheduleData implements ScheduleData {
      *
      * @return
      */
-    @Override public int getOrdersNum() {
+    @Override
+    public int getOrdersNum() {
         return ordersNum;
     }
 
@@ -341,11 +364,13 @@ public class DecartScheduleData implements ScheduleData {
         }
     }
 
-    @Override public int getFitFunctionCallsCount() {
+    @Override
+    public int getFitFunctionCallsCount() {
         return fitFunctionCallsCount;
     }
 
-    @Override public void trimFitFunctionCalls() {
+    @Override
+    public void trimFitFunctionCalls() {
         fitFunctionCallsCount = 0;
     }
 

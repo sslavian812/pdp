@@ -4,8 +4,6 @@ import ru.ifmo.ctddev.generate.DatasetGenerator;
 import ru.ifmo.ctddev.generate.GausianDatasetGeneratorImpl;
 import ru.ifmo.ctddev.scheduling.DecartScheduleData;
 import ru.ifmo.ctddev.scheduling.smallmoves.*;
-import ru.ifmo.ctddev.scheduling.ScheduleData;
-import ru.ifmo.ctddev.old.SchedulerTemp;
 
 import java.awt.geom.Point2D;
 import java.util.List;
@@ -35,35 +33,35 @@ public class App {
                 new Point2D.Double(0, 100), new Point2D.Double(100, 0));
 
 
-        System.out.println("============================================");
-        System.out.println("Lin2Opt");
-        SchedulerTemp scheduler = new SchedulerTemp(new Lin2opt());
-        scheduler.schedule(new DecartScheduleData(points));
-
-        System.out.println("============================================");
-        System.out.println("Relocate-couple");
-        scheduler.setSmallMove(new RelocateCouple());
-        scheduler.schedule(new DecartScheduleData(points));
-
-        System.out.println("============================================");
-        System.out.println("Double-bridge");
-        scheduler.setSmallMove(new DoubleBridge());
-        scheduler.schedule(new DecartScheduleData(points));
-
-        System.out.println("============================================");
-        System.out.println("Point-exchange");
-        scheduler.setSmallMove(new PointExchange());
-        scheduler.schedule(new DecartScheduleData(points));
-
-        System.out.println("============================================");
-        System.out.println("Couple-exchange");
-        scheduler.setSmallMove(new CoupleExchange());
-        scheduler.schedule(new DecartScheduleData(points));
-
-        System.out.println("============================================");
-        System.out.println("Relocate-Block");
-        scheduler.setSmallMove(new RelocateBlock());
-        scheduler.schedule(new DecartScheduleData(points));
+//        System.out.println("============================================");
+//        System.out.println("Lin2Opt");
+//        SchedulerTemp scheduler = new SchedulerTemp(new Lin2opt());
+//        scheduler.schedule(new DecartScheduleData(points));
+//
+//        System.out.println("============================================");
+//        System.out.println("Relocate-couple");
+//        scheduler.setSmallMove(new RelocateCouple());
+//        scheduler.schedule(new DecartScheduleData(points));
+//
+//        System.out.println("============================================");
+//        System.out.println("Double-bridge");
+//        scheduler.setSmallMove(new DoubleBridge());
+//        scheduler.schedule(new DecartScheduleData(points));
+//
+//        System.out.println("============================================");
+//        System.out.println("Point-exchange");
+//        scheduler.setSmallMove(new PointExchange());
+//        scheduler.schedule(new DecartScheduleData(points));
+//
+//        System.out.println("============================================");
+//        System.out.println("Couple-exchange");
+//        scheduler.setSmallMove(new CoupleExchange());
+//        scheduler.schedule(new DecartScheduleData(points));
+//
+//        System.out.println("============================================");
+//        System.out.println("Relocate-Block");
+//        scheduler.setSmallMove(new RelocateBlock());
+//        scheduler.schedule(new DecartScheduleData(points));
 
     }
 }

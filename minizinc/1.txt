@@ -1,0 +1,4 @@
+pdp.mzn:151:
+  type-inst error: condition of if-then-else has invalid type-inst: expected 
+  `bool', actual `var bool'
+minizinc: flattening killed by signal 1

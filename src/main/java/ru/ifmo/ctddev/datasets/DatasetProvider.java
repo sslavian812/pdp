@@ -103,7 +103,7 @@ public class DatasetProvider {
      * If {@code outputFilePath} is specified(is not null),
      * then this original will be alse written to the file.
      *
-     * @param size           size of original(size of orders).
+     * @param size           size of original(number of orders).
      * @param position       position of start
      * @param direction      if LEFT: src is the left column, and des is the right column. RIGHT: vice versa. DEFAULT: as in original-file specified.
      * @param shuffled       if true: all the original will be shuffled beforehand. if false: first {@code size} orders will be taken.

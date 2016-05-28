@@ -19,12 +19,12 @@ public class StrategyProvider {
      * @return
      */
     public static List<Strategy> provideAllStrategies() {
-        List<SmallMove> allSmallMoves = new ArrayList<>(5);
-        allSmallMoves.add(new Lin2opt());
-        allSmallMoves.add(new CoupleExchange());
-        allSmallMoves.add(new DoubleBridge());
-        allSmallMoves.add(new PointExchange());
-        allSmallMoves.add(new RelocateBlock());
+        List<SmallMove> allSmallMoves = getAllSmallMoves();
+//        allSmallMoves.add(new Lin2opt());
+//        allSmallMoves.add(new CoupleExchange());
+//        allSmallMoves.add(new DoubleBridge());
+//        allSmallMoves.add(new PointExchange());
+//        allSmallMoves.add(new RelocateBlock());
 
         List<SmallMove> L2OandPX = new ArrayList<>(2);
         L2OandPX.add(new Lin2opt());
@@ -48,45 +48,43 @@ public class StrategyProvider {
 
         List<Strategy> strategies = new ArrayList<>();
         strategies.add(new ConstantStrategy(new Lin2opt()));
-//        strategies.add(new ConstantStrategy(new CoupleExchange()));
-//        strategies.add(new ConstantStrategy(new DoubleBridge()));
-//        strategies.add(new ConstantStrategy(new PointExchange()));
-//
-//        strategies.add(new ConstantStrategy(new RelocateBlock()));
-//
-//        strategies.add(new ConstantStrategy(allSmallMoves));
-//        strategies.add(new ConstantStrategy(L2OandDB));
-//        strategies.add(new ConstantStrategy(L2OandPX));
-//        strategies.add(new ConstantStrategy(L2OandRB));
-//        strategies.add(new ConstantStrategy(L2Oand3more, new double[]{
-//                3.0 / 6,
-//                1.0 / 6,
-//                1.0 / 6,
-//                1.0 / 6}));
-//
-//        strategies.add(new ConstantStrategy(L2Oand3more));
-//
-//        strategies.add(getEconomicStrategy(50));
-//        strategies.add(getProportionalStrategy());
-//        strategies.add(getYNStrategy());
-//        strategies.add(getProportionalEconomicStrategy(50));
-//
-//        strategies.add(getSmartL2ORBStrategy());
+        strategies.add(new ConstantStrategy(new CoupleExchange()));
+        strategies.add(new ConstantStrategy(new DoubleBridge()));
+        strategies.add(new ConstantStrategy(new PointExchange()));
 
+        strategies.add(new ConstantStrategy(new RelocateBlock()));
 
+        strategies.add(new ConstantStrategy(allSmallMoves));
+        strategies.add(new ConstantStrategy(L2OandDB));
+        strategies.add(new ConstantStrategy(L2OandPX));
+        strategies.add(new ConstantStrategy(L2OandRB));
+        strategies.add(new ConstantStrategy(L2Oand3more, new double[]{
+                3.0 / 6,
+                1.0 / 6,
+                1.0 / 6,
+                1.0 / 6}));
+
+        strategies.add(new ConstantStrategy(L2Oand3more));
+
+        strategies.add(getEconomicStrategy(50));
+        strategies.add(getProportionalStrategy());
+        strategies.add(getYNStrategy());
+        strategies.add(getProportionalEconomicStrategy(50));
         strategies.add(provideFastStrategy());
+
+//        strategies.add(getSmartL2ORBStrategy());
 
         return strategies;
     }
 
 
-    public static Strategy provideFastStrategy()
-    {
+    public static Strategy provideFastStrategy() {
         List<SmallMove> fastMoves = new ArrayList<>(4);
         fastMoves.add(new Lin2opt());
         fastMoves.add(new CoupleExchange());
         fastMoves.add(new DoubleBridge());
         fastMoves.add(new PointExchange());
+        // [0.25,0.25,0.25,0.25,0]
 
         return new ConstantStrategy(fastMoves);
     }
@@ -151,7 +149,7 @@ public class StrategyProvider {
 //    }
 
     public static Strategy getSmartL2ORBStrategy() {
-        return new SmartL2OandRBStrategy();
+        return new SmartL2OandRBStrategy(12);
     }
 
     public static Map<String, String> getStrategiesMapToClasses() {

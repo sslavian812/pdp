@@ -144,8 +144,16 @@ constraint
 output [
    "total: " ++ show(total) ++ "\n" ++
    "x: " ++ show(x) ++ "\n" ++
-   "y: " ++ show(y) ++ "\n"
-
+   "y: " ++ show(y) ++ "\n" ++ "\n"
 ];
+%++[ "\n"]++
+%[
+%   "" ++ if x[i] > 0 then
+%         show(E[i,1]) ++ "-"
+%   else
+%         ""
+%   endif ++ ""
+%| i in 1..num_edges
+%];
 
 

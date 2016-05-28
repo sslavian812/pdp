@@ -14,7 +14,11 @@ public class SmartL2OandRBStrategy implements Strategy, Cloneable {
     private SmallMove relocateBlock = new RelocateBlock();
     private boolean isL2O = true;
     private int misses = 0;
-    public static final int bound = 9;
+    public final int bound;
+
+    public SmartL2OandRBStrategy(int bound) {
+        this.bound = bound;
+    }
 
     @Override
     public SmallMove getSmallMove() {

@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by viacheslav on 05.12.2015.
+ * NOT USED FOR NOW
  */
 public class RelocateCouple implements SmallMove {
     public int[] oneStep(ScheduleData data) {
@@ -28,7 +29,7 @@ public class RelocateCouple implements SmallMove {
                 route.remove(new Integer(n + k));
                 route.add(i, k);
                 route.add(j, n + k);
-                double curCost = data.getCost(route);
+                double curCost = data.getCycleCost(route);
                 if (curCost < bestCost) {
                     bestCost = curCost;
                     bestk = i;
