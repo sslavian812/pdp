@@ -337,9 +337,13 @@ public class DecartScheduleData implements ScheduleData {
      */
     @Override
     public int compareTo(ScheduleData o) {
-        if (this.getCost() < o.getCost())
+//        if (this.getCost() < o.getCost())
+//            return -1;
+//        if (this.getCost() > o.getCost())
+//            return 1;
+        if (this.getCycleCost() < o.getCycleCost())
             return -1;
-        if (this.getCost() > o.getCost())
+        if (this.getCycleCost() > o.getCycleCost())
             return 1;
         return 0;
     }

@@ -66,10 +66,10 @@ public class StrategyProvider {
 
         strategies.add(new ConstantStrategy(L2Oand3more));
 
-        strategies.add(getEconomicStrategy(50));
-        strategies.add(getProportionalStrategy());
-        strategies.add(getYNStrategy());
-        strategies.add(getProportionalEconomicStrategy(50));
+        strategies.add(getEconomicStrategy(50)); // [0.249,0.249,0.249,0.249,0.005
+        strategies.add(getProportionalStrategy());  // [0.327,0.158,0.090,0.160,0.265
+        strategies.add(getYNStrategy());            // [0.348,0.160,0.166,0.160,0.166
+        strategies.add(getProportionalEconomicStrategy(50)); // [0.441,0.214,0.122,0.216,0.007
         strategies.add(provideFastStrategy());
 
 //        strategies.add(getSmartL2ORBStrategy());

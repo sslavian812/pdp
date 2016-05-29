@@ -5,7 +5,7 @@ import ru.ifmo.ctddev.features.Moments;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
-import ru.ifmo.ctddev.scheduling.strategies.SmartL2OandRBStrategy;
+import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 
 import java.util.ArrayList;
@@ -15,33 +15,33 @@ import java.util.List;
 import static util.Util.calcAverage;
 
 /**
- * Created by viacheslav on 07.05.2016.
+ * Created by viacheslav on 29.05.2016.
  */
-public class GeneticRunnerForSmartStrategy {
-    public static final int times = 20;
+public class GeneticsRunnerGraphics {
+
+    public static final int times = 1;
     public static final int size = 50;
-    public static final int n_datasets = 10;
+    public static final int n_datasets = 1;
+    public static final int from = 50;
 
 
     public static void main(String[] args) {
-
 
         GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
 
         List<Scheduler> schedulers = new ArrayList<>();
 
 
-        for (int i = 15; i <= 20; ++i) {
-            schedulers.addAll(factory.getSimpleSchedulers(
-                    (SmartL2OandRBStrategy) StrategyProvider.getSmartL2ORBStrategy(i), size));
+        for (Strategy s : StrategyProvider.provideAllStrategies()) {
+            schedulers.addAll(factory.getGraphickMakingSchedulers(s, size));
         }
 
-        int start = 0;
+        int start = from;
         List<ScheduleData> datasets = new ArrayList<>();
 
-        String filename = "taxi8000.csv";
+        String filename = "gaussian8000.csv";
 
-        while (start + size <= (size * n_datasets)) {
+        while (start + size <= from + (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
                     filename, null));
             start += size;

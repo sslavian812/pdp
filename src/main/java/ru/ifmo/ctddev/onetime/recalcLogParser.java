@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class RecalcLogParser {
     public static void main(String[] args) {
         try {
-            String filename = "C:/tmp/cur/taxi.txt";
+            String filename = "C:/tmp/cur/taxi 15-20 smart.txt";
             BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
             String line = "";
@@ -47,8 +47,8 @@ public class RecalcLogParser {
                         line = bufferedReader.readLine(); // dataset
                         line = bufferedReader.readLine(); // ratios
                         line = bufferedReader.readLine(); // average
-                        String dispersion = bufferedReader.readLine().split(",")[1];
-                        allDoubles.add(Double.parseDouble(dispersion));
+//                        String dispersion = bufferedReader.readLine().split(",")[1];
+//                        allDoubles.add(Double.parseDouble(dispersion));
                     }
                     bufferedReader.readLine(); // empty
 

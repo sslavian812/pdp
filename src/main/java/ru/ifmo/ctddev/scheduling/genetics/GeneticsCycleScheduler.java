@@ -2,7 +2,6 @@ package ru.ifmo.ctddev.scheduling.genetics;
 
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
-import ru.ifmo.ctddev.scheduling.strategies.ConstantStrategy;
 import ru.ifmo.ctddev.scheduling.strategies.SmartL2OandRBStrategy;
 import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 
@@ -12,17 +11,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
  * Created by viacheslav on 29.05.2016.
  */
-public class SimpleGeneticsStrategyScheduler implements Scheduler {
-
+public class GeneticsCycleScheduler implements Scheduler {
 
     private String comment;
-    private boolean writeGraphics = false;
 
     // internals:
     private Strategy strategy;
@@ -50,7 +46,7 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
     private List<String> xs = new ArrayList<>();
     private List<String> ys = new ArrayList<>();
 
-    public SimpleGeneticsStrategyScheduler(String comment, Strategy strategy,
+    public GeneticsCycleScheduler(String comment, Strategy strategy,
                                            int k, int n, int f, int g,
                                            boolean onlyChildren, boolean isBigMutationAllowed) {
         this.strategy = strategy;
@@ -74,13 +70,6 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
      */
     @Override
     public double schedule(ScheduleData scheduleData) {
-        if (writeGraphics) {
-            try {
-                logFile = new BufferedWriter(new FileWriter("wolfram.txt", true));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         originalScheduleData = scheduleData;
         initialCost = scheduleData.getCost();
@@ -109,56 +98,16 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
 
             currentGeneration = selection(mutated);
 
-
-            if (writeGraphics && i % 5 == 0)
-                printState(currentGeneration.get(0));
-
             if (originalScheduleData.getFitFunctionCallsCount() >= F)
                 break;
 
         }
-            System.out.println(getComment() + " - Stopped on " + i + "-th generation");
-
-//        Collections.sort(currentGeneration, originalScheduleData);
-
-
-        if (writeGraphics) {
-            try {
-                logFile.write("\"" + comment + "_" + strategy.getDisplayName() + ":\";");
-                logFile.write("xs = {");
-                logFile.write(String.join(", ", xs));
-                logFile.write("};");
-                logFile.newLine();
-                logFile.write("ys = {");
-                logFile.write(String.join(", ", ys));
-                logFile.write("};");
-                logFile.newLine();
-                logFile.write("list = Transpose[{xs, ys}];");
-                logFile.newLine();
-                logFile.write("ListPlot[list, AxesLabel -> {\"fit function calls\", \"relative cost\"}, PlotLabel -> \"");
-                logFile.write(comment + " - " + strategy.getDisplayName());
-                logFile.write("\", Joined -> True, PlotRange -> {{0, 200500}, {0, 1}}]");
-                logFile.newLine();
-                logFile.newLine();
-                logFile.flush();
-                logFile.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        System.err.println(getComment() + " - Stopped on " + i + "-th generation");
 
         ScheduleData winner = currentGeneration.get(0);
-//        scheduleData.setRoute(currentGeneration.get(0));
+        originalScheduleData.setRoute(winner.getRoute()); // changes original data
 
-        originalScheduleData.setRoute(winner.getRoute());
         return (initialCost - winner.getCost()) / initialCost;
-    }
-
-    //    private void printState(List<ScheduleData> currentGeneration, ScheduleData originalScheduleData) {
-    private void printState(ScheduleData winner) {
-        //(initialCost - reachedCost) / initialCost;
-        xs.add("" + winner.getFitFunctionCallsCount());
-        ys.add("" + ((initialCost - winner.getCost()) / initialCost));
     }
 
 
@@ -170,50 +119,6 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
         return comment + " " + strategy.getDisplayName();
     }
 
-    public String getJuliaHist(int bins, int pairs, long ms) {
-        return "# " + getComment() + " " + strategy.getComment() + System.lineSeparator() +
-                "display(" +
-                "plot(x=ratios" + System.lineSeparator() +
-                ",Geom.histogram(bincount=" + bins + "), "
-                + "Guide.xlabel(\"Optimisation ratio\"), Guide.ylabel(\"Frequency\"),"
-                + " Guide.title(\"" + getComment() + " " + strategy.getDisplayName() + " (" + pairs + " pairs)\")))" + System.lineSeparator()
-                + "display(\"mean= $(mean(ratios)) , std= $(std(ratios))\")\n"
-                + "display(\"average per run: " + ms + " ms\")";
-    }
-
-//    public String getJulaiCells(int bins, int pairs) {
-//        String head = "{\n" +
-//                "   \"cell_type\": \"code\",\n" +
-//                "   \"execution_count\": null,\n" +
-//                "   \"metadata\": {\n" +
-//                "    \"collapsed\": true\n" +
-//                "   },\n" +
-//                "   \"outputs\": [],\n" +
-//                "   \"source\": [";
-//        String tail = " ]\n" +
-//                "  }";
-//
-//        List<String> strings = new ArrayList<>();
-//        strings.add(head);
-//
-//        strings.add(enquote("# " + getComment() + " " + strategy.getComment()));
-//        strings.add(",\n");
-//        strings.add(enquote("plot(x=ratios, Geom.histogram(bincount=" + bins + "), "
-//                + "Guide.xlabel(\"Optimisation ratio\"), Guide.ylabel(\"Frequency\"),"
-//                + " Guide.title(\"" + getComment() + " (" + pairs + " pairs)\"))"));
-////        strings.add(tail +",");
-////        strings.add(System.lineSeparator());
-////        strings.add(head);
-////        strings.add(enquote("# " + getComment() + " " + strategy.getComment()));
-//        strings.add(",\n");
-//        strings.add(enquote("print(\"mean= $(mean(ratios)), std= $(std(ratios))\")"));
-//        strings.add(tail);
-//        return String.join("", strings);
-//    }
-//
-//    private String enquote(String s) {
-//        return "\"" + s + "\"";
-//    }
 
     private List<ScheduleData> bigMutations(List<ScheduleData> generation, int amount) {
         return generation.stream().map(individual -> {
@@ -225,7 +130,9 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
 
     private ScheduleData mutate(ScheduleData individual) {
         int[] route = strategy.getSmallMove().oneStep(individual);
+
 //        double prev = individual.getCost();
+
         if (individual.checkConstraints(route)) {
             individual.setRoute(route);
         }
@@ -306,12 +213,5 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
                 "    isBigMutationAllowed=" + isBigMutationAllowed + System.lineSeparator() +
                 "}";
     }
-
-    public boolean isWriteGraphics() {
-        return writeGraphics;
-    }
-
-    public void setWriteGraphics(boolean writeGraphics) {
-        this.writeGraphics = writeGraphics;
-    }
 }
+

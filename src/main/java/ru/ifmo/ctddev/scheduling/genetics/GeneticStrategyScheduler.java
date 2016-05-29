@@ -256,6 +256,9 @@ public class GeneticStrategyScheduler implements Scheduler {
         return individual;
     }
 
+    private double reward() {
+        return 0.0;
+    }
 
     private List<ScheduleData> selection(List<ScheduleData> generation) {
         List<ScheduleData> list = new ArrayList<>(G);

@@ -2,6 +2,8 @@ package ru.ifmo.ctddev.scheduling.strategies;
 
 import ru.ifmo.ctddev.scheduling.smallmoves.SmallMove;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -105,9 +107,13 @@ public class ConstantStrategy implements Strategy {
 
         StringBuilder stringBuilder = new StringBuilder("[");
 
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols();
+        otherSymbols.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("#0.000", otherSymbols);
+
         stringBuilder.append(String.join(",", getAllSmallMoves().stream().map(smallMove -> {
             if (map.containsKey(smallMove.toString()))
-                return "" + map.get(smallMove.toString());
+                return df.format(map.get(smallMove.toString()));
             else
                 return "" + 0.0;
 
