@@ -149,7 +149,11 @@ public class StrategyProvider {
 //    }
 
     public static Strategy getSmartL2ORBStrategy() {
-        return new SmartL2OandRBStrategy(12);
+        return new SmartL2OandRBStrategy(10);
+    }
+
+    public static Strategy getSmartL2ORBStrategy(int t) {
+        return new SmartL2OandRBStrategy(t);
     }
 
     public static Map<String, String> getStrategiesMapToClasses() {

@@ -69,4 +69,9 @@ public class SmartL2OandRBStrategy implements Strategy, Cloneable {
             return null;
         }
     }
+
+    public void trim() {
+        misses = 0;
+        isL2O = true;
+    }
 }

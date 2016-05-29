@@ -1,9 +1,9 @@
 package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.datasets.DatasetProvider;
+import ru.ifmo.ctddev.features.Moments;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
-import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
 import ru.ifmo.ctddev.scheduling.strategies.SmartL2OandRBStrategy;
 import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static util.Util.calcAverage;
+
 /**
  * Created by viacheslav on 07.05.2016.
  */
@@ -19,42 +21,41 @@ public class GeneticRunnerForSmartStrategy {
     public static final int times = 20;
     public static final int size = 50;
     public static final int n_datasets = 10;
-    public static final int generations = 12 * size * size;
 
 
     public static void main(String[] args) {
 
-        List<SmartL2OandRBStrategy> strategies = new ArrayList<>();
-        strategies.add((SmartL2OandRBStrategy) StrategyProvider.getSmartL2ORBStrategy());
 
         GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
 
-        List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
-        for (SmartL2OandRBStrategy strategy : strategies) {
-            schedulers.add(factory.getOnePluOneScheduler(strategy.clone(), generations));
-            schedulers.add(factory.getOnePlusNScheduler(strategy.clone(), generations, (int) Math.sqrt(size / 2.0)));
-            schedulers.add(factory.getOneCommaNScheduler(strategy.clone(), generations, (int) Math.sqrt(size / 2.0)));
-            schedulers.add(factory.getBigMutationsScheduler(strategy.clone(), generations, (int) Math.sqrt(size / 2)));
-            schedulers.add(factory.getKPlusKNScheduler(strategy.clone(), generations, (int) Math.sqrt(size / 2.0), (int) Math.sqrt(size / 4.0)));
-        }
+        List<Scheduler> schedulers = new ArrayList<>();
 
+
+        for (int i = 8; i <= 12; ++i) {
+            schedulers.addAll(factory.getSimpleSchedulers(
+                    (SmartL2OandRBStrategy) StrategyProvider.getSmartL2ORBStrategy(i), size));
+        }
 
         int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
 
+        String filename = "uniform8000.csv";
+
         while (start + size <= (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
-                    "gaussian8000.csv", null));
+                    filename, null));
             start += size;
         }
-        System.out.println("gaussian8000.csv: \n\n");
+        System.out.println(filename + ": \n\n");
 
-//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
-//        List<Future<List<Double>>> futures = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
 
-        NDataSetsNTimesScheduleTester nDataSetsNTimesScheduleTester = new NDataSetsNTimesScheduleTester(null, datasets, times);
+        NDataSetsNTimesScheduleTester nDataSetsNTimesScheduleTester =
+                new NDataSetsNTimesScheduleTester(null, datasets, times);
+
+        Moments moments = new Moments();
+
 
         for (Scheduler scheduler : schedulers) {
 
@@ -71,11 +72,12 @@ public class GeneticRunnerForSmartStrategy {
             for (List<Double> list : ratios) {
                 String indent = "    ";
                 System.out.println(indent + "dataset: " + i + "-" + (i + size) + ": ");
-                i+=size;
+                i += size;
                 System.out.println(indent + "ratios=" + Arrays.toString(list.toArray()));
                 averagePerNTimes.add(calcAverage(list));
                 System.out.println(indent + "average ratio for i-th dataset: "
                         + averagePerNTimes.get(averagePerNTimes.size() - 1));
+                System.out.println(indent + moments.extractStatisticalFeatures(list).get(3).toCSVString());
                 System.out.println();
             }
 
@@ -85,17 +87,6 @@ public class GeneticRunnerForSmartStrategy {
             System.out.println();
         }
 
-
         System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
-//        threadPoolExecutor.shutdown();
-    }
-
-    private static Double calcAverage(List<Double> list) {
-        double acc = 0;
-        for (Double x : list) {
-            acc += x;
-        }
-        acc /= list.size();
-        return acc;
     }
 }

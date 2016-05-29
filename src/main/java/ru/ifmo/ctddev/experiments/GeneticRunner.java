@@ -95,13 +95,4 @@ public class GeneticRunner {
         System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
 //        threadPoolExecutor.shutdown();
     }
-
-//    private static Double calcAverage(List<Double> list) {
-//        double acc = 0;
-//        for (Double x : list) {
-//            acc += x;
-//        }
-//        acc /= list.size();
-//        return acc;
-//    }
 }

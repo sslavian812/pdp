@@ -1,7 +1,13 @@
 package ru.ifmo.ctddev.scheduling.genetics;
 
+import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.strategies.ConstantStrategy;
+import ru.ifmo.ctddev.scheduling.strategies.SmartL2OandRBStrategy;
+import ru.ifmo.ctddev.scheduling.strategies.StatefulStrategy;
 import ru.ifmo.ctddev.scheduling.strategies.Strategy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by viacheslav on 26.02.2016.
@@ -58,4 +64,26 @@ public class GeneticsSchedulerFactory {
     }
 
 
+    /**
+     * Singlethread.
+     *
+     * @param strategy
+     * @param pairs
+     * @return
+     */
+    public List<Scheduler> getSimpleSchedulers(SmartL2OandRBStrategy strategy, int pairs) {
+        List<Scheduler> schedulers = new ArrayList<>();
+
+        int generations = 12 * pairs * pairs;
+        int F = 200_000;
+        int N = (int) Math.sqrt(pairs / 2.0);
+        int K = (int) Math.sqrt(pairs / 4.0);
+        schedulers.add(new SimpleGeneticsStrategyScheduler("1+1", strategy, 1, 1, F, generations, false, false));
+        schedulers.add(new SimpleGeneticsStrategyScheduler("1+N", strategy, 1, N, F, generations, false, false));
+        schedulers.add(new SimpleGeneticsStrategyScheduler("1,N", strategy, 1, N, F, generations, true, false));
+        schedulers.add(new SimpleGeneticsStrategyScheduler("1+N,BM", strategy, 1, N, F, generations, false, true));
+        schedulers.add(new SimpleGeneticsStrategyScheduler("K+KN", strategy, K, N, F, generations, false, false));
+
+        return schedulers;
+    }
 }
