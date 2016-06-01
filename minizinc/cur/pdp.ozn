@@ -1,8 +1,0 @@
-var int: total;
-array[1 .. 240] of var 0 .. 1: x;
-array[1 .. 240] of var int: y;
-output 
-  [ "total: " ++ 
-    (show(total) ++ 
-    ("\n" ++ 
-    ("x: " ++ (show(x) ++ ("\n" ++ ("y: " ++ (show(y) ++ ("\n" ++ "\n")))))))) ];

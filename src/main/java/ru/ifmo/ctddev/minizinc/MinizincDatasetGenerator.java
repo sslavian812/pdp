@@ -29,6 +29,9 @@ public class MinizincDatasetGenerator {
 
         for (int size = 4; size <= 20; size += 2) {
 
+//        if(firstTime) {
+//            int size = 50;
+
             String curDataset = dataset + "_" + start + "_" + (start + size);
 
             ScheduleData initialData = DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
