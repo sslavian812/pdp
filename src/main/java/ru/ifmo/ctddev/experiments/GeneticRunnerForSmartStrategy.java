@@ -2,6 +2,7 @@ package ru.ifmo.ctddev.experiments;
 
 import ru.ifmo.ctddev.datasets.DatasetProvider;
 import ru.ifmo.ctddev.features.Moments;
+import ru.ifmo.ctddev.scheduling.PolicyProvider;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
@@ -31,15 +32,19 @@ public class GeneticRunnerForSmartStrategy {
         List<Scheduler> schedulers = new ArrayList<>();
 
 
-        for (int i = 15; i <= 20; ++i) {
-            schedulers.addAll(factory.getSimpleSchedulers(
-                    (SmartL2OandRBStrategy) StrategyProvider.getSmartL2ORBStrategy(i), size));
+//        for (int i = 15; i <= 20; ++i) {
+//            schedulers.addAll(factory.getSimpleSchedulers(
+//                    (SmartL2OandRBStrategy) StrategyProvider.getSmartL2ORBStrategy(i), size));
+//        }
+        for(double d=0.8; d>=0.2; d-=0.2) {
+            schedulers.addAll(factory.getSimpleSchedulersWithCopy(
+                    PolicyProvider.provideEpsGreegyPolicy(d), size));
         }
 
         int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
 
-        String filename = "taxi8000.csv";
+        String filename = "uniform8000.csv";
 
         while (start + size <= (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
@@ -77,7 +82,7 @@ public class GeneticRunnerForSmartStrategy {
                 averagePerNTimes.add(calcAverage(list));
                 System.out.println(indent + "average ratio for i-th dataset: "
                         + averagePerNTimes.get(averagePerNTimes.size() - 1));
-//                System.out.println(indent + moments.extractStatisticalFeatures(list).get(3).toCSVString());
+                System.out.println(indent + moments.extractStatisticalFeatures(list).get(3).toCSVString());
                 System.out.println();
             }
 

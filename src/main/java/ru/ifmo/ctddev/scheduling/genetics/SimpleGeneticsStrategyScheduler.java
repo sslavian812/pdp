@@ -117,7 +117,7 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
                 break;
 
         }
-            System.out.println(getComment() + " - Stopped on " + i + "-th generation");
+//            System.out.println(getComment() + " - Stopped on " + i + "-th generation");
 
 //        Collections.sort(currentGeneration, originalScheduleData);
 

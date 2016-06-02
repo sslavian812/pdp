@@ -47,6 +47,11 @@ public class StatefulStrategy implements Strategy {
     public void setDisplayName(String displayName) {
     }
 
+    @Override
+    public Strategy clone() {
+        return this;
+    }
+
     public void trim() {
         called = 0;
         succeed = 0;

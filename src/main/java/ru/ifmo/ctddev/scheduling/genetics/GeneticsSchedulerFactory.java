@@ -88,6 +88,23 @@ public class GeneticsSchedulerFactory {
     }
 
 
+    public List<Scheduler> getSimpleSchedulersWithCopy(Strategy strategy, int pairs) {
+        List<Scheduler> schedulers = new ArrayList<>();
+
+        int generations = 12 * pairs * pairs;
+        int F = 200_000;
+        int N = (int) Math.sqrt(pairs / 2.0);
+        int K = (int) Math.sqrt(pairs / 4.0);
+        schedulers.add(new SimpleGeneticsStrategyScheduler("1+1", strategy.clone(), 1, 1, F, generations, false, false));
+        schedulers.add(new SimpleGeneticsStrategyScheduler("1+N", strategy.clone(), 1, N, F, generations, false, false));
+        schedulers.add(new SimpleGeneticsStrategyScheduler("1,N", strategy.clone(), 1, N, F, generations, true, false));
+        schedulers.add(new SimpleGeneticsStrategyScheduler("1+N,BM", strategy.clone(), 1, N, F, generations, false, true));
+        schedulers.add(new SimpleGeneticsStrategyScheduler("K+KN", strategy.clone(), K, N, F, generations, false, false));
+
+        return schedulers;
+    }
+
+
     public List<Scheduler> getGraphickMakingSchedulers(Strategy strategy, int pairs) {
         List<Scheduler> schedulers = new ArrayList<>();
 

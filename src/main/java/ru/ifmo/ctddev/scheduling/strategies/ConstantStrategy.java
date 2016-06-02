@@ -129,6 +129,11 @@ public class ConstantStrategy implements Strategy {
         return;
     }
 
+    @Override
+    public Strategy clone() {
+        return this;
+    }
+
 
     @Override
     public String toString() {
@@ -158,7 +163,6 @@ public class ConstantStrategy implements Strategy {
     public List<SmallMove> getSmallMoves() {
         return smallMoves;
     }
-
 
 
 

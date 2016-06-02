@@ -32,4 +32,6 @@ public interface Strategy {
     String getDisplayName();
 
     void setDisplayName(String displayName);
+
+    Strategy clone();
 }
