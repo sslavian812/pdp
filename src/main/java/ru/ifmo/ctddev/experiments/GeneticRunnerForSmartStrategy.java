@@ -44,7 +44,7 @@ public class GeneticRunnerForSmartStrategy {
         int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
 
-        String filename = "uniform8000.csv";
+        String filename = "gaussian8000.csv";
 
         while (start + size <= (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, start, DatasetProvider.Direction.RIGHT,
