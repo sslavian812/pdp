@@ -3,6 +3,7 @@ package ru.ifmo.ctddev.scheduling.genetics;
 import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.strategies.ConstantStrategy;
+import ru.ifmo.ctddev.scheduling.strategies.EpsGreedyPolicy;
 import ru.ifmo.ctddev.scheduling.strategies.SmartL2OandRBStrategy;
 import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 
@@ -90,12 +91,18 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
         if (strategy instanceof SmartL2OandRBStrategy)
             ((SmartL2OandRBStrategy) strategy).trim();
 
+        if (strategy instanceof EpsGreedyPolicy)
+            ((EpsGreedyPolicy) strategy).trim();
+
         // form first generation:
         for (int i = 0; i < K; ++i) {
             currentGeneration.add(scheduleData.clone());
         }
 
-        int i=0;
+        double bestCost = currentGeneration.get(0).getCost();
+        int lastGenerationChanged = 0;
+
+        int i = 0;
         for (i = 0; ; ++i) {
             if (isBigMutationAllowed && (i == G / 4 || i == G / 2 || i == 3.0 / 4.0 * (double) G)) {
                 currentGeneration = bigMutations(currentGeneration, (int) Math.sqrt(scheduleData.getSize() / 2));
@@ -109,6 +116,11 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
 
             currentGeneration = selection(mutated);
 
+            if (currentGeneration.get(0).getCost() < bestCost) {
+                lastGenerationChanged = i;
+                bestCost = currentGeneration.get(0).getCost();
+            }
+
 
             if (writeGraphics && i % 5 == 0)
                 printState(currentGeneration.get(0));
@@ -117,7 +129,9 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
                 break;
 
         }
-//            System.out.println(getComment() + " - Stopped on " + i + "-th generation");
+//        System.out.println(getComment() + " - Stopped on " + i + "-th generation");
+//        System.out.println(getComment() + " - last changed generation: " + lastGenerationChanged);
+
 
 //        Collections.sort(currentGeneration, originalScheduleData);
 
@@ -137,7 +151,7 @@ public class SimpleGeneticsStrategyScheduler implements Scheduler {
                 logFile.newLine();
                 logFile.write("ListPlot[list, AxesLabel -> {\"fit function calls\", \"relative cost\"}, PlotLabel -> \"");
                 logFile.write(comment + " - " + strategy.getDisplayName());
-                logFile.write("\", Joined -> True, PlotRange -> {{0, 200500}, {0, 1}}]");
+                logFile.write("\", Joined -> True, PlotRange -> {{0, " + (xs.size() + 20) * 5 + "}, {0, 1}}]");
                 logFile.newLine();
                 logFile.newLine();
                 logFile.flush();

@@ -48,7 +48,9 @@ public class NDataSetsNTimesScheduleTester implements Callable<List<List<Double>
 
         NTimeScheduleTester  nTimeTester = new NTimeScheduleTester(scheduler, null, times);
 
+        int i=0;
         for (ScheduleData iData : data) {
+            System.out.println("/// dataset processing: " + i);
             ScheduleData currentData = iData.clone();
 
             List<Double> ratios = nTimeTester.setData(currentData).call();

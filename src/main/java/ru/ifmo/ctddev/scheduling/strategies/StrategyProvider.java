@@ -77,6 +77,10 @@ public class StrategyProvider {
         return strategies;
     }
 
+    public static Strategy provideLin2Opt() {
+        return new ConstantStrategy(new Lin2opt());
+    }
+
 
     public static Strategy provideFastStrategy() {
         List<SmallMove> fastMoves = new ArrayList<>(4);

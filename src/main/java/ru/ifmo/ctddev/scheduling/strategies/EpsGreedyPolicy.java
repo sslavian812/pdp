@@ -35,6 +35,13 @@ public class EpsGreedyPolicy implements Strategy, Cloneable {
         this.hits = new int[smallMoves.size()];
     }
 
+    public void trim() {
+        this.calls = 0;
+        this.lastSmallMove = -1;
+        this.stackpointer = smallMoves.size() - 1;
+        this.hits = new int[smallMoves.size()];
+    }
+
     @Override
     public SmallMove getSmallMove() {
         if (stackpointer >= 0) {

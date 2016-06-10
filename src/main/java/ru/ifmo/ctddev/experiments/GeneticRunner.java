@@ -6,6 +6,7 @@ import ru.ifmo.ctddev.scheduling.ScheduleData;
 import ru.ifmo.ctddev.scheduling.Scheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticStrategyScheduler;
 import ru.ifmo.ctddev.scheduling.genetics.GeneticsSchedulerFactory;
+import ru.ifmo.ctddev.scheduling.strategies.EpsGreedyPolicy;
 import ru.ifmo.ctddev.scheduling.strategies.Strategy;
 import ru.ifmo.ctddev.scheduling.strategies.StrategyProvider;
 
@@ -19,41 +20,59 @@ import static util.Util.calcAverage;
  * Created by viacheslav on 21.02.2016.
  */
 public class GeneticRunner {
-    public static final int times = 20;
-    public static final int size = 50;
+    public static final int times = 10; // 20
+    public static final int size = 50; // 50
     public static final int from = 0;
 
-    public static final int n_datasets = 10;
+    public static final int n_datasets = 10; //10
     public static final int generations = 12 * size * size;
 
 
     public static void main(String[] args) {
 
-        List<Strategy> strategies = StrategyProvider.provideAllStrategies();
-        GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
+//        List<Strategy> strategies = StrategyProvider.provideAllStrategies();
+//        GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
 
-        List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
-        for (Strategy strategy : strategies) {
-            schedulers.add(factory.getOnePluOneScheduler(strategy, generations));
-            schedulers.add(factory.getOnePlusNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
-            schedulers.add(factory.getOneCommaNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
-            schedulers.add(factory.getBigMutationsScheduler(strategy, generations, (int) Math.sqrt(size / 2)));
-            schedulers.add(factory.getKPlusKNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0), (int) Math.sqrt(size / 4.0)));
-        }
+//        List<GeneticStrategyScheduler> schedulers = new ArrayList<>();
+//        for (Strategy strategy : strategies) {
+//            schedulers.add(factory.getOnePluOneScheduler(strategy, generations));
+//            schedulers.add(factory.getOnePlusNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
+//            schedulers.add(factory.getOneCommaNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0)));
+//            schedulers.add(factory.getBigMutationsScheduler(strategy, generations, (int) Math.sqrt(size / 2)));
+//            schedulers.add(factory.getKPlusKNScheduler(strategy, generations, (int) Math.sqrt(size / 2.0), (int) Math.sqrt(size / 4.0)));
+//        }
+
+        GeneticsSchedulerFactory factory = GeneticsSchedulerFactory.getInstance();
+        List<Scheduler> schedulers =
+                factory.getLongTimeScheduler(
+//                factory.getLongTimeOnePlusOneScheduler(
+//                        StrategyProvider.provideLin2Opt(), size);
+//                        StrategyProvider.getProportionalEconomicStrategy(size), size);
+                        new EpsGreedyPolicy(0.4, StrategyProvider.getAllSmallMoves()), size);
 
 
         int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
 
-        System.out.println("taxi8000.csv: \n\n");
+        System.out.println("uniform8000.csv: \n\n");
         while (from + start + size <= from + (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, from + start, DatasetProvider.Direction.RIGHT,
-                    "taxi8000.csv", null));
+                    "uniform8000.csv", null));
             start += size;
         }
 
 //        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 10, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 //        List<Future<List<Double>>> futures = new ArrayList<>();
+
+
+        // warmup:
+        System.out.println("wamup");
+        for (Scheduler scheduler : schedulers) {
+            ScheduleData data = datasets.get(0).clone();
+            scheduler.schedule(data);
+        }
+        System.out.println("end warmup");
+
 
         long startTime = System.currentTimeMillis();
 
@@ -75,8 +94,8 @@ public class GeneticRunner {
             int i = 0;
             for (List<Double> list : ratios) {
                 String indent = "    ";
-                System.out.println(indent + "dataset: " + (from  +i) + "-" + (from + i + size) + ": ");
-                i+=size;
+                System.out.println(indent + "dataset: " + (from + i) + "-" + (from + i + size) + ": ");
+                i += size;
                 System.out.println(indent + "ratios=" + Arrays.toString(list.toArray()));
                 averagePerNTimes.add(calcAverage(list));
                 System.out.println(indent + "average ratio for i-th dataset: "
