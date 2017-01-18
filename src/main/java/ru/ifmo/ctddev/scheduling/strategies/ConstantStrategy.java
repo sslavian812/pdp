@@ -164,6 +164,4 @@ public class ConstantStrategy implements Strategy {
         return smallMoves;
     }
 
-
-
 }

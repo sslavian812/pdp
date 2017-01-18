@@ -119,7 +119,7 @@ public class GeneticsSchedulerFactory {
         List<Scheduler> schedulers = new ArrayList<>();
 
         int generations = 120 * pairs * pairs;
-        int F = 2_000_000;
+        int F = 20_000_000;
         int K = (int) (pairs * 1.0 / 2.0);
         int N = (int) Math.sqrt(pairs);
 

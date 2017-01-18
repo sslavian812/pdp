@@ -85,10 +85,6 @@ public class HillClimbingRunner {
             System.out.println();
         }
 
-
         System.out.println("time spent: " + (System.currentTimeMillis() - startTime) / 1000 + " s");
-
-
-
     }
 }

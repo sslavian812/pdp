@@ -20,7 +20,7 @@ import static util.Util.calcAverage;
  * Created by viacheslav on 21.02.2016.
  */
 public class GeneticRunner {
-    public static final int times = 10; // 20
+    public static final int times = 20; // 20
     public static final int size = 50; // 50
     public static final int from = 0;
 
@@ -47,17 +47,17 @@ public class GeneticRunner {
                 factory.getLongTimeScheduler(
 //                factory.getLongTimeOnePlusOneScheduler(
 //                        StrategyProvider.provideLin2Opt(), size);
-//                        StrategyProvider.getProportionalEconomicStrategy(size), size);
-                        new EpsGreedyPolicy(0.4, StrategyProvider.getAllSmallMoves()), size);
+                        StrategyProvider.getProportionalEconomicStrategy(size), size);
+//                        new EpsGreedyPolicy(0.4, StrategyProvider.getAllSmallMoves()), size);
 
 
         int start = 0;
         List<ScheduleData> datasets = new ArrayList<>();
 
-        System.out.println("uniform8000.csv: \n\n");
+        System.out.println("taxi8000.csv: \n\n");
         while (from + start + size <= from + (size * n_datasets)) {
             datasets.add(DatasetProvider.getDataset(size, from + start, DatasetProvider.Direction.RIGHT,
-                    "uniform8000.csv", null));
+                    "taxi8000.csv", null));
             start += size;
         }
 
